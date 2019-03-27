@@ -1,0 +1,15 @@
+{
+  "name": "Kartikey Tripathi",
+  "short_name": "Kartikey",
+  "description": "My Portfolio",
+  "start_url": "/?homescreen=1",
+  "background_color": "#0000 00",
+  "theme_color": "#0f4a73",
+  "icons": [{
+    "src": "/images/icons.png",
+    "sizes": "256x256",
+    "type": "image/png"
+  }],
+  "display": "standalone"
+
+}
