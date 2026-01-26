@@ -25,36 +25,36 @@ export const socialLinks = [
     id: 5,
     priority: 1,
     title: "GitHub",
-    url: "https://github.com/adityadomle",
+    url: "https://github.com/kartikeytripathi",
   },
   {
     id: 6,
     priority: 2,
     title: "LinkedIn",
-    url: "https://www.linkedin.com/in/adityadomle",
+    url: "https://www.linkedin.com/in/kartikeytripathi",
   },
   {
     id: 7,
     priority: 3,
     title: "Twitter",
-    url: "https://x.com/env_aditya",
+    url: "https://x.com/",
   },
   {
     id: 8,
     priority: 4,
     title: "Instagram",
-    url: "https://www.instagram.com/adittya.tsx",
+    url: "https://www.instagram.com/kar.ti.key",
   },
 ];
 
 export const personalInfo = {
-  name: "Aditya Domle",
-  title: "Full-Stack Developer | Next.js, React, Node.js",
-  avatar: "/images/about/aditya-domle.webp",
-  email: "adityadomle14@gmail.com",
-  location: "Ngp, Maharashtra, India",
+  name: "Kartikey Tripathi",
+  title: "Cloud & DevOps Engineer",
+  avatar: "/images/about/KT.JPG",
+  email: "kartikey.tripathi.37@gmail.com",
+  location: "Hyderabad, Telangana, India",
   description:
-    "Self-taught Full-Stack Developer from India, specializing in modern web technologies and open-source development. Passionate about building scalable applications with Next.js and contributing to the developer community through open-source projects.",
+    "Cloud and DevOps Engineer with hands-on experience in AWS services, container technologies, and modern web development. Passionate about building scalable, reliable, and automated cloud-native solutions",
 };
 
 export const heroSection = {

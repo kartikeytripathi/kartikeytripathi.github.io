@@ -37,7 +37,7 @@ export function Header() {
               width={50}
               height={50}
             />
-            <span className="text-lg">adittya.site</span>
+            <span className="text-lg">kartikeytripathi</span>
           </Link>
         </div>
         <div className=" text-gray-400">{time}</div>
