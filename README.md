@@ -17,7 +17,3 @@
 - 🌗 Fully **responsive**, minimal, and **SEO-friendly**  
 
 ---
-
-### 📄 License  
-MIT © 2025 — [Aditya Domle](https://www.adittya.site)  
-_Crafted with precision, motion, and caffeine ☕_
