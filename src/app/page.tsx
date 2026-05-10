@@ -42,6 +42,10 @@ export default function Portfolio() {
 <FadeInUp delay={0.6}>
   <CallToAction />
 </FadeInUp>
+
+<footer className="mt-12 pb-6 text-center text-sm text-muted-foreground">
+  © 2026 Kartikey Tripathi
+</footer>
     </main>
   );
 }
