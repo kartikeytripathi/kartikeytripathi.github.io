@@ -1,10 +1,10 @@
 {
-  "name": "aditya_portfolio",
+  "name": "kartikey_portfolio",
   "version": "1.0.0",
   "private": true,
   "author": {
-    "name": "Aditya Domle",
-    "github": "https://github.com/adityadomle"
+    "name": "Kartikey Tripathi",
+    "github": "https://github.com/kartikeytripathi"
   },
   "scripts": {
     "dev": "next dev --turbopack",

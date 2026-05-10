@@ -2,8 +2,16 @@
 
 import { certifications } from "@/config/data"
 import { motion } from "framer-motion"
-import Image from "next/image"
-import { FaCertificate } from "react-icons/fa"
+import { FaAws, FaCertificate, FaExternalLinkAlt } from "react-icons/fa"
+import { SiOracle } from "react-icons/si"
+
+function IssuerIcon({ issuer }: { issuer: string }) {
+  if (issuer.toLowerCase().includes("oracle"))
+    return <SiOracle className="w-5 h-5 text-red-500" />
+  if (issuer.toLowerCase().includes("amazon") || issuer.toLowerCase().includes("aws"))
+    return <FaAws className="w-5 h-5 text-orange-400" />
+  return <FaCertificate className="w-5 h-5 text-blue-400" />
+}
 
 export function Certifications() {
   return (
@@ -38,30 +46,52 @@ export function Certifications() {
         />
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
-        {certifications.map((cert, index) => (
-          <motion.a
-            href={cert.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={cert.title}
-            key={index}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.02 }}
-            className="group bg-gray-900/30 rounded-xl overflow-hidden hover:bg-gray-800/50 transition-all duration-500"
-          >
-            <Image
-              src={cert.image || "/placeholder.svg"}
-              alt={cert.title}
-              width={500}
-              height={500}
-              className="w-full h-full group-hover:scale-105 transition-transform duration-500"
-            />
-          </motion.a>
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {certifications.map((cert, index) => {
+          const Card = (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.02 }}
+              className="group flex items-start gap-4 p-5 bg-gray-900/30 hover:bg-gray-800/50 border border-blue-500/20 hover:border-blue-500/40 rounded-xl transition-all duration-300 cursor-pointer"
+            >
+              <div className="p-2 bg-gray-800/60 rounded-lg shrink-0 mt-0.5">
+                <IssuerIcon issuer={cert.issuer} />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <p className="text-white font-semibold text-sm leading-snug mb-1 group-hover:text-blue-200 transition-colors duration-300">
+                  {cert.title}
+                </p>
+                <p className="text-gray-400 text-xs mb-2">{cert.issuer}</p>
+                <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                  <span>Issued {cert.issued}</span>
+                  {cert.expires && (
+                    <>
+                      <span className="text-gray-600">·</span>
+                      <span>Expires {cert.expires}</span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {cert.url && (
+                <FaExternalLinkAlt className="w-3 h-3 text-gray-600 group-hover:text-blue-400 shrink-0 mt-1 transition-colors duration-300" />
+              )}
+            </motion.div>
+          )
+
+          return cert.url ? (
+            <a key={index} href={cert.url} target="_blank" rel="noopener noreferrer">
+              {Card}
+            </a>
+          ) : (
+            <div key={index}>{Card}</div>
+          )
+        })}
       </div>
     </div>
   )

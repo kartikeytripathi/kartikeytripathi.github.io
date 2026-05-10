@@ -37,7 +37,7 @@ export function WorkExperience() {
         />
       </motion.div>
 
-      <div className="space-y-12 ">
+      <div className="space-y-12">
         {workExperience.map((job, index) => (
           <motion.div
             key={index}
@@ -45,34 +45,35 @@ export function WorkExperience() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-4"
           >
-            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-2">
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-1">
               <div>
                 <h3 className="text-2xl font-bold text-white">{job.company}</h3>
                 <p className="text-blue-400 font-medium text-lg">{job.position}</p>
+                <p className="text-gray-500 text-sm">{job.location}</p>
               </div>
-              <span className="text-gray-400">{job.period}</span>
+              <span className="text-gray-400 shrink-0">{job.period}</span>
             </div>
 
-            <p className="text-lg text-gray-200 mb-2">{job.shortDesc}</p>
+            <p className="text-lg text-gray-200">{job.shortDesc}</p>
 
-            <ul className="space-y-2 mb-8 pl-3">
-              {job.bulletPoints.map((item, index) => (
+            <ul className="space-y-2 pl-3">
+              {job.bulletPoints.map((item, i) => (
                 <motion.li
-                  key={index}
+                  key={i}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
+                  transition={{ duration: 0.4, delay: i * 0.08, ease: "easeOut" }}
                   viewport={{ once: true }}
                   className="flex items-start gap-3 text-gray-300 text-lg"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 + 0.2, ease: "easeOut" }}
+                    transition={{ duration: 0.3, delay: i * 0.05 + 0.2, ease: "easeOut" }}
                     viewport={{ once: true }}
-                    className="w-2 h-2 bg-cyan-400 rounded-full mt-3 flex-shrink-0"
+                    className="w-2 h-2 bg-cyan-400 rounded-full mt-3 shrink-0"
                   />
                   <span>{item}</span>
                 </motion.li>

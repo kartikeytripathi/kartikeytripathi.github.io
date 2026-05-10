@@ -69,7 +69,7 @@ export function CallToAction() {
             icon: <FiMail className="w-5 h-5 text-blue-400" />
           },
           {
-            href: "https://topmate.io/aditya_domle/1811763",
+            href: "https://topmate.io/kartikey_tripathi14",
             label: "Source code on Topmate",
             icon: (
               <svg
