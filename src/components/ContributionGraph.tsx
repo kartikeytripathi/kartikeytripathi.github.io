@@ -24,7 +24,7 @@ const GitHubCalendar = dynamic(() => import("react-github-calendar"), {
 // Server Actions
 import {
   getLoveCountServerAction,
-  setLoveCountServerAction,
+  addLoveServerAction,
 } from "@/app/api/loveActions";
 import {
   getViewsServerAction,
@@ -170,7 +170,7 @@ export default function ContributionGraph() {
     localStorage.setItem("hasLoved", "true");
 
     try {
-      const res = await setLoveCountServerAction();
+      const res = await addLoveServerAction();
       setLove(res.count);
     } catch (error) {
       console.error("Love count error:", error);
