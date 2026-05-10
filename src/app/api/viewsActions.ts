@@ -2,11 +2,10 @@
 "use server";
 
 export async function getViewsServerAction() {
-  return 0;
+  return { views: 0 };
 }
 
-export async function setViewsServerAction(_count: number) {
-  // MongoDB disabled – do nothing
+export async function setViewsServerAction() {
   return { success: true };
 }
 
