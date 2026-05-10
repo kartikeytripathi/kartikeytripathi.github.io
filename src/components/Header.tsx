@@ -31,8 +31,8 @@ export function Header() {
         <div className="text-white">
           <Link href="/" className="flex gap-2 items-center">
             <Image
-              src="/logo.webp"
-              alt="imabhishek logo"
+              src="https://i.pinimg.com/1200x/fc/5d/7c/fc5d7c4dd0339b2053ddd781e6626d49.jpg"
+              alt="Kartikey Tripathi"
               className="rounded-full h-8 w-8"
               width={50}
               height={50}
