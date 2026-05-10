@@ -107,7 +107,7 @@ export function HeroSection() {
             >
               <a
                 className="flex items-center border border-blue-700/50 text-blue-300 hover:bg-blue-900/30 transition-all duration-300 py-2 px-4 rounded-sm"
-                href="https://topmate.io/kartikey_tripathi14"
+                href="https://topmate.io/kartikeytripathi"
                 target="_blank"
                 rel="noopener noreferrer"
               >
