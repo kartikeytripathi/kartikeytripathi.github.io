@@ -7,6 +7,7 @@ import {
   TechnicalSkills,
   WorkExperience,
   ContributionGraph,
+  BlogSection,
 } from "@/components";
 
 
@@ -35,11 +36,14 @@ export default function Portfolio() {
 </FadeInUp>
 
 <FadeInUp delay={0.55}>
+  <BlogSection />
+</FadeInUp>
+
+<FadeInUp delay={0.6}>
   <ContributionGraph />
 </FadeInUp>
 
-
-<FadeInUp delay={0.6}>
+<FadeInUp delay={0.65}>
   <CallToAction />
 </FadeInUp>
 

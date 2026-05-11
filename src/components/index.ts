@@ -1,4 +1,5 @@
 export * from "./Header";
+export * from "./BlogSection";
 export * from "./BlogPosts";
 export * from "./CallToAction";
 export * from "./Certifications";
