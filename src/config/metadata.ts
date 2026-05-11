@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metaData: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_CURRENT_SITE_URL || "http://localhost:3000"
+    process.env.NEXT_PUBLIC_CURRENT_SITE_URL || "https://www.kartikeytripathi.in"
   ),
 
   title:
@@ -25,14 +25,6 @@ export const metaData: Metadata = {
     description:
       "Explore the portfolio of Kartikey Tripathi, a Cloud and DevOps Engineer specializing in AWS, container technologies, and scalable web solutions. Focused on reliability, automation, and performance-driven architectures.",
 
-    images: [
-      {
-        url: "/image.webp",
-        alt: "Kartikey Tripathi | Cloud & DevOps Engineer",
-        width: 1200,
-        height: 630,
-      },
-    ],
   },
 
   robots:
