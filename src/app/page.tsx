@@ -10,10 +10,70 @@ import {
   BlogSection,
 } from "@/components";
 
-
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://www.kartikeytripathi.in/#person",
+      name: "Kartikey Tripathi",
+      jobTitle: "Cloud & DevOps Engineer",
+      url: "https://www.kartikeytripathi.in",
+      email: "kartikey.tripathi.37@gmail.com",
+      image: "https://www.kartikeytripathi.in/images/about/KT.JPG",
+      sameAs: [
+        "https://github.com/kartikeytripathi",
+        "https://www.linkedin.com/in/kartikeytripathi",
+        "https://www.instagram.com/kar.ti.key",
+      ],
+      worksFor: {
+        "@type": "Organization",
+        name: "Amazon Web Services",
+        url: "https://aws.amazon.com",
+      },
+      knowsAbout: [
+        "AWS",
+        "Kubernetes",
+        "Docker",
+        "DevOps",
+        "Cloud Engineering",
+        "EKS",
+        "ECS",
+        "Terraform",
+        "CI/CD",
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Hyderabad",
+        addressRegion: "Telangana",
+        addressCountry: "IN",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.kartikeytripathi.in/#website",
+      name: "Kartikey Tripathi — Cloud & DevOps Engineer",
+      url: "https://www.kartikeytripathi.in",
+      author: { "@id": "https://www.kartikeytripathi.in/#person" },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://www.kartikeytripathi.in/#profilepage",
+      url: "https://www.kartikeytripathi.in",
+      name: "Kartikey Tripathi Portfolio",
+      about: { "@id": "https://www.kartikeytripathi.in/#person" },
+      mainEntity: { "@id": "https://www.kartikeytripathi.in/#person" },
+    },
+  ],
+};
 
 export default function Portfolio() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <main className="max-w-4xl mx-auto p-6 lg:p-8 bg-background text-foreground">
       <FadeInUp delay={0.1}>
   <HeroSection />
@@ -51,5 +111,6 @@ export default function Portfolio() {
   © 2026 Kartikey Tripathi
 </footer>
     </main>
+    </>
   );
 }
