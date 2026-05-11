@@ -29,7 +29,7 @@ export function Header() {
     >
       <nav className="w-full flex items-center justify-between">
         <div className="text-white">
-          <Link href="/" className="flex gap-2 items-center">
+          <Link href="https://www.kartikeytripathi.in" className="flex gap-2 items-center">
             <Image
               src="https://i.pinimg.com/1200x/fc/5d/7c/fc5d7c4dd0339b2053ddd781e6626d49.jpg"
               alt="Kartikey Tripathi"
