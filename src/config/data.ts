@@ -33,6 +33,12 @@ export const socialLinks = [
     title: "Instagram",
     url: "https://www.instagram.com/kar.ti.key",
   },
+  {
+    id: 9,
+    priority: 5,
+    title: "Diagrams",
+    url: "https://diagrams.kartikeytripathi.in",
+  },
 ];
 
 export const personalInfo = {

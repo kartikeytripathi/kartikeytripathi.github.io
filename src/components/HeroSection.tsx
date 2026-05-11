@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiCalendar, FiMapPin } from "react-icons/fi";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { BsDiagram3 } from "react-icons/bs";
 import { heroSection } from "@/config/data";
 
 function getSocialIcon(title: string) {
@@ -11,13 +12,11 @@ function getSocialIcon(title: string) {
     case "GitHub":
       return <FaGithub className="w-8 h-8 text-gray-200 hover:text-gray-500" />;
     case "Instagram":
-      return (
-        <FaInstagram className="w-8 h-8 text-pink-500 hover:text-pink-700" />
-      );
+      return <FaInstagram className="w-8 h-8 text-pink-500 hover:text-pink-700" />;
+    case "Diagrams":
+      return <BsDiagram3 className="w-8 h-8 text-orange-400 hover:text-orange-300" />;
     default:
-      return (
-        <FaLinkedinIn className="w-8 h-8 text-blue-500 hover:text-blue-700" />
-      );
+      return <FaLinkedinIn className="w-8 h-8 text-blue-500 hover:text-blue-700" />;
   }
 }
 
