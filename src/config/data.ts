@@ -28,12 +28,6 @@ export const socialLinks = [
     url: "https://www.linkedin.com/in/kartikeytripathi",
   },
   {
-    id: 7,
-    priority: 3,
-    title: "Twitter",
-    url: "https://x.com/",
-  },
-  {
     id: 8,
     priority: 4,
     title: "Instagram",

@@ -4,17 +4,12 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiCalendar, FiMapPin } from "react-icons/fi";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import { heroSection } from "@/config/data";
 
 function getSocialIcon(title: string) {
   switch (title) {
     case "GitHub":
       return <FaGithub className="w-8 h-8 text-gray-200 hover:text-gray-500" />;
-    case "Twitter":
-      return (
-        <FaSquareXTwitter className="w-8 h-8 text-gray-200 hover:text-gray-500" />
-      );
     case "Instagram":
       return (
         <FaInstagram className="w-8 h-8 text-pink-500 hover:text-pink-700" />
