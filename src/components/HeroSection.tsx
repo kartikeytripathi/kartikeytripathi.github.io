@@ -67,7 +67,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-            className="flex w-full items-center gap-4 justify-between"
+            className="flex items-center gap-6 justify-center lg:justify-start"
           >
             {heroSection.socialLinks.map(({ title, url }, index) => (
               <motion.a
