@@ -148,7 +148,7 @@ export const projects = [
     description:
       "Hands-on Kubernetes & Amazon EKS learning platform with 38 labs across 4 phases — from core K8s concepts to production EKS deep dives. Every concept ships with a lab and every lab has automated verification, targeting engineers pursuing CKA or moving into DevOps.",
     image: "/images/projects/kubeforge.webp",
-    liveUrl: "https://kubeforge.vercel.app",
+    liveUrl: "https://kubeforge.kartikeytripathi.in",
     githubUrl: "https://github.com/kartikeytripathi/kubeforge",
     techStack: techStack.filter((item) =>
       ["Next.js", "TypeScript", "Tailwind"].includes(item.name)
