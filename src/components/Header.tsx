@@ -102,7 +102,8 @@ export function Header() {
 
         {/* AWS chip */}
         <span className="text-xs font-mono px-2.5 py-1 rounded-sm border border-orange-800/60 text-orange-400 bg-orange-950/30 shrink-0">
-          @ Amazon Web Services
+          <span className="md:hidden">@ AWS</span>
+          <span className="hidden md:inline">@ Amazon Web Services</span>
         </span>
       </nav>
     </motion.header>
