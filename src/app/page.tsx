@@ -79,33 +79,41 @@ export default function Portfolio() {
   <HeroSection />
 </FadeInUp>
 
+<div id="experience">
 <FadeInUp delay={0.2}>
   <WorkExperience />
 </FadeInUp>
+</div>
 
 <FadeInUp delay={0.3}>
   <TechnicalSkills />
 </FadeInUp>
 
+<div id="projects">
 <FadeInUp delay={0.4}>
   <Projects />
 </FadeInUp>
+</div>
 
 <FadeInUp delay={0.5}>
   <Certifications />
 </FadeInUp>
 
+<div id="blog">
 <FadeInUp delay={0.55}>
   <BlogSection />
 </FadeInUp>
+</div>
 
 <FadeInUp delay={0.6}>
   <ContributionGraph />
 </FadeInUp>
 
+<div id="contact">
 <FadeInUp delay={0.65}>
   <CallToAction />
 </FadeInUp>
+</div>
 
 <footer className="mt-12 pb-6 text-center text-sm text-muted-foreground">
   © 2026 Kartikey Tripathi
