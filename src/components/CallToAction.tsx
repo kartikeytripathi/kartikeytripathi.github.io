@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
-import { personalInfo } from "@/config/data";
 
 export function CallToAction() {
   return (
@@ -64,8 +63,8 @@ export function CallToAction() {
 
         {[
           {
-            href: `mailto:${personalInfo.email}`,
-            label: personalInfo.email,
+            href: "mailto:contact@kartikeytripathi.in",
+            label: "contact@kartikeytripathi.in",
             icon: <FiMail className="w-5 h-5 text-blue-400" />
           },
           {
