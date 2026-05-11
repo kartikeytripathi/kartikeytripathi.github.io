@@ -6,6 +6,7 @@ export type BlogPost = {
   tags: string[];
   type: "video" | "article";
   videoId?: string;
+  externalUrl?: string;
   thumbnail: string;
   publishedOn?: string;
 };
@@ -21,6 +22,7 @@ export const blogPosts: BlogPost[] = [
     tags: ["AWS", "RDS", "EC2", "Networking"],
     type: "video",
     videoId: "TRkp54ekyY4",
+    externalUrl: "https://www.youtube.com/watch?v=TRkp54ekyY4",
     thumbnail: "https://i.ytimg.com/vi/TRkp54ekyY4/hqdefault.jpg",
     publishedOn: "Amazon Web Services",
   },

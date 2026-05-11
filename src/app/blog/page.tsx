@@ -26,7 +26,9 @@ export default function BlogPage() {
         {blogPosts.map((post) => (
           <Link
             key={post.slug}
-            href={`/blog/${post.slug}`}
+            href={post.externalUrl ?? `/blog/${post.slug}`}
+            target={post.externalUrl ? "_blank" : undefined}
+            rel={post.externalUrl ? "noopener noreferrer" : undefined}
             className="group block border border-border rounded-sm overflow-hidden hover:border-gray-600 transition-colors duration-200"
           >
             {/* Thumbnail */}
