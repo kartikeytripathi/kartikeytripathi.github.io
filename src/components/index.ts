@@ -1,4 +1,7 @@
 export * from "./Header";
+export * from "./CursorSpotlight";
+export * from "./ScrollProgress";
+export * from "./BackToTop";
 export * from "./BlogSection";
 export * from "./BlogPosts";
 export * from "./CallToAction";
