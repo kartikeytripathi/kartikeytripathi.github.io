@@ -1,7 +1,7 @@
 import "./globals.css";
 import { inter, jetbrainsMono } from "@/config/fonts";
 import { metaData } from "@/config/metadata";
-import { Header } from "@/components";
+import { Header, CursorSpotlight, ScrollProgress, BackToTop } from "@/components";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -21,11 +21,11 @@ export default function RootLayout({
       className={`dark ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased bg-black text-white">
-        {/* 🔝 Site Header */}
+        <ScrollProgress />
+        <CursorSpotlight />
         <Header />
-
-        {/* 🔥 Page Content */}
         {children}
+        <BackToTop />
 
         {/* 📊 Analytics */}
         {gaId && <GoogleAnalytics gaId={gaId} />} {/* Google Analytics */}

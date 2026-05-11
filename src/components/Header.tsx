@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,36 @@ const navLinks = [
 ];
 
 export function Header() {
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const [activeSection, setActiveSection] = useState<string>("");
+
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.slice(1));
+
+    const observers = ids.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(id);
+        },
+        { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      return obs;
+    });
+
+    return () => {
+      observers.forEach((obs, i) => {
+        const el = document.getElementById(ids[i]);
+        if (obs && el) obs.unobserve(el);
+      });
+    };
+  }, []);
+
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     if (!href.startsWith("#")) return;
     e.preventDefault();
     const el = document.querySelector(href);
@@ -28,7 +58,10 @@ export function Header() {
     >
       <nav className="w-full flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link href="https://www.kartikeytripathi.in" className="flex gap-2 items-center shrink-0">
+        <Link
+          href="https://www.kartikeytripathi.in"
+          className="flex gap-2 items-center shrink-0"
+        >
           <Image
             src="https://i.pinimg.com/1200x/fc/5d/7c/fc5d7c4dd0339b2053ddd781e6626d49.jpg"
             alt="Kartikey Tripathi"
@@ -41,16 +74,30 @@ export function Header() {
 
         {/* Nav links — hidden on mobile */}
         <div className="hidden md:flex items-center gap-5">
-          {navLinks.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              onClick={(e) => handleScroll(e, href)}
-              className="text-sm text-gray-500 hover:text-gray-200 transition-colors duration-200"
-            >
-              {label}
-            </a>
-          ))}
+          {navLinks.map(({ label, href }) => {
+            const id = href.slice(1);
+            const isActive = activeSection === id;
+            return (
+              <a
+                key={label}
+                href={href}
+                onClick={(e) => handleScroll(e, href)}
+                className={`relative text-sm transition-colors duration-200 ${
+                  isActive
+                    ? "text-white"
+                    : "text-gray-500 hover:text-gray-200"
+                }`}
+              >
+                {label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute -bottom-0.5 left-0 right-0 h-px bg-indigo-400"
+                  />
+                )}
+              </a>
+            );
+          })}
         </div>
 
         {/* AWS chip */}
