@@ -40,7 +40,25 @@ export function Header() {
             <span className="text-lg">kartikeytripathi</span>
           </Link>
         </div>
-        <div className=" text-gray-400">{time}</div>
+        <div className="flex items-center gap-4">
+          <Link
+            href="https://kubeforge.kartikeytripathi.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+          >
+            KubeForge
+          </Link>
+          <Link
+            href="https://diagrams.kartikeytripathi.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-gray-500 hover:text-gray-300 transition-colors"
+          >
+            Diagrams
+          </Link>
+          <span className="text-gray-400">{time}</span>
+        </div>
       </nav>
     </motion.header>
   );
