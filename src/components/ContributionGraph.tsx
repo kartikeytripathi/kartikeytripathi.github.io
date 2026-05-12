@@ -246,10 +246,21 @@ export default function ContributionGraph() {
             viewport={{ once: true }}
             whileHover={{ scale: 1.05 }}
             onClick={item.isLove ? handleLoveClick : undefined}
-            className={`bg-gray-900/30 border border-blue-500/30 hover:bg-gray-800/50 
-              transition-all duration-300 flex flex-col items-center justify-center 
+            {...(item.isLove && {
+              role: "button",
+              tabIndex: 0,
+              "aria-label": hasLoved
+                ? `You already loved this — ${love} loves`
+                : `Give love — ${love} loves so far`,
+              "aria-pressed": hasLoved,
+              onKeyDown: (e: React.KeyboardEvent) => {
+                if (e.key === "Enter" || e.key === " ") handleLoveClick();
+              },
+            })}
+            className={`bg-gray-900/30 border border-blue-500/30 hover:bg-gray-800/50
+              transition-all duration-300 flex flex-col items-center justify-center
               p-3 rounded-lg text-center h-[70px] md:h-[80px] lg:h-[85px]
-              w-[90%] md:w-[85%] lg:w-[80%] mx-auto 
+              w-[90%] md:w-[85%] lg:w-[80%] mx-auto
               ${item.isLove ? "cursor-pointer hover:border-pink-400/60" : ""}`}
           >
             <div
