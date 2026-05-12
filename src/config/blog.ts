@@ -13,6 +13,16 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "what-happens-when-you-run-kubectl-apply",
+    title: "What Actually Happens When You Run kubectl apply",
+    description:
+      "A walkthrough of every component your YAML touches — from your terminal to the running container. AuthN, admission, etcd, controllers, scheduler, kubelet, CNI, and beyond.",
+    date: "May 2026",
+    tags: ["Kubernetes", "EKS", "kubectl", "Internals", "DevOps"],
+    type: "article",
+    thumbnail: "",
+  },
+  {
     slug: "connect-rds-private-ec2-instance-connect-endpoint",
     title:
       "How do I use an EC2 instance to connect to a private RDS DB instance from a local machine?",

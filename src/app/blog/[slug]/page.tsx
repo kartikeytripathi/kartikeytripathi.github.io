@@ -2,6 +2,9 @@ import Link from "next/link";
 import { blogPosts } from "@/config/blog";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { readFile } from "fs/promises";
+import path from "path";
+import ArticleBody from "./ArticleBody";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,6 +26,20 @@ export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) notFound();
+
+  let markdown: string | null = null;
+  if (post.type === "article") {
+    try {
+      const filePath = path.join(
+        process.cwd(),
+        "src/content/blog",
+        `${slug}.md`
+      );
+      markdown = await readFile(filePath, "utf-8");
+    } catch {
+      markdown = null;
+    }
+  }
 
   return (
     <main className="max-w-4xl mx-auto p-6 lg:p-8">
@@ -78,6 +95,11 @@ export default async function BlogPostPage({ params }: Props) {
             className="absolute inset-0 w-full h-full"
           />
         </div>
+      )}
+
+      {/* Article body */}
+      {post.type === "article" && markdown && (
+        <ArticleBody content={markdown} />
       )}
     </main>
   );
