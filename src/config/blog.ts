@@ -13,6 +13,16 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "the-manifest-list-trap-ecr-lifecycle",
+    title: "The Manifest List Trap: Why Your ECR Lifecycle Policy Keeps Failing",
+    description:
+      "One multi-arch push creates three objects in ECR. Your untagged cleanup rule sees only two of them — and that's where the ImageReferencedByManifestList failures start.",
+    date: "May 2026",
+    tags: ["AWS", "ECR", "Docker", "Containers", "DevOps"],
+    type: "article",
+    thumbnail: "",
+  },
+  {
     slug: "what-happens-when-you-run-kubectl-apply",
     title: "What Actually Happens When You Run kubectl apply",
     description:
