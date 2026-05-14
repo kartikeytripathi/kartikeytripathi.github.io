@@ -35,10 +35,14 @@ export const metaData: Metadata = {
     apple: "/apple-touch-icon.png",
   },
 
+  alternates: {
+    canonical: "https://www.kartikeytripathi.in",
+  },
+
   authors: [
     {
       name: "Kartikey Tripathi",
-      url: "https://kartikeytripathi.in",
+      url: "https://www.kartikeytripathi.in",
     },
   ],
 };

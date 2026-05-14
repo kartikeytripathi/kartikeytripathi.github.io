@@ -16,6 +16,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${post.title} — Kartikey Tripathi`,
     description: post.description,
+    alternates: {
+      canonical: `https://www.kartikeytripathi.in/blog/${slug}`,
+    },
   };
 }
 

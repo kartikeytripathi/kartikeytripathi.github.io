@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Blog — Kartikey Tripathi",
   description:
     "Articles and videos by Kartikey Tripathi on AWS, Cloud, DevOps, and Kubernetes.",
+  alternates: {
+    canonical: "https://www.kartikeytripathi.in/blog",
+  },
 };
 
 export default function BlogPage() {
