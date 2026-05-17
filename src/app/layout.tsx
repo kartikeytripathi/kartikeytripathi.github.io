@@ -3,7 +3,7 @@ import { inter, jetbrainsMono } from "@/config/fonts";
 import { metaData } from "@/config/metadata";
 import { Header, CursorSpotlight, ScrollProgress, BackToTop } from "@/components";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = metaData;

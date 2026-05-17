@@ -8,6 +8,7 @@ import {
   WorkExperience,
   ContributionGraph,
   BlogSection,
+  ErrorBoundary,
 } from "@/components";
 
 const jsonLd = {
@@ -20,7 +21,7 @@ const jsonLd = {
       jobTitle: "Cloud & DevOps Engineer",
       url: "https://www.kartikeytripathi.in",
       email: "kartikey.tripathi.37@gmail.com",
-      image: "https://www.kartikeytripathi.in/images/about/KT.JPG",
+      image: "https://www.kartikeytripathi.in/images/about/KT.webp",
       sameAs: [
         "https://github.com/kartikeytripathi",
         "https://www.linkedin.com/in/kartikeytripathi",
@@ -106,7 +107,9 @@ export default function Portfolio() {
 </div>
 
 <FadeInUp delay={0.6}>
-  <ContributionGraph />
+  <ErrorBoundary>
+    <ContributionGraph />
+  </ErrorBoundary>
 </FadeInUp>
 
 <div id="contact">

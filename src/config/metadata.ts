@@ -25,6 +25,23 @@ export const metaData: Metadata = {
     description:
       "Explore the portfolio of Kartikey Tripathi, a Cloud and DevOps Engineer specializing in AWS, container technologies, and scalable web solutions. Focused on reliability, automation, and performance-driven architectures.",
 
+    images: [
+      {
+        url: "/images/about/KT.webp",
+        width: 800,
+        height: 1067,
+        alt: "Kartikey Tripathi",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title:
+      "Kartikey Tripathi | Cloud & DevOps Engineer | AWS, Containers, Web Development",
+    description:
+      "Explore the portfolio of Kartikey Tripathi, a Cloud and DevOps Engineer specializing in AWS, container technologies, and scalable web solutions.",
+    images: ["/images/about/KT.webp"],
   },
 
   robots:

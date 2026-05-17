@@ -44,7 +44,7 @@ export const socialLinks = [
 export const personalInfo = {
   name: "Kartikey Tripathi",
   title: "Cloud & DevOps Engineer",
-  avatar: "/images/about/KT.JPG",
+  avatar: "/images/about/KT.webp",
   email: "kartikey.tripathi.37@gmail.com",
   location: "Hyderabad, Telangana, India",
   description:

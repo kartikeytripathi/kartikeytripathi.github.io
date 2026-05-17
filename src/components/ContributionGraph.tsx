@@ -93,8 +93,8 @@ export default function ContributionGraph() {
         });
         const data = await res.json();
         setStats({ followers: data.followers, following: data.following });
-      } catch (err) {
-        console.error("GitHub API error:", err);
+      } catch {
+        // stats stay at 0 on failure
       }
     }
     fetchGitHubData();
@@ -116,8 +116,8 @@ export default function ContributionGraph() {
           await setViewsServerAction();
           localStorage.setItem("uniqueUserViewed", "true");
         }
-      } catch (err) {
-        console.error("Error fetching counts:", err);
+      } catch {
+        // counts stay at 0 on failure
       }
     }
     fetchCounts();
@@ -155,8 +155,8 @@ export default function ContributionGraph() {
 
       shoot();
       [200, 400, 600, 800].forEach((t) => setTimeout(shoot, t));
-    } catch (e) {
-      console.error("Confetti error:", e);
+    } catch {
+      // confetti is non-critical
     }
   };
 
@@ -172,8 +172,8 @@ export default function ContributionGraph() {
     try {
       const res = await addLoveServerAction();
       setLove(res.count);
-    } catch (error) {
-      console.error("Love count error:", error);
+    } catch {
+      // love count stays optimistically incremented
     }
   };
 
