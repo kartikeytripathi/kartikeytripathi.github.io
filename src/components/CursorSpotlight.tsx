@@ -14,8 +14,14 @@ export function CursorSpotlight() {
       el.style.top = `${e.clientY}px`;
     };
 
+    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
+
     window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
+    window.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
   }, []);
 
   return (
