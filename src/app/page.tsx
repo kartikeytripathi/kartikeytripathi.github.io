@@ -9,6 +9,7 @@ import {
   ContributionGraph,
   BlogSection,
   ErrorBoundary,
+  TerminalWidget,
 } from "@/components";
 
 const jsonLd = {
@@ -78,6 +79,10 @@ export default function Portfolio() {
     <main className="max-w-4xl mx-auto p-6 lg:p-8 bg-background text-foreground">
       <FadeInUp delay={0.1}>
   <HeroSection />
+</FadeInUp>
+
+<FadeInUp delay={0.15}>
+  <TerminalWidget />
 </FadeInUp>
 
 <div id="experience">
