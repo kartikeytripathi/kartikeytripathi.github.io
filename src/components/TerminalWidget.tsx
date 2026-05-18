@@ -69,11 +69,12 @@ export function TerminalWidget() {
   const [visibleOutputLines, setVisibleOutputLines] = useState(0);
   const [phase, setPhase] = useState<"typing" | "output" | "pause">("typing");
   const [cmdIndex, setCmdIndex] = useState(0);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom whenever content changes
+  // Scroll terminal body (not the page) to bottom as new lines appear
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const el = bodyRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [history, typedCmd, visibleOutputLines]);
 
   useEffect(() => {
@@ -149,7 +150,7 @@ export function TerminalWidget() {
       </div>
 
       {/* Terminal body */}
-      <div className="bg-gray-950/90 border border-blue-500/30 border-t-0 rounded-b-xl p-4 font-mono text-sm leading-relaxed min-h-[220px] max-h-[320px] overflow-y-auto scrollbar-none">
+      <div ref={bodyRef} className="bg-gray-950/90 border border-blue-500/30 border-t-0 rounded-b-xl p-4 font-mono text-sm leading-relaxed min-h-[220px] max-h-[320px] overflow-y-auto scrollbar-none">
         {/* Completed history */}
         {history.map((entry, i) => (
           <div key={i} className="mb-3">
@@ -190,7 +191,6 @@ export function TerminalWidget() {
           </div>
         )}
 
-        <div ref={bottomRef} />
       </div>
     </motion.div>
   );
