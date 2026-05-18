@@ -33,7 +33,7 @@ export function CallToAction() {
           </motion.div>
 
           <h2 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-cyan-300 bg-clip-text text-transparent">
-            Let's Build Something Amazing
+            Let&apos;s Build Something Amazing
           </h2>
         </div>
 
@@ -54,7 +54,7 @@ export function CallToAction() {
         viewport={{ once: true }}
         className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
       >
-        Ready to bring your ideas to life? I'm always excited to collaborate on
+        Ready to bring your ideas to life? I&apos;m always excited to collaborate on
         innovative projects and help transform your vision into reality.
       </motion.p>
 

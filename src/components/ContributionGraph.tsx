@@ -50,7 +50,7 @@ export default function ContributionGraph() {
   const username = githubSection.username;
   const { title } = githubSection;
 
-  const [serverTheme, setServerTheme] = useState<"light" | "dark" | undefined>();
+  const [mounted, setMounted] = useState(false);
   const [stats, setStats] = useState({ followers: 0, following: 0 });
   const [views, setViews] = useState(0);
   const [love, setLove] = useState(0);
@@ -79,10 +79,11 @@ export default function ContributionGraph() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Theme
+  // Delay theme until client is mounted to avoid hydration mismatch
   useEffect(() => {
-    setServerTheme(scheme);
-  }, [scheme]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   // Fetch profile stats
   useEffect(() => {
@@ -221,7 +222,7 @@ export default function ContributionGraph() {
       >
         <GitHubCalendar
           username={username}
-          colorScheme={serverTheme}
+          colorScheme={mounted ? scheme : undefined}
           theme={{ light: githubTheme.light, dark: githubTheme.dark }}
           blockSize={11}
           blockMargin={3}

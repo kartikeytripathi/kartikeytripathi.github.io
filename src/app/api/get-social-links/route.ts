@@ -7,7 +7,7 @@ export async function GET() {
         if (!socialLinks || !socialLinks?.length)
             return Response.json({ error: "No social links found!" });
         return Response.json(socialLinks);
-    } catch (error) {
+    } catch {
         return Response.json({ error: "Something went wrong!" });
     }
 }

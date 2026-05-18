@@ -21,7 +21,7 @@ function getSocialIcon(title: string) {
 }
 
 export function HeroSection() {
-  const { avatar, name, title, description, location, email } =
+  const { avatar, name, title, description, location } =
     heroSection.personalInfo;
 
   return (
