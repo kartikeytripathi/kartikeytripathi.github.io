@@ -36,12 +36,20 @@ export default function BlogPage() {
           >
             {/* Thumbnail */}
             <div className="relative aspect-video bg-gray-900 overflow-hidden">
-              <Image
-                src={post.thumbnail}
-                alt={post.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
-              />
+              {post.thumbnail ? (
+                <Image
+                  src={post.thumbnail}
+                  alt={post.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-950/60 to-purple-950/60 p-6">
+                  <p className="text-sm font-mono text-gray-300 text-center line-clamp-3 leading-relaxed">
+                    {post.title}
+                  </p>
+                </div>
+              )}
               <span className="absolute top-2 left-2 text-xs font-mono px-2 py-0.5 rounded-sm bg-black/70 text-gray-300 border border-gray-700">
                 {post.type === "video" ? "▶ VIDEO" : "✦ ARTICLE"}
               </span>

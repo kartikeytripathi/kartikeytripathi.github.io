@@ -44,7 +44,7 @@ export function BlogSection() {
         {blogPosts.map((post, index) => (
           <motion.a
             key={post.slug}
-            href={post.externalUrl ?? `https://blogs.kartikeytripathi.in/blog/${post.slug}`}
+            href={post.externalUrl ?? `https://blogs.kartikeytripathi.in/${post.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20 }}
@@ -55,13 +55,21 @@ export function BlogSection() {
             className="rounded-xl overflow-hidden transition-all duration-500 ease-out border border-purple-500/30 block"
           >
             {/* Thumbnail */}
-            <div className="relative aspect-video bg-gray-800 overflow-hidden">
-              <Image
-                src={post.thumbnail}
-                alt={post.title}
-                fill
-                className="object-cover"
-              />
+            <div className="relative aspect-video bg-gray-900 overflow-hidden">
+              {post.thumbnail ? (
+                <Image
+                  src={post.thumbnail}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-950/60 to-purple-950/60 p-6">
+                  <p className="text-sm font-mono text-gray-300 text-center line-clamp-3 leading-relaxed">
+                    {post.title}
+                  </p>
+                </div>
+              )}
               <span className="absolute top-2 left-2 text-xs font-mono px-2 py-0.5 rounded-sm bg-black/70 text-gray-300 border border-gray-700">
                 {post.type === "video" ? "▶ VIDEO" : "✦ ARTICLE"}
               </span>
