@@ -9,6 +9,7 @@ import {
   ContributionGraph,
   BlogSection,
   ErrorBoundary,
+  StarBackground,
 } from "@/components";
 
 const jsonLd = {
@@ -71,6 +72,7 @@ const jsonLd = {
 export default function Portfolio() {
   return (
     <>
+      <StarBackground />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
