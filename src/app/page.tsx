@@ -86,9 +86,11 @@ export default function Portfolio() {
 </FadeInUp>
 </div>
 
+<div id="skills">
 <FadeInUp delay={0.3}>
   <TechnicalSkills />
 </FadeInUp>
+</div>
 
 <div id="projects">
 <FadeInUp delay={0.4}>
@@ -96,9 +98,11 @@ export default function Portfolio() {
 </FadeInUp>
 </div>
 
+<div id="certifications">
 <FadeInUp delay={0.5}>
   <Certifications />
 </FadeInUp>
+</div>
 
 <div id="blog">
 <FadeInUp delay={0.55}>

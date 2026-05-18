@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { CommandPalette } from "./CommandPalette";
 
 const navLinks = [
   { label: "Experience", href: "#experience" },
@@ -99,6 +100,9 @@ export function Header() {
             );
           })}
         </div>
+
+        {/* Command palette trigger */}
+        <CommandPalette />
 
         {/* AWS chip */}
         <span className="text-xs font-mono px-2.5 py-1 rounded-sm border border-orange-800/60 text-orange-400 bg-orange-950/30 shrink-0">
