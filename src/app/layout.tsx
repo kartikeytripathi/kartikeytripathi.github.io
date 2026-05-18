@@ -20,7 +20,7 @@ export default function RootLayout({
       lang="en"
       className={`dark ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="font-sans antialiased bg-black text-white">
+      <body className="font-sans antialiased bg-black text-white select-none">
         <ScrollProgress />
         <CursorSpotlight />
         <Header />
