@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { FiCalendar, FiMapPin } from "react-icons/fi";
+import { FiCalendar, FiMapPin, FiDownload } from "react-icons/fi";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { BsDiagram3 } from "react-icons/bs";
 import { heroSection } from "@/config/data";
@@ -99,7 +99,7 @@ export function HeroSection() {
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <a
+              {/* <a
                 className="flex items-center border border-blue-700/50 text-blue-300 hover:bg-blue-900/30 transition-all duration-300 py-2 px-4 rounded-sm"
                 href="https://topmate.io/kartikeytripathi"
                 target="_blank"
@@ -107,6 +107,14 @@ export function HeroSection() {
               >
                 <FiCalendar className="w-4 h-4 mr-2" />
                 <span>Schedule a call</span>
+              </a> */}
+              <a
+                className="flex items-center border border-blue-700/50 text-blue-300 hover:bg-blue-900/30 transition-all duration-300 py-2 px-4 rounded-sm"
+                href="/resume.pdf"
+                download
+              >
+                <FiDownload className="w-4 h-4 mr-2" />
+                <span>Download Resume</span>
               </a>
             </motion.div>
           </div>
