@@ -20,7 +20,7 @@ export const blogPosts: BlogPost[] = [
     date: "May 2026",
     tags: ["Networking", "DevOps", "Cloud", "Reference"],
     type: "resource",
-    externalUrl: "/resources/networking-handbook",
+    externalUrl: "https://kartikeytripathi.in/resources/networking-handbook",
     thumbnail: "",
   },
   {
