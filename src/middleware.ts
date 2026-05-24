@@ -5,6 +5,9 @@ export function middleware(request: NextRequest) {
 
   if (host === "blogs.kartikeytripathi.in") {
     const url = request.nextUrl.clone();
+    if (url.pathname.startsWith("/resources/")) {
+      return NextResponse.next();
+    }
     const path = url.pathname === "/" ? "" : url.pathname;
     url.pathname = `/blog${path}`;
     return NextResponse.rewrite(url);
