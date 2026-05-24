@@ -4,7 +4,7 @@ export type BlogPost = {
   description: string;
   date: string;
   tags: string[];
-  type: "video" | "article";
+  type: "video" | "article" | "resource";
   videoId?: string;
   externalUrl?: string;
   thumbnail: string;
@@ -12,6 +12,17 @@ export type BlogPost = {
 };
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "networking-handbook",
+    title: "Networking // Field Manual",
+    description:
+      "Five modules, one mantra. Move from packets on a wire to VPCs in the cloud, with a debugging arsenal in between. An interactive, offline-ready reference built for DevOps and cloud engineers.",
+    date: "May 2026",
+    tags: ["Networking", "DevOps", "Cloud", "Reference"],
+    type: "resource",
+    externalUrl: "/resources/networking-handbook",
+    thumbnail: "",
+  },
   {
     slug: "what-happens-when-you-run-kubectl-apply",
     title: "What Actually Happens When You Run kubectl apply",

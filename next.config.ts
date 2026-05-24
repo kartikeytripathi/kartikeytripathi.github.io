@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/resources/networking-handbook",
+        destination: "/resources/networking-handbook/index.html",
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

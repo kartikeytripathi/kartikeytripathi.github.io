@@ -45,7 +45,7 @@ export function BlogSection() {
           <motion.a
             key={post.slug}
             href={post.externalUrl ?? `https://blogs.kartikeytripathi.in/${post.slug}`}
-            target="_blank"
+            target={post.type === "resource" ? "_self" : "_blank"}
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ export function BlogSection() {
                 </div>
               )}
               <span className="absolute top-2 left-2 text-xs font-mono px-2 py-0.5 rounded-sm bg-black/70 text-gray-300 border border-gray-700">
-                {post.type === "video" ? "▶ VIDEO" : "✦ ARTICLE"}
+                {post.type === "video" ? "▶ VIDEO" : post.type === "resource" ? "⬇ RESOURCE" : "✦ ARTICLE"}
               </span>
             </div>
 

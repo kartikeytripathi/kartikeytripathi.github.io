@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Kartikey Tripathi" />
+<meta name="description" content="A networking field manual covering fundamentals, core concepts, DevOps networking, debugging tools, and cloud networking. Built by Kartikey Tripathi." />
+<title>NETWORKING // FIELD MANUAL — kartikeytripathi.in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,200;0,400;0,500;0,700;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #0a0d14;
+    --bg-2:         #0f131c;
+    --bg-3:         #161b27;
+    --line:         #232a3a;
+    --line-bright:  #3b4660;
+    --ink:          #e9ecf3;
+    --ink-2:        #aab3c5;
+    --ink-3:        #6b7488;
+    --amber:        #ffb547;
+    --amber-2:      #ffc879;
+    --cyan:         #5ee3ff;
+    --lime:         #b3ff66;
+    --magenta:      #ff6ec7;
+    --red:          #ff5d6c;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --display: 'Space Mono', 'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(900px 600px at 80% -10%, rgba(255, 181, 71, 0.07), transparent 60%),
+      radial-gradient(800px 500px at -10% 30%, rgba(94, 227, 255, 0.05), transparent 60%),
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: auto, auto, 48px 48px, 48px 48px;
+    background-position: 0 0, 0 0, -1px -1px, -1px -1px;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.012) 0,
+      rgba(255,255,255,0.012) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
+    z-index: 2;
+  }
+
+  /* ============= TOP BAR ============= */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--amber);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    white-space: nowrap;
+  }
+  .brand-dot {
+    width: 9px; height: 9px;
+    background: var(--amber);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(255, 181, 71, 0.18), 0 0 14px rgba(255, 181, 71, 0.55);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .progress-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink-3);
+  }
+  .progress-rail {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    position: absolute;
+    inset: 0 100% 0 0;
+    background: linear-gradient(90deg, var(--amber), var(--amber-2));
+    transition: right 0.4s cubic-bezier(.2,.7,.2,1);
+    box-shadow: 0 0 16px rgba(255,181,71,0.5);
+  }
+  .progress-count {
+    color: var(--amber);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .nav-links { display: flex; gap: 18px; }
+  .nav-links a {
+    color: var(--ink-3);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ============= LAYOUT ============= */
+  main {
+    position: relative;
+    z-index: 5;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ============= HERO ============= */
+  .hero {
+    padding: 80px 0 60px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 32px;
+    color: var(--ink-3);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin-bottom: 36px;
+  }
+  .hero-meta strong { color: var(--amber); font-weight: 500; }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(40px, 7vw, 92px);
+    line-height: 0.95;
+    margin: 0 0 24px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .slash { color: var(--amber); }
+  .hero h1 .dim { color: var(--ink-3); font-weight: 400; }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--ink-2);
+    max-width: 720px;
+    line-height: 1.65;
+    margin-bottom: 48px;
+  }
+  .hero-sub em {
+    color: var(--cyan);
+    font-style: normal;
+  }
+  .toc {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    border: 1px solid var(--line);
+  }
+  .toc-item {
+    padding: 20px 22px;
+    border-right: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .toc-item:last-child { border-right: none; }
+  .toc-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--bg-3);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(.2,.7,.2,1);
+    z-index: -1;
+  }
+  .toc-item:hover::before { transform: translateY(0); }
+  .toc-item:hover { color: var(--amber); }
+  .toc-num {
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.16em;
+    margin-bottom: 8px;
+  }
+  .toc-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 720px) {
+    .toc { grid-template-columns: 1fr 1fr; }
+    .toc-item { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .toc-item:nth-child(2n) { border-right: none; }
+  }
+
+  /* ============= SECTIONS ============= */
+  section.module {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .module-head {
+    display: grid;
+    grid-template-columns: 110px 1fr auto;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 48px;
+  }
+  .module-num {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 56px;
+    color: var(--amber);
+    line-height: 1;
+    border-top: 3px solid var(--amber);
+    padding-top: 14px;
+  }
+  .module-title-wrap h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.05;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  .module-tag {
+    display: inline-block;
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .module-desc {
+    color: var(--ink-2);
+    font-size: 15px;
+    max-width: 640px;
+    line-height: 1.7;
+  }
+  .complete-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid var(--line-bright);
+    color: var(--ink-2);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+  }
+  .complete-toggle:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+  .complete-toggle .box {
+    width: 14px; height: 14px;
+    border: 1.5px solid currentColor;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .complete-toggle.done {
+    border-color: var(--lime);
+    color: var(--lime);
+    background: rgba(179, 255, 102, 0.04);
+  }
+  .complete-toggle.done .box::after {
+    content: "✓";
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  @media (max-width: 760px) {
+    .module-head { grid-template-columns: 1fr; gap: 16px; }
+    .module-num { font-size: 40px; }
+  }
+
+  /* ============= TOPIC CHIPS ============= */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 36px;
+  }
+  .chip {
+    border: 1px solid var(--line-bright);
+    color: var(--ink-2);
+    padding: 7px 12px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--bg-2);
+  }
+  .chip.hot { color: var(--amber); border-color: rgba(255, 181, 71, 0.4); }
+  .chip.cool { color: var(--cyan); border-color: rgba(94, 227, 255, 0.4); }
+
+  /* ============= RESOURCE CARDS ============= */
+  .resources {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    border: 1px solid var(--line);
+    margin-bottom: 36px;
+  }
+  .resource {
+    padding: 22px 24px;
+    border-right: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.25s;
+    position: relative;
+  }
+  .resource:last-child { border-right: none; }
+  .resource:hover { background: var(--bg-2); }
+  .resource:hover .resource-arrow { transform: translate(3px, -3px); color: var(--amber); }
+  .resource-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--ink-3);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .resource-arrow {
+    color: var(--ink-3);
+    transition: all 0.25s;
+    font-size: 14px;
+  }
+  .resource-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+  .resource-url {
+    font-size: 11px;
+    color: var(--ink-3);
+    word-break: break-all;
+    margin-top: 4px;
+  }
+  @media (max-width: 600px) {
+    .resources { grid-template-columns: 1fr; }
+    .resource { border-right: none; border-bottom: 1px solid var(--line); }
+    .resource:last-child { border-bottom: none; }
+  }
+
+  /* ============= TABULAR — Kartikey loves these ============= */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 36px;
+    font-size: 13px;
+  }
+  .data-table th, .data-table td {
+    text-align: left;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .data-table thead th {
+    background: var(--bg-2);
+    color: var(--amber);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .data-table tbody tr:hover { background: var(--bg-2); }
+  .data-table code {
+    color: var(--cyan);
+    font-size: 12px;
+  }
+  .data-table .col-key { color: var(--amber); font-weight: 700; white-space: nowrap; }
+
+  /* ============= REQUEST FLOW VISUAL ============= */
+  .flow {
+    margin-bottom: 36px;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 28px 24px;
+  }
+  .flow-title {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .flow-strip {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .flow-step {
+    border: 1px solid var(--line-bright);
+    border-right: none;
+    padding: 16px 14px;
+    background: var(--bg);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+    font-family: var(--mono);
+    color: var(--ink-2);
+    font-size: 12px;
+    position: relative;
+  }
+  .flow-step:last-child { border-right: 1px solid var(--line-bright); }
+  .flow-step:hover, .flow-step.active {
+    background: var(--bg-3);
+    color: var(--amber);
+    border-color: var(--amber);
+    z-index: 2;
+  }
+  .flow-step .step-num {
+    display: block;
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+    letter-spacing: 0.12em;
+  }
+  .flow-step.active .step-num { color: var(--amber-2); }
+  .flow-step .step-name {
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .flow-detail {
+    margin-top: 18px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 80px;
+  }
+  .flow-detail .key { color: var(--amber); font-weight: 700; }
+  .flow-detail code {
+    background: var(--bg-3);
+    color: var(--cyan);
+    padding: 1px 6px;
+  }
+  @media (max-width: 720px) {
+    .flow-strip { grid-template-columns: 1fr 1fr 1fr; }
+    .flow-step:nth-child(3) { border-right: 1px solid var(--line-bright); }
+    .flow-step:nth-child(4), .flow-step:nth-child(5), .flow-step:nth-child(6) {
+      border-top: none;
+    }
+  }
+
+  /* ============= COMMAND CARDS ============= */
+  .cmd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .cmd-card {
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    overflow: hidden;
+  }
+  .cmd-head {
+    padding: 14px 16px;
+    background: var(--bg-3);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .cmd-name {
+    font-weight: 700;
+    color: var(--lime);
+    font-size: 15px;
+  }
+  .cmd-name::before {
+    content: "$ ";
+    color: var(--ink-3);
+  }
+  .cmd-toggle-icon {
+    color: var(--ink-3);
+    font-size: 14px;
+    transition: transform 0.25s;
+  }
+  .cmd-card.open .cmd-toggle-icon { transform: rotate(45deg); color: var(--amber); }
+  .cmd-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .cmd-card.open .cmd-body { max-height: 600px; }
+  .cmd-body-inner { padding: 16px; }
+  .cmd-purpose {
+    color: var(--ink-2);
+    font-size: 13px;
+    margin-bottom: 14px;
+    line-height: 1.65;
+  }
+  .cmd-purpose strong { color: var(--ink); }
+  .cmd-example {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--cyan);
+    margin-bottom: 10px;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .cmd-example::before {
+    content: "$ ";
+    color: var(--ink-3);
+  }
+  .cmd-note {
+    color: var(--ink-3);
+    font-size: 12px;
+    font-style: italic;
+    border-left: 2px solid var(--amber);
+    padding-left: 10px;
+  }
+
+  /* ============= VPC DIAGRAM ============= */
+  .vpc-wrap {
+    margin-bottom: 36px;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 28px;
+    overflow-x: auto;
+  }
+  .vpc-svg-wrap { display: flex; justify-content: center; }
+  .vpc-svg { width: 100%; max-width: 760px; height: auto; }
+  .vpc-caption {
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: 20px;
+  }
+
+  /* ============= CALLOUT ============= */
+  .callout {
+    border: 1px solid var(--amber);
+    background: linear-gradient(180deg, rgba(255,181,71,0.05), rgba(255,181,71,0.01));
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .callout-marker {
+    color: var(--amber);
+    font-weight: 700;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    padding-top: 2px;
+  }
+
+  /* ============= FINAL RULE / CLOSER ============= */
+  .closer {
+    padding: 100px 0 80px;
+    text-align: center;
+    position: relative;
+  }
+  .closer-tag {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .closer-quote {
+    font-family: var(--display);
+    font-size: clamp(28px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    max-width: 900px;
+    margin: 0 auto 40px;
+  }
+  .closer-quote .line { display: block; }
+  .closer-quote .neg { color: var(--ink-3); text-decoration: line-through; text-decoration-color: var(--red); }
+  .closer-quote .pos { color: var(--amber); }
+  .closer-rule {
+    display: inline-block;
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    padding: 14px 22px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ============= FOOTER ============= */
+  footer.bottom {
+    border-top: 1px solid var(--line);
+    padding: 32px 28px;
+    color: var(--ink-3);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  footer.bottom .reset {
+    background: transparent;
+    border: 1px solid var(--line-bright);
+    color: var(--ink-3);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: all 0.2s;
+  }
+  footer.bottom .reset:hover { color: var(--red); border-color: var(--red); }
+
+  /* Small scroll fade-in */
+  .fadein { opacity: 0; transform: translateY(12px); transition: all 0.7s ease; }
+  .fadein.in { opacity: 1; transform: none; }
+
+  /* ASCII flair */
+  .ascii-divider {
+    color: var(--line-bright);
+    font-size: 10px;
+    line-height: 1;
+    margin: 0 0 36px;
+    overflow: hidden;
+    white-space: nowrap;
+    letter-spacing: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR ============================== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      NET // FIELD MANUAL &nbsp;·&nbsp; <a href="https://kartikeytripathi.in" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;opacity:0.55;font-size:10px;letter-spacing:0.12em;">kartikeytripathi.in&nbsp;↗</a>
+    </div>
+    <div class="progress-wrap">
+      <span style="font-size:10px; letter-spacing:0.14em;">PROGRESS</span>
+      <div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-count"><span id="progressCount">0</span> / 5</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#m1">01</a><a href="#m2">02</a><a href="#m3">03</a>
+      <a href="#m4">04</a><a href="#m5">05</a><a href="#closer">∎</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO ============================== -->
+  <section class="hero">
+    <div class="hero-meta">
+      <span>BY <strong>KARTIKEY&nbsp;TRIPATHI</strong></span>
+      <span>ROLE <strong>AWS&nbsp;CONTAINERS&nbsp;ENGINEER</strong></span>
+      <span>FOCUS <strong>NETWORKING&nbsp;FOUNDATIONS</strong></span>
+      <span>EDITION <strong>2026.05</strong></span>
+    </div>
+
+    <h1>
+      Networking<span class="slash">/</span><br>
+      <span class="dim">a field manual</span>
+    </h1>
+
+    <p class="hero-sub">
+      Five modules, one mantra. Move from <em>packets on a wire</em> to <em>VPCs in the cloud</em>,
+      with a debugging arsenal in between. Track your progress as you go &mdash;
+      everything is saved locally to this device. Built by a Cloud Engineer at AWS &mdash;
+      for engineers who already read <em>kubernetes/kubernetes</em> for fun.
+    </p>
+
+    <nav class="toc" aria-label="Modules">
+      <a class="toc-item" href="#m1">
+        <div class="toc-num">MODULE&nbsp;01</div>
+        <div class="toc-title">Fundamentals</div>
+      </a>
+      <a class="toc-item" href="#m2">
+        <div class="toc-num">MODULE&nbsp;02</div>
+        <div class="toc-title">Core Concepts</div>
+      </a>
+      <a class="toc-item" href="#m3">
+        <div class="toc-num">MODULE&nbsp;03</div>
+        <div class="toc-title">DevOps Networking</div>
+      </a>
+      <a class="toc-item" href="#m4">
+        <div class="toc-num">MODULE&nbsp;04</div>
+        <div class="toc-title">Debugging Arsenal</div>
+      </a>
+      <a class="toc-item" href="#m5">
+        <div class="toc-num">MODULE&nbsp;05</div>
+        <div class="toc-title">Cloud Networking</div>
+      </a>
+    </nav>
+  </section>
+
+  <!-- MODULE 01 ============================== -->
+  <section class="module" id="m1">
+    <div class="module-head">
+      <div class="module-num">01</div>
+      <div class="module-title-wrap">
+        <div class="module-tag">// fundamentals</div>
+        <h2>How the internet actually works.</h2>
+        <p class="module-desc">
+          Strip away the abstractions. An <strong style="color:var(--ink)">IP address</strong> is a
+          mailing address, <strong style="color:var(--ink)">DNS</strong> is the phonebook,
+          <strong style="color:var(--ink)">HTTP</strong> is the language two machines agree to speak,
+          and a <strong style="color:var(--ink)">request</strong> is what travels through all of it.
+          Build this mental model first &mdash; everything else hangs off it.
+        </p>
+      </div>
+      <button class="complete-toggle" data-module="1">
+        <span class="box"></span><span class="label">Mark complete</span>
+      </button>
+    </div>
+
+    <div class="chips">
+      <span class="chip hot">IP&nbsp;v4&nbsp;/&nbsp;v6</span>
+      <span class="chip">DNS&nbsp;A/AAAA/CNAME</span>
+      <span class="chip">HTTP&nbsp;1.1&nbsp;/&nbsp;2&nbsp;/&nbsp;3</span>
+      <span class="chip cool">Client&nbsp;⇄&nbsp;Server</span>
+      <span class="chip">URL&nbsp;anatomy</span>
+      <span class="chip">Headers&nbsp;&amp;&nbsp;status&nbsp;codes</span>
+    </div>
+
+    <div class="flow">
+      <div class="flow-title">// trace a request — click any step</div>
+      <div class="flow-strip" id="flowStrip">
+        <button class="flow-step active" data-step="0">
+          <span class="step-num">01</span><span class="step-name">Type URL</span>
+        </button>
+        <button class="flow-step" data-step="1">
+          <span class="step-num">02</span><span class="step-name">DNS lookup</span>
+        </button>
+        <button class="flow-step" data-step="2">
+          <span class="step-num">03</span><span class="step-name">TCP&nbsp;handshake</span>
+        </button>
+        <button class="flow-step" data-step="3">
+          <span class="step-num">04</span><span class="step-name">TLS&nbsp;handshake</span>
+        </button>
+        <button class="flow-step" data-step="4">
+          <span class="step-num">05</span><span class="step-name">HTTP request</span>
+        </button>
+        <button class="flow-step" data-step="5">
+          <span class="step-num">06</span><span class="step-name">Render</span>
+        </button>
+      </div>
+      <div class="flow-detail" id="flowDetail"></div>
+    </div>
+
+    <div class="resources">
+      <a class="resource" href="https://www.cloudflare.com/learning/" target="_blank" rel="noopener">
+        <div class="resource-label">CLOUDFLARE&nbsp;LEARNING <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">How the Internet Works</div>
+        <div class="resource-url">cloudflare.com/learning</div>
+      </a>
+      <a class="resource" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" target="_blank" rel="noopener">
+        <div class="resource-label">MDN&nbsp;WEB&nbsp;DOCS <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">HTTP Basics — Overview</div>
+        <div class="resource-url">developer.mozilla.org/.../HTTP/Overview</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- MODULE 02 ============================== -->
+  <section class="module" id="m2">
+    <div class="module-head">
+      <div class="module-num">02</div>
+      <div class="module-title-wrap">
+        <div class="module-tag">// core concepts</div>
+        <h2>Ports, protocols, packets &amp; routing.</h2>
+        <p class="module-desc">
+          The middle layer. <strong style="color:var(--ink)">TCP</strong> guarantees order and delivery;
+          <strong style="color:var(--ink)">UDP</strong> trades guarantees for speed.
+          <strong style="color:var(--ink)">DNS resolution</strong> is recursive and cached at every hop.
+          <strong style="color:var(--ink)">Routing</strong> is just &ldquo;next hop?&rdquo; asked over and over.
+        </p>
+      </div>
+      <button class="complete-toggle" data-module="2">
+        <span class="box"></span><span class="label">Mark complete</span>
+      </button>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th style="width:14%">Layer</th><th>What it does</th><th>Owns&nbsp;in&nbsp;packet</th><th>You debug with</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-key">L2 / Link</td><td>Moves frames across a physical/virtual network</td><td>MAC address</td><td><code>arp</code>, <code>ip&nbsp;link</code></td></tr>
+        <tr><td class="col-key">L3 / Network</td><td>Routes packets between networks</td><td>IP address, TTL</td><td><code>ip&nbsp;route</code>, <code>traceroute</code>, <code>ping</code></td></tr>
+        <tr><td class="col-key">L4 / Transport</td><td>End-to-end conversations (TCP/UDP)</td><td>Port, sequence, flags</td><td><code>ss</code>, <code>netstat</code>, <code>tcpdump</code></td></tr>
+        <tr><td class="col-key">L7 / Application</td><td>HTTP, DNS, gRPC, the stuff humans care about</td><td>Headers, methods, body</td><td><code>curl</code>, <code>dig</code>, <code>nslookup</code></td></tr>
+      </tbody>
+    </table>
+
+    <table class="data-table">
+      <thead>
+        <tr><th style="width:18%">&nbsp;</th><th>TCP</th><th>UDP</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="col-key">Delivery</td><td>Guaranteed, ordered, retried</td><td>Fire-and-forget, no order</td></tr>
+        <tr><td class="col-key">Setup</td><td>3-way handshake (SYN → SYN-ACK → ACK)</td><td>None &mdash; just send</td></tr>
+        <tr><td class="col-key">Overhead</td><td>Higher (state, ACKs, retransmits)</td><td>Lower (almost none)</td></tr>
+        <tr><td class="col-key">Use when</td><td>HTTP, SSH, databases &mdash; correctness matters</td><td>DNS query, VoIP, gaming, metrics &mdash; speed matters</td></tr>
+        <tr><td class="col-key">Failure mode</td><td>Slowness, retransmits, RST</td><td>Silent loss, you don&rsquo;t know</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <span class="callout-marker">▶ MEMORY HOOK</span>
+      <span>Ports under 1024 are <em style="color:var(--cyan); font-style:normal">privileged</em> (root to bind).
+      <code style="color:var(--cyan)">22</code> ssh,
+      <code style="color:var(--cyan)">53</code> dns,
+      <code style="color:var(--cyan)">80</code> http,
+      <code style="color:var(--cyan)">443</code> https,
+      <code style="color:var(--cyan)">3306</code> mysql,
+      <code style="color:var(--cyan)">5432</code> postgres,
+      <code style="color:var(--cyan)">6379</code> redis,
+      <code style="color:var(--cyan)">6443</code> kube-apiserver,
+      <code style="color:var(--cyan)">2379-2380</code> etcd.</span>
+    </div>
+
+    <div class="resources">
+      <a class="resource" href="https://www.digitalocean.com/community/tutorials/an-introduction-to-networking-terminology-interfaces-and-protocols" target="_blank" rel="noopener">
+        <div class="resource-label">DIGITALOCEAN <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">Networking Terminology, Interfaces &amp; Protocols</div>
+        <div class="resource-url">digitalocean.com/community/tutorials/...</div>
+      </a>
+      <a class="resource" href="https://www.youtube.com/watch?v=qiQR5rTSshw" target="_blank" rel="noopener">
+        <div class="resource-label">FREECODECAMP&nbsp;/&nbsp;YOUTUBE <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">Full Networking Course</div>
+        <div class="resource-url">youtube.com/watch?v=qiQR5rTSshw</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- MODULE 03 ============================== -->
+  <section class="module" id="m3">
+    <div class="module-head">
+      <div class="module-num">03</div>
+      <div class="module-title-wrap">
+        <div class="module-tag">// devops-focused networking</div>
+        <h2>The pieces in front of your app.</h2>
+        <p class="module-desc">
+          In production almost nothing talks to your container directly. Traffic lands on a
+          <strong style="color:var(--ink)">load balancer</strong>, may pass through a
+          <strong style="color:var(--ink)">reverse proxy</strong>, gets translated by
+          <strong style="color:var(--ink)">NAT</strong>, and only then reaches your service.
+          Each of these is a place a request can go wrong.
+        </p>
+      </div>
+      <button class="complete-toggle" data-module="3">
+        <span class="box"></span><span class="label">Mark complete</span>
+      </button>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th style="width:20%">Component</th><th>What it does</th><th>Lives at layer</th><th>Real-world example</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-key">Load Balancer (L4)</td>
+          <td>Spreads TCP/UDP connections across backends; doesn&rsquo;t see HTTP</td>
+          <td>L4</td>
+          <td>AWS&nbsp;NLB, HAProxy (TCP mode)</td>
+        </tr>
+        <tr>
+          <td class="col-key">Load Balancer (L7)</td>
+          <td>Reads HTTP &mdash; routes by host/path, terminates TLS, rewrites headers</td>
+          <td>L7</td>
+          <td>AWS&nbsp;ALB, NGINX, Envoy, Traefik</td>
+        </tr>
+        <tr>
+          <td class="col-key">Reverse Proxy</td>
+          <td>Sits in front of an app, can cache, compress, auth, route</td>
+          <td>L7</td>
+          <td>NGINX, Caddy, Envoy</td>
+        </tr>
+        <tr>
+          <td class="col-key">NAT</td>
+          <td>Rewrites src/dst IP &amp; port so private nets can reach the internet</td>
+          <td>L3/L4</td>
+          <td>AWS NAT Gateway, your home router</td>
+        </tr>
+        <tr>
+          <td class="col-key">Ingress Controller</td>
+          <td>K8s pattern that programs an L7 LB from Ingress / Gateway resources</td>
+          <td>L7</td>
+          <td>AWS&nbsp;LBC, NGINX&nbsp;Ingress, Istio</td>
+        </tr>
+        <tr>
+          <td class="col-key">Service Mesh</td>
+          <td>Sidecar proxies handle mTLS, retries, traffic-split between services</td>
+          <td>L4&nbsp;–&nbsp;L7</td>
+          <td>Istio, Linkerd, App&nbsp;Mesh</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <span class="callout-marker">▶ CONTAINERS TIE-IN</span>
+      <span>In EKS, an <em style="color:var(--cyan); font-style:normal">Ingress</em> with
+      <code style="color:var(--cyan)">target-type: ip</code> programs the ALB to send traffic
+      <em style="color:var(--cyan); font-style:normal">directly to pod IPs</em> via VPC&nbsp;CNI &mdash; skipping the kube-proxy/Service hop.
+      With <code style="color:var(--cyan)">target-type: instance</code> the ALB hits a NodePort and lets
+      kube-proxy do the second hop. Knowing which mode you&rsquo;re in changes how you debug latency.</span>
+    </div>
+
+    <div class="resources">
+      <a class="resource" href="https://nginx.org/en/docs/beginners_guide.html" target="_blank" rel="noopener">
+        <div class="resource-label">NGINX&nbsp;DOCS <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">Beginner&rsquo;s Guide</div>
+        <div class="resource-url">nginx.org/en/docs/beginners_guide.html</div>
+      </a>
+      <a class="resource" href="https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html" target="_blank" rel="noopener">
+        <div class="resource-label">AWS&nbsp;DOCS <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">Amazon VPC — What Is</div>
+        <div class="resource-url">docs.aws.amazon.com/vpc/latest/userguide/...</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- MODULE 04 ============================== -->
+  <section class="module" id="m4">
+    <div class="module-head">
+      <div class="module-num">04</div>
+      <div class="module-title-wrap">
+        <div class="module-tag">// debugging arsenal — most important</div>
+        <h2>If you can trace traffic, you can fix it.</h2>
+        <p class="module-desc">
+          Reading about networking gets you understanding. Running these commands against
+          a broken system gets you a paycheck. Tap any card to expand &mdash; each one shows the
+          purpose, a real example, and the thing that usually trips people up.
+        </p>
+      </div>
+      <button class="complete-toggle" data-module="4">
+        <span class="box"></span><span class="label">Mark complete</span>
+      </button>
+    </div>
+
+    <div class="cmd-grid" id="cmdGrid">
+      <!-- ping -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">ping</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>Is the host reachable?</strong> Sends ICMP echo. The fastest way to confirm L3 connectivity &mdash; or notice that ICMP is blocked.</div>
+          <div class="cmd-example">ping -c 4 8.8.8.8</div>
+          <div class="cmd-example">ping -c 4 kubernetes.default.svc.cluster.local</div>
+          <div class="cmd-note">If ping fails but curl works → ICMP is blocked, app is fine.</div>
+        </div></div>
+      </div>
+
+      <!-- curl -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">curl</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>Talk HTTP / inspect the wire.</strong> The single most useful tool. Headers, timing, TLS, redirects &mdash; all of it.</div>
+          <div class="cmd-example">curl -v https://api.example.com/health</div>
+          <div class="cmd-example">curl -I https://example.com                 # headers only</div>
+          <div class="cmd-example">curl -w "%{time_total}\n" -o /dev/null -s …  # just timing</div>
+          <div class="cmd-note">Add <code style="color:var(--cyan)">--resolve host:443:1.2.3.4</code> to bypass DNS &mdash; isolates whether DNS or the backend is broken.</div>
+        </div></div>
+      </div>
+
+      <!-- traceroute -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">traceroute</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>Which hop is dropping packets?</strong> Sends packets with increasing TTL so each router on the path is forced to identify itself.</div>
+          <div class="cmd-example">traceroute -n example.com</div>
+          <div class="cmd-example">mtr -rwzbc 50 example.com   # better: realtime stats per hop</div>
+          <div class="cmd-note"><code style="color:var(--cyan)">*&nbsp;*&nbsp;*</code> isn&rsquo;t always failure &mdash; many hops just refuse to reply to ICMP/UDP probes.</div>
+        </div></div>
+      </div>
+
+      <!-- ss / netstat -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">ss / netstat</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>What sockets are open on this host?</strong> Prefer <code style="color:var(--cyan)">ss</code> &mdash; faster, modern, same flags. <code style="color:var(--cyan)">netstat</code> on legacy boxes.</div>
+          <div class="cmd-example">ss -tlnp                  # all listening TCP + pid</div>
+          <div class="cmd-example">ss -tnp state established # who am I talking to?</div>
+          <div class="cmd-example">ss -s                     # summary counts (great for SYN floods)</div>
+          <div class="cmd-note">A pod that &ldquo;won&rsquo;t serve traffic&rdquo; often <em>isn&rsquo;t actually listening</em>. <code style="color:var(--cyan)">ss -tlnp</code> ends the argument.</div>
+        </div></div>
+      </div>
+
+      <!-- dig / nslookup -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">dig / nslookup</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>What does DNS actually return?</strong> <code style="color:var(--cyan)">dig</code> is the surgical tool; <code style="color:var(--cyan)">nslookup</code> is what&rsquo;s already installed everywhere.</div>
+          <div class="cmd-example">dig +short A example.com</div>
+          <div class="cmd-example">dig @8.8.8.8 example.com           # ask a specific resolver</div>
+          <div class="cmd-example">dig +trace example.com             # follow the recursion</div>
+          <div class="cmd-note">In EKS: <code style="color:var(--cyan)">dig svc-name.namespace.svc.cluster.local</code> from inside a pod isolates CoreDNS issues.</div>
+        </div></div>
+      </div>
+
+      <!-- tcpdump -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">tcpdump</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>What&rsquo;s actually on the wire?</strong> The court of last resort. Capture, then read in Wireshark.</div>
+          <div class="cmd-example">tcpdump -i any -n port 443 -w cap.pcap</div>
+          <div class="cmd-example">tcpdump -i eth0 -nn 'tcp[tcpflags] &amp; (tcp-syn) != 0'</div>
+          <div class="cmd-note">In EKS Fargate you can&rsquo;t run tcpdump on the host &mdash; use a sidecar or VPC Traffic Mirroring.</div>
+        </div></div>
+      </div>
+
+      <!-- ip -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">ip</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>The modern replacement for ifconfig/route.</strong> Inspect interfaces, addresses, routes, ARP &mdash; all in one tool.</div>
+          <div class="cmd-example">ip addr</div>
+          <div class="cmd-example">ip route get 8.8.8.8        # which interface &amp; gateway is used?</div>
+          <div class="cmd-example">ip -s link                  # rx/tx errors, drops</div>
+          <div class="cmd-note"><code style="color:var(--cyan)">ip route get &lt;ip&gt;</code> answers &ldquo;why does my traffic leave the wrong interface?&rdquo; in one line.</div>
+        </div></div>
+      </div>
+
+      <!-- nc -->
+      <div class="cmd-card">
+        <div class="cmd-head">
+          <span class="cmd-name">nc (netcat)</span><span class="cmd-toggle-icon">+</span>
+        </div>
+        <div class="cmd-body"><div class="cmd-body-inner">
+          <div class="cmd-purpose"><strong>Test a port without an app.</strong> Open raw TCP/UDP. The &ldquo;is the security group letting me through&rdquo; tool.</div>
+          <div class="cmd-example">nc -zv db.internal 5432       # connect, report, exit</div>
+          <div class="cmd-example">nc -lvnp 8080                 # listener for testing</div>
+          <div class="cmd-note">Pair with <code style="color:var(--cyan)">ss -tlnp</code> on the other side &mdash; you&rsquo;ve just proved L3+L4 from both ends.</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-marker">▶ ESCALATION PATTERN</span>
+      <span>When a customer reports &ldquo;it&rsquo;s slow / not working&rdquo;, walk the stack in order:
+      <code style="color:var(--cyan)">ping</code> &rarr;
+      <code style="color:var(--cyan)">dig</code> &rarr;
+      <code style="color:var(--cyan)">nc -zv</code> &rarr;
+      <code style="color:var(--cyan)">curl -v</code> &rarr;
+      <code style="color:var(--cyan)">traceroute/mtr</code> &rarr;
+      <code style="color:var(--cyan)">tcpdump</code>. Each step rules out a layer.</span>
+    </div>
+  </section>
+
+  <!-- MODULE 05 ============================== -->
+  <section class="module" id="m5">
+    <div class="module-head">
+      <div class="module-num">05</div>
+      <div class="module-title-wrap">
+        <div class="module-tag">// cloud networking — must for devops</div>
+        <h2>How traffic flows inside the cloud.</h2>
+        <p class="module-desc">
+          A VPC is just a software-defined data center. Once you&rsquo;ve internalized the
+          <strong style="color:var(--ink)">VPC&nbsp;→&nbsp;subnet&nbsp;→&nbsp;route&nbsp;table&nbsp;→&nbsp;SG</strong>
+          chain, every cloud network feels the same. Without it, every cloud network feels like a riddle.
+        </p>
+      </div>
+      <button class="complete-toggle" data-module="5">
+        <span class="box"></span><span class="label">Mark complete</span>
+      </button>
+    </div>
+
+    <div class="vpc-wrap">
+      <div class="flow-title">// anatomy of a vpc</div>
+      <div class="vpc-svg-wrap">
+        <svg class="vpc-svg" viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg" aria-label="VPC diagram">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#ffb547"/>
+            </marker>
+          </defs>
+
+          <!-- Internet cloud -->
+          <g font-family="JetBrains Mono, monospace" font-size="11">
+            <rect x="20" y="20" width="120" height="44" fill="none" stroke="#5ee3ff" stroke-dasharray="4 3"/>
+            <text x="80" y="38" fill="#5ee3ff" text-anchor="middle" font-weight="700">INTERNET</text>
+            <text x="80" y="54" fill="#aab3c5" text-anchor="middle" font-size="9">0.0.0.0/0</text>
+          </g>
+
+          <!-- IGW -->
+          <g font-family="JetBrains Mono, monospace" font-size="10">
+            <rect x="180" y="26" width="80" height="32" fill="#0f131c" stroke="#ffb547"/>
+            <text x="220" y="46" fill="#ffb547" text-anchor="middle" font-weight="700">IGW</text>
+          </g>
+
+          <line x1="140" y1="42" x2="180" y2="42" stroke="#ffb547" stroke-width="1.5" marker-end="url(#arr)"/>
+
+          <!-- VPC outer -->
+          <g>
+            <rect x="180" y="80" width="560" height="340" fill="none" stroke="#3b4660" stroke-width="1.5"/>
+            <text x="200" y="100" fill="#aab3c5" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">VPC&nbsp;&nbsp;10.0.0.0/16</text>
+          </g>
+
+          <!-- Public subnet -->
+          <g>
+            <rect x="200" y="120" width="240" height="130" fill="#0f131c" stroke="#5ee3ff" stroke-width="1"/>
+            <text x="216" y="138" fill="#5ee3ff" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">PUBLIC&nbsp;SUBNET&nbsp;&nbsp;10.0.1.0/24</text>
+            <rect x="220" y="156" width="90" height="32" fill="#161b27" stroke="#5ee3ff" stroke-dasharray="3 2"/>
+            <text x="265" y="176" fill="#e9ecf3" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">ALB</text>
+            <rect x="330" y="156" width="90" height="32" fill="#161b27" stroke="#5ee3ff" stroke-dasharray="3 2"/>
+            <text x="375" y="176" fill="#e9ecf3" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">NAT&nbsp;GW</text>
+            <text x="220" y="220" fill="#6b7488" font-family="JetBrains Mono, monospace" font-size="9">route:&nbsp;0.0.0.0/0&nbsp;→&nbsp;IGW</text>
+          </g>
+
+          <!-- Private subnet -->
+          <g>
+            <rect x="200" y="270" width="240" height="130" fill="#0f131c" stroke="#b3ff66" stroke-width="1"/>
+            <text x="216" y="288" fill="#b3ff66" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">PRIVATE&nbsp;SUBNET&nbsp;&nbsp;10.0.2.0/24</text>
+            <rect x="220" y="306" width="90" height="32" fill="#161b27" stroke="#b3ff66" stroke-dasharray="3 2"/>
+            <text x="265" y="326" fill="#e9ecf3" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">EKS&nbsp;node</text>
+            <rect x="330" y="306" width="90" height="32" fill="#161b27" stroke="#b3ff66" stroke-dasharray="3 2"/>
+            <text x="375" y="326" fill="#e9ecf3" font-family="JetBrains Mono, monospace" font-size="10" text-anchor="middle">RDS</text>
+            <text x="220" y="370" fill="#6b7488" font-family="JetBrains Mono, monospace" font-size="9">route:&nbsp;0.0.0.0/0&nbsp;→&nbsp;NAT&nbsp;GW</text>
+          </g>
+
+          <!-- SG callouts -->
+          <g font-family="JetBrains Mono, monospace" font-size="9">
+            <rect x="480" y="140" width="240" height="100" fill="#0f131c" stroke="#ffb547" stroke-dasharray="2 2"/>
+            <text x="492" y="156" fill="#ffb547" font-weight="700">SECURITY&nbsp;GROUP&nbsp;(public)</text>
+            <text x="492" y="174" fill="#aab3c5">ingress&nbsp;tcp&nbsp;443&nbsp;from&nbsp;0.0.0.0/0</text>
+            <text x="492" y="190" fill="#aab3c5">ingress&nbsp;tcp&nbsp;80&nbsp;&nbsp;from&nbsp;0.0.0.0/0</text>
+            <text x="492" y="206" fill="#aab3c5">egress&nbsp;&nbsp;all</text>
+            <text x="492" y="226" fill="#6b7488">stateful&nbsp;&middot;&nbsp;default&nbsp;deny</text>
+
+            <rect x="480" y="280" width="240" height="100" fill="#0f131c" stroke="#b3ff66" stroke-dasharray="2 2"/>
+            <text x="492" y="296" fill="#b3ff66" font-weight="700">SECURITY&nbsp;GROUP&nbsp;(private)</text>
+            <text x="492" y="314" fill="#aab3c5">ingress&nbsp;tcp&nbsp;5432&nbsp;from&nbsp;sg-public</text>
+            <text x="492" y="330" fill="#aab3c5">ingress&nbsp;tcp&nbsp;22&nbsp;&nbsp;&nbsp;from&nbsp;10.0.0.0/16</text>
+            <text x="492" y="346" fill="#aab3c5">egress&nbsp;&nbsp;all</text>
+            <text x="492" y="366" fill="#6b7488">references&nbsp;by&nbsp;sg-id&nbsp;&gt;&nbsp;by&nbsp;CIDR</text>
+          </g>
+
+          <!-- traffic arrows -->
+          <line x1="220" y1="58" x2="265" y2="156" stroke="#ffb547" stroke-width="1.2" marker-end="url(#arr)"/>
+          <line x1="265" y1="188" x2="265" y2="306" stroke="#ffb547" stroke-width="1.2" marker-end="url(#arr)" stroke-dasharray="4 3"/>
+          <line x1="375" y1="338" x2="375" y2="188" stroke="#5ee3ff" stroke-width="1.2" marker-end="url(#arr)" stroke-dasharray="4 3"/>
+        </svg>
+      </div>
+      <div class="vpc-caption">↑ ingress via IGW → ALB → pod &nbsp;|&nbsp; ↓ egress via NAT&nbsp;GW for outbound calls</div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th style="width:22%">Concept</th><th>Mental model</th><th>Common gotcha</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-key">VPC</td>
+          <td>A virtual data-center with its own private IP range (CIDR).</td>
+          <td>CIDR overlap kills VPC peering and TGW attachments. Plan early.</td>
+        </tr>
+        <tr>
+          <td class="col-key">Subnet</td>
+          <td>A slice of the VPC, tied to one AZ. &ldquo;Public&rdquo; just means the route table points to an IGW.</td>
+          <td>A subnet isn&rsquo;t public because of its name &mdash; it&rsquo;s public because of its route table.</td>
+        </tr>
+        <tr>
+          <td class="col-key">Route Table</td>
+          <td>Per-subnet rule: &ldquo;for destination X, send to gateway Y.&rdquo;</td>
+          <td>Missing <code>0.0.0.0/0 → nat-gw</code> in a private subnet = mysterious egress timeouts.</td>
+        </tr>
+        <tr>
+          <td class="col-key">Security Group</td>
+          <td>Stateful firewall at the ENI level. Default deny inbound, default allow outbound.</td>
+          <td>SGs are <em>allow-only</em>. There&rsquo;s no deny rule. Use NACLs for explicit denies.</td>
+        </tr>
+        <tr>
+          <td class="col-key">NACL</td>
+          <td>Stateless ACL at the subnet boundary. Numbered rules, allow + deny.</td>
+          <td>Stateless &mdash; you must allow ephemeral return ports (1024-65535) on outbound responses.</td>
+        </tr>
+        <tr>
+          <td class="col-key">IGW vs NAT&nbsp;GW</td>
+          <td>IGW = two-way internet. NAT&nbsp;GW = outbound-only for private subnets.</td>
+          <td>NAT GW is per-AZ &mdash; one per AZ if you want HA and no cross-AZ data charges.</td>
+        </tr>
+        <tr>
+          <td class="col-key">VPC&nbsp;Endpoint</td>
+          <td>Private tunnel from your VPC to an AWS service (S3, ECR, STS) without internet.</td>
+          <td>Without endpoints, every pull from ECR goes out the NAT&nbsp;GW. Look at your bill.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <span class="callout-marker">▶ EKS&nbsp;LENS</span>
+      <span>VPC&nbsp;CNI assigns each pod a real VPC IP from the secondary IP pool of the node&rsquo;s ENI.
+      That&rsquo;s why pod count per node is bounded by ENI/IP limits, and why
+      <em style="color:var(--cyan); font-style:normal">SGs for pods</em> works at all &mdash; the pod IS an ENI to the VPC.</span>
+    </div>
+
+    <div class="resources">
+      <a class="resource" href="https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html" target="_blank" rel="noopener">
+        <div class="resource-label">AWS&nbsp;DOCS <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">VPC User Guide</div>
+        <div class="resource-url">docs.aws.amazon.com/vpc/latest/userguide/...</div>
+      </a>
+      <a class="resource" href="https://docs.aws.amazon.com/eks/latest/userguide/eks-networking.html" target="_blank" rel="noopener">
+        <div class="resource-label">AWS&nbsp;DOCS <span class="resource-arrow">↗</span></div>
+        <div class="resource-title">EKS Networking</div>
+        <div class="resource-url">docs.aws.amazon.com/eks/latest/userguide/eks-networking.html</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- CLOSER ============================== -->
+  <section class="closer" id="closer">
+    <div class="closer-tag">// final rule</div>
+    <div class="closer-quote">
+      <span class="line"><span class="neg">Don&rsquo;t just read networking.</span></span>
+      <span class="line pos">Break things. Trace traffic. Fix issues.</span>
+    </div>
+    <div class="closer-rule">∎&nbsp;&nbsp;THE&nbsp;LAB&nbsp;IS&nbsp;THE&nbsp;CURRICULUM&nbsp;&nbsp;∎</div>
+  </section>
+
+</main>
+
+<footer class="bottom">
+  <span>NET&nbsp;//&nbsp;FIELD&nbsp;MANUAL&nbsp;&nbsp;·&nbsp;&nbsp;OFFLINE-READY&nbsp;·&nbsp;PROGRESS&nbsp;SAVED&nbsp;LOCALLY&nbsp;&nbsp;·&nbsp;&nbsp;kartikeytripathi.in</span>
+  <button class="reset" id="resetBtn">Reset progress</button>
+</footer>
+
+<script>
+  // ============= REQUEST FLOW =============
+  const flowSteps = [
+    {
+      key: 'Type a URL',
+      body: 'You type <code>https://api.example.com/users</code>. The browser parses the URL into <span class="key">scheme</span>, <span class="key">host</span>, <span class="key">port</span> (defaulting to 443 for https), and <span class="key">path</span>. Nothing has gone over the network yet.'
+    },
+    {
+      key: 'DNS lookup',
+      body: 'The browser asks the OS resolver: "what\'s the IP for <code>api.example.com</code>?" Resolver checks local cache → /etc/hosts → recursive resolver (e.g. <code>8.8.8.8</code>) → which walks root → TLD → authoritative nameserver. Returns one or more A/AAAA records.'
+    },
+    {
+      key: 'TCP 3-way handshake',
+      body: 'The browser opens a TCP connection to the resolved IP on port 443. <span class="key">SYN → SYN-ACK → ACK</span>. Three round trips&rsquo; worth of latency happens here. After this, both sides have agreed sequence numbers and there&rsquo;s a real socket.'
+    },
+    {
+      key: 'TLS handshake',
+      body: 'On top of TCP, TLS negotiates a cipher suite, the server presents a certificate, the client verifies the chain against root CAs, keys are exchanged. Result: an encrypted tunnel. With <span class="key">TLS 1.3</span> this is one round trip; older versions take two.'
+    },
+    {
+      key: 'HTTP request',
+      body: 'Now the browser sends an HTTP request inside that tunnel: <code>GET /users HTTP/1.1</code> + headers (Host, Cookie, Accept, Authorization). The server processes it, returns a status line, response headers, and a body. Status code tells you what happened: 2xx ok, 3xx redirect, 4xx your fault, 5xx their fault.'
+    },
+    {
+      key: 'Render',
+      body: 'Browser parses the response, follows any sub-resource references (CSS, JS, images), and triggers paint. From a debugging standpoint, "is it slow?" is answered by which of the previous five steps took the time &mdash; that&rsquo;s exactly what <code>curl -w</code> and browser dev-tools waterfall both show.'
+    }
+  ];
+  const flowDetail = document.getElementById('flowDetail');
+  const flowStrip = document.getElementById('flowStrip');
+  function renderStep(i) {
+    flowDetail.innerHTML = '<span class="key">[' + String(i + 1).padStart(2, '0') + ']</span> ' + flowSteps[i].body;
+    flowStrip.querySelectorAll('.flow-step').forEach(b => {
+      b.classList.toggle('active', Number(b.dataset.step) === i);
+    });
+  }
+  flowStrip.querySelectorAll('.flow-step').forEach(b => {
+    b.addEventListener('click', () => renderStep(Number(b.dataset.step)));
+  });
+  renderStep(0);
+
+  // ============= COMMAND CARDS =============
+  document.querySelectorAll('.cmd-card').forEach(card => {
+    card.querySelector('.cmd-head').addEventListener('click', () => {
+      card.classList.toggle('open');
+    });
+  });
+
+  // ============= PROGRESS TRACKING =============
+  const STORAGE_KEY = 'lkk-net-handbook-progress-v1';
+  function loadProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch (e) { return {}; }
+  }
+  function saveProgress(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function refreshProgressUI(state) {
+    let done = 0;
+    document.querySelectorAll('.complete-toggle').forEach(btn => {
+      const m = btn.dataset.module;
+      const isDone = !!state[m];
+      btn.classList.toggle('done', isDone);
+      btn.querySelector('.label').textContent = isDone ? 'Completed' : 'Mark complete';
+      if (isDone) done++;
+    });
+    document.getElementById('progressCount').textContent = done;
+    document.getElementById('progressFill').style.right = (100 - (done / 5) * 100) + '%';
+  }
+  const state = loadProgress();
+  document.querySelectorAll('.complete-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const m = btn.dataset.module;
+      state[m] = !state[m];
+      saveProgress(state);
+      refreshProgressUI(state);
+    });
+  });
+  refreshProgressUI(state);
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (confirm('Reset all progress?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      Object.keys(state).forEach(k => delete state[k]);
+      refreshProgressUI(state);
+    }
+  });
+
+  // ============= FADE-IN ON SCROLL (optional polish) =============
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('section.module, .closer').forEach(el => {
+    el.classList.add('fadein');
+    io.observe(el);
+  });
+</script>
+
+</body>
+</html>
