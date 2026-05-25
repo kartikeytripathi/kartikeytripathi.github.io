@@ -38,7 +38,8 @@ export default async function BlogPostPage({ params }: Props) {
         "src/content/blog",
         `${slug}.md`
       );
-      markdown = await readFile(filePath, "utf-8");
+      const raw = await readFile(filePath, "utf-8");
+      markdown = raw.replace(/^---[\s\S]*?---\n?/, "");
     } catch {
       markdown = null;
     }
