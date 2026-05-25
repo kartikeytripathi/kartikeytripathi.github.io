@@ -24,6 +24,16 @@ export const blogPosts: BlogPost[] = [
     thumbnail: "",
   },
   {
+    slug: "how-irsa-really-works-on-eks",
+    title: "How IRSA Really Works on EKS — and the One-Character Bug That Can Break It",
+    description:
+      "A deep dive into IAM Roles for Service Accounts on Amazon EKS — how the JWT-to-IAM-credentials exchange actually works, what STS checks under the hood, and why a single stray character in your OIDC provider configuration can silently break everything.",
+    date: "May 2026",
+    tags: ["AWS", "EKS", "Kubernetes", "IRSA", "OIDC", "STS", "Debugging"],
+    type: "article",
+    thumbnail: "",
+  },
+  {
     slug: "what-happens-when-you-run-kubectl-apply",
     title: "What Actually Happens When You Run kubectl apply",
     description:
