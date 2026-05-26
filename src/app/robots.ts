@@ -6,6 +6,9 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://www.kartikeytripathi.in/sitemap.xml",
+    sitemap: [
+      "https://www.kartikeytripathi.in/sitemap.xml",
+      "https://blogs.kartikeytripathi.in/sitemap.xml",
+    ],
   };
 }

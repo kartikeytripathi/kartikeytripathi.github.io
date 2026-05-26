@@ -16,11 +16,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) return {};
+  const canonical = `https://blogs.kartikeytripathi.in/${slug}`;
   return {
     title: `${post.title} — Kartikey Tripathi`,
     description: post.description,
-    alternates: {
-      canonical: `https://www.kartikeytripathi.in/blog/${slug}`,
+    authors: [{ name: "Kartikey Tripathi", url: "https://kartikeytripathi.in" }],
+    alternates: { canonical },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: canonical,
+      siteName: "Kartikey Tripathi",
+      type: "article",
+      publishedTime: post.date,
+      authors: ["Kartikey Tripathi"],
+      tags: post.tags,
+      ...(post.thumbnail ? { images: [{ url: post.thumbnail }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      ...(post.thumbnail ? { images: [post.thumbnail] } : {}),
     },
   };
 }
@@ -45,8 +62,28 @@ export default async function BlogPostPage({ params }: Props) {
     }
   }
 
+  const canonical = `https://blogs.kartikeytripathi.in/${slug}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: post.title,
+    description: post.description,
+    author: {
+      "@type": "Person",
+      name: "Kartikey Tripathi",
+      url: "https://kartikeytripathi.in",
+    },
+    datePublished: post.date,
+    url: canonical,
+    keywords: post.tags.join(", "),
+  };
+
   return (
     <main className="max-w-4xl mx-auto p-6 lg:p-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Back */}
       <Link
         href="/blog"

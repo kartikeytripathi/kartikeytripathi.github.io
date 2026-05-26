@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Articles and videos by Kartikey Tripathi on AWS, Cloud, DevOps, and Kubernetes.",
   alternates: {
-    canonical: "https://www.kartikeytripathi.in/blog",
+    canonical: "https://blogs.kartikeytripathi.in",
   },
 };
 
