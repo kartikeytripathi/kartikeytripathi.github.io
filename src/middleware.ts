@@ -6,8 +6,12 @@ export function middleware(request: NextRequest) {
   if (host === "blogs.kartikeytripathi.in") {
     const url = request.nextUrl.clone();
 
-    // Pass through static resources
-    if (url.pathname.startsWith("/resources/")) {
+    // Pass through static resources and system routes
+    if (
+      url.pathname.startsWith("/resources/") ||
+      url.pathname === "/sitemap.xml" ||
+      url.pathname === "/robots.txt"
+    ) {
       return NextResponse.next();
     }
 
