@@ -1,0 +1,133 @@
+<svg viewBox="0 0 1280 760" xmlns="http://www.w3.org/2000/svg" font-family="'JetBrains Mono','SF Mono','Menlo','Courier New',monospace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A1A2F"/>
+      <stop offset="1" stop-color="#06101C"/>
+    </linearGradient>
+    <linearGradient id="lbc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#326CE5"/>
+      <stop offset="1" stop-color="#FF9900"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#13314F" stroke-width="1" opacity="0.5"/>
+    </pattern>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#5CC8C8"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#FF9900"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#2ECC71"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#5B8DEF"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="760" fill="url(#bg)"/>
+  <rect width="1280" height="760" fill="url(#grid)"/>
+
+  <!-- Title -->
+  <text x="64" y="58" fill="#EAF4FF" font-size="30" font-weight="700" letter-spacing="1.5">HOW TRAFFIC REACHES YOUR EKS POD</text>
+  <text x="64" y="88" fill="#FF9900" font-size="15" letter-spacing="0.5">Ingress → AWS Load Balancer Controller → ALB → Target Group → Pod</text>
+  <line x1="64" y1="104" x2="1216" y2="104" stroke="#1E3A5C" stroke-width="1"/>
+
+  <!-- Tier labels -->
+  <text x="64" y="150" fill="#FF9900" font-size="11" letter-spacing="2" opacity="0.85">CONTROL PLANE  ·  intent → infrastructure</text>
+  <text x="64" y="318" fill="#5CC8C8" font-size="11" letter-spacing="2" opacity="0.85">DATA PATH  ·  where packets actually flow</text>
+  <text x="64" y="560" fill="#2ECC71" font-size="11" letter-spacing="2" opacity="0.85">SYNC LOOP  ·  keeping the target list honest</text>
+
+  <!-- ============ CONTROL PLANE ============ -->
+  <!-- Ingress -->
+  <rect x="120" y="164" width="160" height="74" rx="8" fill="#0F2942" stroke="#326CE5" stroke-width="1.6"/>
+  <text x="200" y="196" text-anchor="middle" fill="#9CC2F0" font-size="14" font-weight="700">INGRESS</text>
+  <text x="200" y="216" text-anchor="middle" fill="#5E80A6" font-size="10.5">L7 intent (host/path)</text>
+
+  <!-- LBC -->
+  <rect x="380" y="160" width="220" height="82" rx="8" fill="#0F2034" stroke="url(#lbc)" stroke-width="2.4"/>
+  <text x="490" y="190" text-anchor="middle" fill="#EAF4FF" font-size="14" font-weight="700">AWS LBC</text>
+  <text x="490" y="210" text-anchor="middle" fill="#8FB3D9" font-size="10.5">the translation layer</text>
+  <text x="490" y="227" text-anchor="middle" fill="#5E80A6" font-size="9.5">watches K8s · builds AWS</text>
+
+  <!-- Ingress -> LBC -->
+  <line x1="280" y1="201" x2="372" y2="201" stroke="#5B8DEF" stroke-width="1.8" marker-end="url(#arrB)"/>
+  <text x="326" y="193" text-anchor="middle" fill="#7FA8D9" font-size="9.5">watches</text>
+
+  <!-- LBC provisions ALB / Target Group (dashed) -->
+  <path d="M450 242 L440 326" fill="none" stroke="#FF9900" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrO)"/>
+  <path d="M540 242 Q650 270 700 326" fill="none" stroke="#FF9900" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrO)"/>
+  <text x="372" y="290" text-anchor="middle" fill="#D99543" font-size="9.5">provisions</text>
+  <text x="660" y="288" text-anchor="middle" fill="#D99543" font-size="9.5">provisions + creates TGB</text>
+
+  <!-- ============ DATA PATH ============ -->
+  <!-- Internet -->
+  <rect x="64" y="332" width="150" height="86" rx="8" fill="#0E2030" stroke="#5CC8C8" stroke-width="1.6"/>
+  <circle cx="139" cy="360" r="14" fill="none" stroke="#5CC8C8" stroke-width="1.4"/>
+  <ellipse cx="139" cy="360" rx="5.5" ry="14" fill="none" stroke="#5CC8C8" stroke-width="1.1"/>
+  <line x1="125" y1="360" x2="153" y2="360" stroke="#5CC8C8" stroke-width="1.1"/>
+  <text x="139" y="396" text-anchor="middle" fill="#A8E0E0" font-size="14" font-weight="700">INTERNET</text>
+  <text x="139" y="411" text-anchor="middle" fill="#5E80A6" font-size="9">users</text>
+
+  <!-- ALB -->
+  <rect x="360" y="326" width="160" height="92" rx="8" fill="#2A1B08" stroke="#FF9900" stroke-width="1.8"/>
+  <text x="440" y="362" text-anchor="middle" fill="#FFC266" font-size="16" font-weight="700">ALB</text>
+  <text x="440" y="382" text-anchor="middle" fill="#C98F45" font-size="10.5">L7 · terminates TLS</text>
+  <text x="440" y="399" text-anchor="middle" fill="#8A6B3A" font-size="9.5">listener rules route</text>
+
+  <!-- Target Group -->
+  <rect x="620" y="326" width="160" height="92" rx="8" fill="#2A1B08" stroke="#FF9900" stroke-width="1.8"/>
+  <text x="700" y="362" text-anchor="middle" fill="#FFC266" font-size="14" font-weight="700">TARGET GROUP</text>
+  <text x="700" y="382" text-anchor="middle" fill="#C98F45" font-size="10.5">list of registered</text>
+  <text x="700" y="398" text-anchor="middle" fill="#C98F45" font-size="10.5">pod IPs + health</text>
+
+  <!-- Pods panel -->
+  <rect x="880" y="312" width="336" height="124" rx="8" fill="#0F2942" stroke="#326CE5" stroke-width="1.6"/>
+  <text x="1048" y="336" text-anchor="middle" fill="#9CC2F0" font-size="13" font-weight="700">PODS</text>
+  <text x="1048" y="352" text-anchor="middle" fill="#5E80A6" font-size="9.5">routable pod IPs via VPC CNI</text>
+  <!-- pod hexes -->
+  <polygon points="940,378 952,367.6 976,367.6 988,378 976,388.4 952,388.4" fill="#10351F" stroke="#2ECC71" stroke-width="1.5" transform="translate(-12,8)"/>
+  <polygon points="1036,378 1048,367.6 1072,367.6 1084,378 1072,388.4 1048,388.4" fill="#10351F" stroke="#2ECC71" stroke-width="1.5" transform="translate(0,8)"/>
+  <polygon points="1132,378 1144,367.6 1168,367.6 1180,378 1168,388.4 1144,388.4" fill="#33270A" stroke="#F0A93B" stroke-width="1.5" transform="translate(12,8)"/>
+  <text x="952" y="416" text-anchor="middle" fill="#2ECC71" font-size="9">ready+serving</text>
+  <text x="1048" y="416" text-anchor="middle" fill="#2ECC71" font-size="9">ready+serving</text>
+  <text x="1156" y="416" text-anchor="middle" fill="#F0A93B" font-size="9">serving·draining</text>
+
+  <!-- data flow arrows -->
+  <line x1="214" y1="372" x2="354" y2="372" stroke="#5CC8C8" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="284" y="364" text-anchor="middle" fill="#7FB8B8" font-size="9.5">HTTPS</text>
+  <line x1="520" y1="372" x2="614" y2="372" stroke="#5CC8C8" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="780" y1="372" x2="874" y2="372" stroke="#5CC8C8" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="827" y="364" text-anchor="middle" fill="#7FB8B8" font-size="9">to pod IP</text>
+
+  <!-- ============ SYNC LOOP ============ -->
+  <!-- TargetGroupBinding -->
+  <rect x="360" y="574" width="230" height="80" rx="8" fill="#0F2942" stroke="#326CE5" stroke-width="1.6"/>
+  <text x="475" y="604" text-anchor="middle" fill="#9CC2F0" font-size="13" font-weight="700">TargetGroupBinding</text>
+  <text x="475" y="623" text-anchor="middle" fill="#5E80A6" font-size="10">the LBC's sync engine</text>
+  <text x="475" y="639" text-anchor="middle" fill="#5E80A6" font-size="9.5">register / deregister pods</text>
+
+  <!-- EndpointSlices -->
+  <rect x="650" y="574" width="190" height="80" rx="8" fill="#0F2942" stroke="#326CE5" stroke-width="1.6"/>
+  <text x="745" y="604" text-anchor="middle" fill="#9CC2F0" font-size="13" font-weight="700">EndpointSlices</text>
+  <text x="745" y="623" text-anchor="middle" fill="#5E80A6" font-size="10">live pod IPs + conditions</text>
+  <text x="745" y="639" text-anchor="middle" fill="#5E80A6" font-size="9.5">ready · serving · terminating</text>
+
+  <!-- pods -> endpointslices -->
+  <path d="M1048 436 Q1010 540 842 600" fill="none" stroke="#2ECC71" stroke-width="1.8" marker-end="url(#arrG)"/>
+  <text x="1010" y="520" text-anchor="middle" fill="#5FBF85" font-size="9.5">report ready / serving</text>
+
+  <!-- endpointslices -> TGB -->
+  <line x1="650" y1="614" x2="594" y2="614" stroke="#2ECC71" stroke-width="1.8" marker-end="url(#arrG)"/>
+  <text x="622" y="606" text-anchor="middle" fill="#5FBF85" font-size="9">watch</text>
+
+  <!-- TGB -> target group (close the loop) -->
+  <path d="M475 574 Q500 470 660 422" fill="none" stroke="#2ECC71" stroke-width="1.8" stroke-dasharray="1 0" marker-end="url(#arrG)"/>
+  <text x="500" y="498" text-anchor="middle" fill="#5FBF85" font-size="9.5">keep targets in sync</text>
+
+  <!-- ============ INVARIANT RIBBON ============ -->
+  <rect x="64" y="688" width="1152" height="46" rx="6" fill="#0C2236" stroke="#1E3A5C" stroke-width="1"/>
+  <rect x="64" y="688" width="5" height="46" rx="2" fill="url(#lbc)"/>
+  <text x="92" y="710" fill="#9FC4E8" font-size="11" letter-spacing="0.5">THE ONE INVARIANT</text>
+  <text x="92" y="727" fill="#EAF4FF" font-size="12.5" font-weight="600">The load balancer's target list always mirrors the set of pods that can actually serve traffic right now.</text>
+</svg>

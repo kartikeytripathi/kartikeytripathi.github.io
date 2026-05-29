@@ -248,6 +248,8 @@ Every piece we walked through solves a problem created by the one before it. Her
 
 *I want internet traffic to reach my pods → so I declare intent in Kubernetes (Ingress or `LoadBalancer` Service) → the LBC translates that into real AWS infrastructure (ALB or NLB) → and it keeps that infrastructure pointed at only the live, healthy pods as they churn.*
 
+![EKS traffic routing diagram](/images/blog/eks-traffic-diagram.svg)
+
 And the layered view that ties the objects together:
 
 | Layer | You declare | Translated by | Into | Kept in sync by | Reads |

@@ -96,6 +96,13 @@ const components: Components = {
     <strong className="font-semibold text-white">{children}</strong>
   ),
   em: ({ children }) => <em className="italic text-gray-300">{children}</em>,
+  img: ({ src, alt }) => (
+    <img
+      src={src}
+      alt={alt ?? ""}
+      className="w-full rounded-md border border-gray-800 my-6"
+    />
+  ),
 };
 
 export default function ArticleBody({ content }: { content: string }) {
