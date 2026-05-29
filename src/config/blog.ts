@@ -24,6 +24,16 @@ export const blogPosts: BlogPost[] = [
     thumbnail: "",
   },
   {
+    slug: "how-traffic-reaches-your-eks-pods",
+    title: "What Actually Happens When Internet Traffic Reaches Your EKS Pod",
+    description:
+      "From Ingress YAML to a packet landing on your container — a full walkthrough of the AWS Load Balancer Controller, TargetGroupBinding, EndpointSlices, and the ready vs serving conditions that make rolling updates graceful.",
+    date: "May 2026",
+    tags: ["AWS", "EKS", "Kubernetes", "Networking", "ALB", "Ingress", "DevOps"],
+    type: "article",
+    thumbnail: "",
+  },
+  {
     slug: "how-irsa-really-works-on-eks",
     title: "How IRSA Really Works on EKS — and the One-Character Bug That Can Break It",
     description:
