@@ -9,6 +9,7 @@ export function middleware(request: NextRequest) {
     // Pass through static resources and system routes
     if (
       url.pathname.startsWith("/resources/") ||
+      url.pathname.startsWith("/images/") ||
       url.pathname === "/sitemap.xml" ||
       url.pathname === "/robots.txt"
     ) {
