@@ -20,12 +20,12 @@ export async function setViewsServerAction() {
     { upsert: true, new: true }
   );
 
-  resend.emails.send({
+  await resend.emails.send({
     from: "portfolio@kartikeytripathi.in",
     to: "kartikey.tripathi.37@gmail.com",
     subject: "👀 Someone visited your portfolio",
     text: `Your portfolio just got a new visit! Total views: ${doc?.views ?? 1}`,
-  }).catch(() => {});
+  });
 
   return { success: true };
 }
