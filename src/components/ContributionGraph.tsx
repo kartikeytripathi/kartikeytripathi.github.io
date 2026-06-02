@@ -258,16 +258,22 @@ export default function ContributionGraph() {
                 if (e.key === "Enter" || e.key === " ") handleLoveClick();
               },
             })}
-            className={`bg-gray-900/30 border border-blue-500/30 hover:bg-gray-800/50
-              transition-all duration-300 flex flex-col items-center justify-center
+            className={`bg-gray-900/30 border transition-all duration-300 flex flex-col items-center justify-center
               p-3 rounded-lg text-center h-[70px] md:h-[80px] lg:h-[85px]
               w-[90%] md:w-[85%] lg:w-[80%] mx-auto
-              ${item.isLove ? "cursor-pointer hover:border-pink-400/60" : ""}`}
+              ${item.isLove
+                ? hasLoved
+                  ? "cursor-default border-red-500/60 bg-red-950/20"
+                  : "cursor-pointer border-blue-500/30 hover:bg-gray-800/50 hover:border-pink-400/60"
+                : "border-blue-500/30 hover:bg-gray-800/50"
+              }`}
           >
             <div
               className={`mb-1 ${
                 item.isLove
-                  ? "text-pink-400 group-hover:text-pink-300"
+                  ? hasLoved
+                    ? "text-red-500"
+                    : "text-pink-400 group-hover:text-pink-300"
                   : "text-blue-400"
               }`}
             >
@@ -278,7 +284,7 @@ export default function ContributionGraph() {
             </p>
             <p
               className={`text-[13px] md:text-[14px] font-semibold ${
-                item.isLove ? "text-pink-400" : "text-white"
+                item.isLove ? (hasLoved ? "text-red-500" : "text-pink-400") : "text-white"
               }`}
             >
               {item.isLove ? `❤️ ${item.value}` : item.value}
