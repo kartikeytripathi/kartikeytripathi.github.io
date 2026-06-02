@@ -2,6 +2,9 @@
 
 import { connectToDatabase } from "@/lib/database";
 import LoveCount from "@/model/loveCount.model";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function getLoveCountServerAction() {
   await connectToDatabase();
@@ -16,6 +19,13 @@ export async function addLoveServerAction() {
     { $inc: { count: 1 } },
     { upsert: true, new: true }
   );
+  resend.emails.send({
+    from: "portfolio@kartikeytripathi.in",
+    to: "kartikey.tripathi.37@gmail.com",
+    subject: "❤️ Someone loved your portfolio",
+    text: `Your portfolio just received a love! Total loves: ${doc.count}`,
+  }).catch(() => {});
+
   return { success: true, count: doc.count };
 }
 
