@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1100 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How a conntrack insert race produces a one second DNS delay">
+  <defs>
+    <style>
+      .t-title  { font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; fill: #0f172a; }
+      .t-sub    { font-family: 'IBM Plex Sans', sans-serif; font-weight: 400; fill: #6b6453; }
+      .t-label  { font-family: 'IBM Plex Sans', sans-serif; font-weight: 500; fill: #0f172a; }
+      .t-mono   { font-family: 'IBM Plex Mono', monospace; fill: #334155; }
+      .t-monob  { font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+      .t-stage  { font-family: 'IBM Plex Mono', monospace; font-weight: 600; fill: #b45309; letter-spacing: 0.08em; }
+    </style>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#2563a8"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#c0392b"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#3b6d11"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#94908a"/>
+    </marker>
+  </defs>
+
+  <!-- ===== HEADER ===== -->
+  <text x="40" y="46" class="t-title" font-size="27">The one-second DNS delay</text>
+  <text x="40" y="72" class="t-sub" font-size="15">Why two parallel lookups race through conntrack — and one quietly vanishes</text>
+  <line x1="40" y1="90" x2="1060" y2="90" stroke="#d6cfbf" stroke-width="1"/>
+
+  <!-- ===== POD BOX ===== -->
+  <rect x="40" y="120" width="300" height="170" rx="8" fill="#f6f3ea" stroke="#d6cfbf" stroke-width="1.2"/>
+  <text x="60" y="148" class="t-stage" font-size="12">THE POD</text>
+  <text x="60" y="176" class="t-label" font-size="14">App calls getaddrinfo()</text>
+  <text x="60" y="200" class="t-mono" font-size="12.5">glibc fires TWO queries</text>
+  <text x="60" y="220" class="t-mono" font-size="12.5">in parallel on ONE socket:</text>
+  <rect x="60" y="234" width="120" height="36" rx="5" fill="#e6f1fb" stroke="#9cc2e6"/>
+  <text x="120" y="251" class="t-monob" font-size="12" fill="#185fa5" text-anchor="middle">A record</text>
+  <text x="120" y="265" class="t-mono" font-size="10.5" fill="#185fa5" text-anchor="middle">query #1</text>
+  <rect x="196" y="234" width="120" height="36" rx="5" fill="#e6f1fb" stroke="#9cc2e6"/>
+  <text x="256" y="251" class="t-monob" font-size="12" fill="#185fa5" text-anchor="middle">AAAA record</text>
+  <text x="256" y="265" class="t-mono" font-size="10.5" fill="#185fa5" text-anchor="middle">query #2</text>
+
+  <!-- same-tuple callout -->
+  <text x="60" y="258" class="t-mono" font-size="11" fill="#c0392b" opacity="0"></text>
+
+  <!-- arrows from the two queries down into the kernel -->
+  <path d="M120,270 L120,332" stroke="#2563a8" stroke-width="2.4" fill="none" marker-end="url(#arrowBlue)"/>
+  <path d="M256,270 L256,332" stroke="#2563a8" stroke-width="2.4" fill="none" marker-end="url(#arrowBlue)"/>
+  <text x="40" y="320" class="t-mono" font-size="10.5" fill="#c0392b">both queries carry an identical 5-tuple</text>
+
+  <!-- ===== SAME TUPLE NOTE (right of pod) ===== -->
+  <rect x="372" y="120" width="688" height="170" rx="8" fill="#fbf6ee" stroke="#e6d9bf" stroke-width="1.2"/>
+  <text x="392" y="148" class="t-stage" font-size="12" fill="#b45309">WHY THEY COLLIDE</text>
+  <text x="392" y="174" class="t-mono" font-size="12.5">Both packets leave the same socket, so they share the same source tuple:</text>
+  <rect x="392" y="188" width="648" height="32" rx="5" fill="#fff" stroke="#e6d9bf"/>
+  <text x="404" y="209" class="t-mono" font-size="12.5" fill="#334155">src=10.244.1.5 sport=51514  dst=10.96.0.10 dport=53  proto=udp</text>
+  <text x="392" y="244" class="t-mono" font-size="12.5">conntrack must create a NEW entry for each — but they arrive nanoseconds apart,</text>
+  <text x="392" y="263" class="t-mono" font-size="12.5">on different CPUs, both checking "does an entry exist yet?" at the same instant.</text>
+
+  <!-- ===== STAGE 1: DNAT ===== -->
+  <text x="40" y="364" class="t-stage" font-size="13">STAGE 1 — DNAT IN PREROUTING</text>
+  <line x1="40" y1="376" x2="1060" y2="376" stroke="#e6d9bf" stroke-width="1"/>
+
+  <rect x="40" y="396" width="470" height="118" rx="8" fill="#f6f3ea" stroke="#d6cfbf"/>
+  <text x="60" y="423" class="t-label" font-size="14">Query #1  (A)</text>
+  <text x="60" y="447" class="t-mono" font-size="12">VIP 10.96.0.10:53 → CoreDNS pod</text>
+  <text x="60" y="467" class="t-mono" font-size="12">conntrack: insert entry... </text>
+  <rect x="60" y="478" width="430" height="26" rx="5" fill="#eaf3de" stroke="#97c459"/>
+  <text x="75" y="496" class="t-monob" font-size="11.5" fill="#3b6d11">[OK] slot reserved — committed first</text>
+
+  <rect x="590" y="396" width="470" height="118" rx="8" fill="#f6f3ea" stroke="#d6cfbf"/>
+  <text x="610" y="423" class="t-label" font-size="14">Query #2  (AAAA)</text>
+  <text x="610" y="447" class="t-mono" font-size="12">VIP 10.96.0.10:53 → CoreDNS pod</text>
+  <text x="610" y="467" class="t-mono" font-size="12">conntrack: insert entry...</text>
+  <rect x="610" y="478" width="430" height="26" rx="5" fill="#fdeceb" stroke="#e0a39c"/>
+  <text x="625" y="496" class="t-monob" font-size="11.5" fill="#c0392b">[X] identical tuple already inserting — clash</text>
+
+  <!-- two parallel lanes -->
+  <path d="M120,514 L120,560" stroke="#3b6d11" stroke-width="2.4" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M256,514 L256,560" stroke="#3b6d11" stroke-width="2.4" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M780,514 L780,560" stroke="#c0392b" stroke-width="2.4" fill="none" marker-end="url(#arrowRed)" stroke-dasharray="6 4"/>
+
+  <!-- ===== STAGE 2: THE RACE ===== -->
+  <text x="40" y="592" class="t-stage" font-size="13">STAGE 2 — THE INSERT RACE (nf_conntrack_confirm)</text>
+  <line x1="40" y1="604" x2="1060" y2="604" stroke="#e6d9bf" stroke-width="1"/>
+
+  <rect x="40" y="624" width="470" height="108" rx="8" fill="#f1f7e9" stroke="#c4dca3"/>
+  <text x="60" y="651" class="t-label" font-size="14" fill="#3b6d11">Packet #1 — confirmed</text>
+  <text x="60" y="675" class="t-mono" font-size="12">Entry written to the hash table.</text>
+  <text x="60" y="695" class="t-mono" font-size="12">Forwarded to CoreDNS. Reply will</text>
+  <text x="60" y="713" class="t-mono" font-size="12">come back and be un-NAT'd cleanly.</text>
+
+  <rect x="590" y="624" width="470" height="108" rx="8" fill="#fcefed" stroke="#e6b5ae"/>
+  <text x="610" y="651" class="t-label" font-size="14" fill="#c0392b">Packet #2 — DROPPED</text>
+  <text x="610" y="675" class="t-mono" font-size="12">Confirm sees a duplicate tuple and</text>
+  <text x="610" y="695" class="t-mono" font-size="12">silently discards the packet. No error,</text>
+  <text x="610" y="713" class="t-mono" font-size="12">no ICMP — it simply never arrives.</text>
+
+  <path d="M275,732 L275,778" stroke="#3b6d11" stroke-width="2.4" fill="none" marker-end="url(#arrowGreen)"/>
+  <path d="M825,732 L825,778" stroke="#94908a" stroke-width="2.4" fill="none" marker-end="url(#arrowGray)" stroke-dasharray="3 4"/>
+  <text x="838" y="762" class="t-mono" font-size="10.5" fill="#94908a">silence...</text>
+
+  <!-- ===== STAGE 3: THE WAIT ===== -->
+  <text x="40" y="810" class="t-stage" font-size="13">STAGE 3 — THE RESOLVER WAITS</text>
+  <line x1="40" y1="822" x2="1060" y2="822" stroke="#e6d9bf" stroke-width="1"/>
+
+  <rect x="40" y="842" width="470" height="92" rx="8" fill="#f1f7e9" stroke="#c4dca3"/>
+  <text x="60" y="869" class="t-label" font-size="14" fill="#3b6d11">A answer returns fast</text>
+  <text x="60" y="893" class="t-mono" font-size="12">CoreDNS replies in single-digit ms.</text>
+  <text x="60" y="911" class="t-mono" font-size="12">But getaddrinfo() needs BOTH.</text>
+
+  <rect x="590" y="842" width="470" height="92" rx="8" fill="#fcefed" stroke="#e6b5ae"/>
+  <text x="610" y="869" class="t-label" font-size="14" fill="#c0392b">AAAA answer never came</text>
+  <text x="610" y="893" class="t-mono" font-size="12">glibc blocks on its retransmit timer.</text>
+  <text x="610" y="911" class="t-monob" font-size="13" fill="#c0392b">Default timeout = 1 second.</text>
+
+  <!-- ===== PAYOFF BANNER ===== -->
+  <rect x="40" y="958" width="1020" height="86" rx="10" fill="#fbf0d9" stroke="#e6c98f" stroke-width="1.4"/>
+  <rect x="40" y="958" width="6" height="86" rx="3" fill="#b45309"/>
+  <text x="64" y="990" class="t-mono" font-size="12" fill="#b45309" letter-spacing="0.08em">THE RESULT</text>
+  <text x="64" y="1018" class="t-title" font-size="20" fill="#1f2a37">A retransmit fires after 1s, succeeds, and the app finally resolves.</text>
+  <text x="64" y="1038" class="t-mono" font-size="12.5" fill="#6b6453">Fixes: --random-fully · single-request-reopen in resolv.conf · NodeLocal DNSCache (take DNS off the conntrack path)</text>
+</svg>

@@ -13,6 +13,16 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "conntrack-kubernetes-dns-race",
+    title: "The conntrack DNS Race Condition in Kubernetes",
+    description:
+      "Why your pods get random 5-second DNS timeouts — a deep dive into the Linux conntrack table, the A vs AAAA query race through iptables SNAT, how to confirm it with conntrack -S, and four remediation paths including NodeLocal DNSCache.",
+    date: "Jun 2026",
+    tags: ["Kubernetes", "Networking", "DNS", "conntrack", "iptables", "EKS", "Debugging", "DevOps"],
+    type: "article",
+    thumbnail: "/images/blog/conntrack-dns-race-thumbnail.svg",
+  },
+  {
     slug: "networking-handbook",
     title: "Networking // Field Manual",
     description:

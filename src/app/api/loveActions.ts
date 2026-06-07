@@ -29,12 +29,3 @@ export async function addLoveServerAction() {
   return { success: true, count: doc.count };
 }
 
-export async function setLoveCountServerAction(count: number) {
-  await connectToDatabase();
-  const doc = await LoveCount.findOneAndUpdate(
-    {},
-    { $set: { count } },
-    { upsert: true, new: true }
-  );
-  return { success: true, count: doc.count };
-}
