@@ -13,6 +13,16 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "adot-collector-eks-setup",
+    title: "Installing the ADOT Collector on EKS: Every Trap I Hit, and How I Got Out",
+    description:
+      "A start-to-finish walkthrough of installing the AWS Distro for OpenTelemetry addon on EKS — cert-manager prereqs, the v1beta1 config gotcha, pod-density scheduling failures, and verifying traces actually land in X-Ray.",
+    date: "Jun 2026",
+    tags: ["AWS", "EKS", "ADOT", "OpenTelemetry", "Observability", "X-Ray", "Kubernetes"],
+    type: "article",
+    thumbnail: "/images/blog/adot-hero.webp",
+  },
+  {
     slug: "conntrack-kubernetes-dns-race",
     title: "The conntrack DNS Race Condition in Kubernetes",
     description:
