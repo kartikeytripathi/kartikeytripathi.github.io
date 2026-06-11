@@ -5,6 +5,11 @@ import Image from "next/image";
 import { FiExternalLink, FiBookOpen } from "react-icons/fi";
 import { blogPosts } from "@/config/blog";
 
+const featuredPosts = [
+  ...blogPosts.filter((p) => p.type !== "video").slice(0, 3),
+  ...blogPosts.filter((p) => p.type === "video").slice(0, 1),
+];
+
 export function BlogSection() {
   return (
     <div className="mb-16">
@@ -41,7 +46,7 @@ export function BlogSection() {
 
       {/* Blog Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {blogPosts.map((post, index) => (
+        {featuredPosts.map((post, index) => (
           <motion.a
             key={post.slug}
             href={post.externalUrl ?? `https://blogs.kartikeytripathi.in/${post.slug}`}
