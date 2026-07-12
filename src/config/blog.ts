@@ -13,6 +13,16 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "github-actions-runners-lambda-microvms",
+    title: "Every CI Job Gets Its Own Kernel: GitHub Actions Runners on AWS Lambda MicroVMs",
+    description:
+      "Building single-use, Firecracker-isolated GitHub Actions runners on the new Lambda MicroVMs primitive — architecture, full repro, and the snapshot-identity problem nobody talks about.",
+    date: "Jul 2026",
+    tags: ["AWS", "Lambda", "Firecracker", "GitHub Actions", "CI/CD", "Containers", "MicroVMs"],
+    type: "article",
+    thumbnail: "/images/blog/hero-banner-microvm.png",
+  },
+  {
     slug: "adot-collector-eks-setup",
     title: "Installing the ADOT Collector on EKS: Every Trap I Hit, and How I Got Out",
     description:

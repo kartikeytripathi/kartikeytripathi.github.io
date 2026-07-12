@@ -1,0 +1,141 @@
+<svg viewBox="0 0 1200 660" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Sans','Segoe UI',sans-serif">
+  <defs>
+    <!-- sunrise gradient: the accent of the piece -->
+    <linearGradient id="sunrise" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%"  stop-color="#f59e0b"/>
+      <stop offset="55%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="sunriseSoft" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%"  stop-color="#fde9d4"/>
+      <stop offset="100%" stop-color="#fdf3e7"/>
+    </linearGradient>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#fbf7f0"/>
+      <stop offset="100%" stop-color="#f7efe3"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a7a66"/>
+    </marker>
+    <marker id="arrowAccent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f97316"/>
+    </marker>
+  </defs>
+
+  <!-- paper background -->
+  <rect x="0" y="0" width="1200" height="660" fill="url(#sky)"/>
+  <!-- sunrise horizon glow -->
+  <ellipse cx="600" cy="700" rx="760" ry="190" fill="url(#sunriseSoft)" opacity="0.8"/>
+  <circle cx="1075" cy="92" r="46" fill="url(#sunrise)" opacity="0.16"/>
+  <circle cx="1075" cy="92" r="30" fill="url(#sunrise)" opacity="0.25"/>
+
+  <!-- title -->
+  <text x="72" y="76" font-size="30" font-weight="600" fill="#3d332a" letter-spacing="-0.3">Every CI job gets its own kernel</text>
+  <text x="72" y="104" font-size="15" fill="#8a7a66">GitHub Actions runners on AWS Lambda MicroVMs — one job, one Firecracker VM, then gone</text>
+
+  <!-- ═════════ row 1 : control plane ═════════ -->
+  <!-- GitHub -->
+  <g>
+    <rect x="72" y="168" width="180" height="86" rx="12" fill="#fffdf9" stroke="#d9cbb8" stroke-width="1.5"/>
+    <text x="162" y="203" font-size="16" font-weight="600" fill="#3d332a" text-anchor="middle">GitHub repo</text>
+    <text x="162" y="226" font-size="12.5" fill="#8a7a66" text-anchor="middle" font-family="'IBM Plex Mono',monospace">workflow_job</text>
+    <text x="162" y="243" font-size="11.5" fill="#b3a48f" text-anchor="middle">queued / completed</text>
+  </g>
+
+  <!-- webhook arrow -->
+  <line x1="252" y1="211" x2="332" y2="211" stroke="#8a7a66" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <text x="292" y="200" font-size="11" fill="#8a7a66" text-anchor="middle">webhook</text>
+
+  <!-- API Gateway -->
+  <g>
+    <rect x="334" y="168" width="196" height="86" rx="12" fill="#fffdf9" stroke="#d9cbb8" stroke-width="1.5"/>
+    <text x="432" y="200" font-size="16" font-weight="600" fill="#3d332a" text-anchor="middle">API Gateway</text>
+    <text x="432" y="222" font-size="12" fill="#8a7a66" text-anchor="middle">HMAC verify</text>
+    <text x="432" y="240" font-size="11" fill="#c2410c" text-anchor="middle" font-family="'IBM Plex Mono',monospace">X-Hub-Signature-256</text>
+  </g>
+
+  <!-- split arrows to two queues -->
+  <path d="M 530 196 C 575 196 575 176 618 176" fill="none" stroke="#8a7a66" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M 530 228 C 575 228 575 248 618 248" fill="none" stroke="#8a7a66" stroke-width="1.8" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
+
+  <!-- SQS queues -->
+  <g>
+    <rect x="620" y="150" width="176" height="52" rx="10" fill="#fffdf9" stroke="#d9cbb8" stroke-width="1.5"/>
+    <text x="708" y="172" font-size="13.5" font-weight="600" fill="#3d332a" text-anchor="middle">SQS · jobs queue</text>
+    <text x="708" y="190" font-size="11" fill="#8a7a66" text-anchor="middle" font-family="'IBM Plex Mono',monospace">action = queued</text>
+  </g>
+  <g>
+    <rect x="620" y="222" width="176" height="52" rx="10" fill="#fffdf9" stroke="#d9cbb8" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="708" y="244" font-size="13.5" font-weight="600" fill="#3d332a" text-anchor="middle">SQS · cleanup queue</text>
+    <text x="708" y="262" font-size="11" fill="#8a7a66" text-anchor="middle" font-family="'IBM Plex Mono',monospace">action = completed</text>
+  </g>
+
+  <!-- arrows to launcher / janitor -->
+  <line x1="796" y1="176" x2="876" y2="176" stroke="#8a7a66" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <line x1="796" y1="248" x2="876" y2="248" stroke="#8a7a66" stroke-width="1.8" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
+
+  <!-- Launcher -->
+  <g>
+    <rect x="878" y="150" width="250" height="52" rx="10" fill="#fffdf9" stroke="#d9cbb8" stroke-width="1.5"/>
+    <text x="1003" y="172" font-size="13.5" font-weight="600" fill="#3d332a" text-anchor="middle">Launcher λ</text>
+    <text x="1003" y="190" font-size="11" fill="#8a7a66" text-anchor="middle" font-family="'IBM Plex Mono',monospace">run-microvm · reg token · push cfg</text>
+  </g>
+  <!-- Janitor -->
+  <g>
+    <rect x="878" y="222" width="250" height="52" rx="10" fill="#fffdf9" stroke="#d9cbb8" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="1003" y="244" font-size="13.5" font-weight="600" fill="#3d332a" text-anchor="middle">Janitor λ</text>
+    <text x="1003" y="262" font-size="11" fill="#8a7a66" text-anchor="middle" font-family="'IBM Plex Mono',monospace">terminate-microvm · 10-min sweep</text>
+  </g>
+
+  <!-- ═════════ launcher down into the microVM ═════════ -->
+  <path d="M 878 192 C 860 192 850 202 850 218 L 850 298 C 850 314 838 322 818 322 L 726 322"
+        fill="none" stroke="#f97316" stroke-width="2.2" marker-end="url(#arrowAccent)"/>
+  <text x="864" y="292" font-size="11.5" fill="#c2410c" font-family="'IBM Plex Mono',monospace">POST /register</text>
+  <text x="864" y="308" font-size="10.5" fill="#c2410c" font-family="'IBM Plex Mono',monospace">X-aws-proxy-auth: JWE</text>
+
+  <!-- janitor dashed terminate path -->
+  <path d="M 1128 248 C 1168 248 1168 560 1128 560 L 728 560"
+        fill="none" stroke="#b3a48f" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="1090" y="548" font-size="10.5" fill="#8a7a66" font-family="'IBM Plex Mono',monospace" text-anchor="end">terminate-microvm</text>
+
+  <!-- ═════════ the MicroVM : nested layers ═════════ -->
+  <!-- outer: Firecracker VM -->
+  <g>
+    <rect x="150" y="308" width="576" height="304" rx="16" fill="#fffdf9" stroke="url(#sunrise)" stroke-width="2.6"/>
+    <rect x="150" y="308" width="576" height="304" rx="16" fill="url(#sunriseSoft)" opacity="0.35"/>
+    <text x="174" y="340" font-size="15" font-weight="600" fill="#c2410c">Lambda MicroVM · Firecracker · own kernel</text>
+    <text x="702" y="340" font-size="11" fill="#8a7a66" text-anchor="end" font-family="'IBM Plex Mono',monospace">arm64 · ≤8h · per-second</text>
+
+    <!-- layer: guest OS -->
+    <rect x="174" y="356" width="528" height="232" rx="12" fill="#fffdf9" stroke="#e4d6c2" stroke-width="1.4"/>
+    <text x="192" y="382" font-size="12.5" font-weight="600" fill="#6b5d4d">AL2023 guest — resumed from snapshot, mid-heartbeat</text>
+
+    <!-- bootstrap agent -->
+    <rect x="192" y="396" width="238" height="76" rx="10" fill="#fdf3e7" stroke="#e8b98a" stroke-width="1.4"/>
+    <text x="311" y="422" font-size="13" font-weight="600" fill="#3d332a" text-anchor="middle">bootstrap agent :8080</text>
+    <text x="311" y="441" font-size="10.5" fill="#8a7a66" text-anchor="middle">snapshotted · identity-free</text>
+    <text x="311" y="458" font-size="10.5" fill="#c2410c" text-anchor="middle" font-family="'IBM Plex Mono',monospace">waits for one job</text>
+
+    <!-- runner -->
+    <rect x="446" y="396" width="238" height="76" rx="10" fill="#fdf3e7" stroke="#e8b98a" stroke-width="1.4"/>
+    <text x="565" y="420" font-size="13" font-weight="600" fill="#3d332a" text-anchor="middle">actions runner</text>
+    <text x="565" y="439" font-size="10.5" fill="#8a7a66" text-anchor="middle" font-family="'IBM Plex Mono',monospace">config.sh --ephemeral</text>
+    <text x="565" y="456" font-size="10.5" fill="#8a7a66" text-anchor="middle">registers post-boot · runs ONE job</text>
+
+    <line x1="430" y1="434" x2="444" y2="434" stroke="#e8935a" stroke-width="1.8" marker-end="url(#arrowAccent)"/>
+
+    <!-- innermost: containers -->
+    <rect x="192" y="488" width="492" height="82" rx="10" fill="#fffaf3" stroke="#e4d6c2" stroke-width="1.3"/>
+    <text x="210" y="513" font-size="12" font-weight="600" fill="#6b5d4d">dockerd → containerd → runc</text>
+    <text x="210" y="532" font-size="10.5" fill="#8a7a66" font-family="'IBM Plex Mono',monospace">clone(CLONE_NEWNS|NEWPID|…)</text>
+    <!-- little container boxes -->
+    <rect x="520" y="500" width="46" height="46" rx="7" fill="#fde9d4" stroke="#e8b98a"/>
+    <rect x="576" y="500" width="46" height="46" rx="7" fill="#fde9d4" stroke="#e8b98a"/>
+    <rect x="632" y="500" width="46" height="46" rx="7" fill="url(#sunrise)" opacity="0.85"/>
+    <text x="655" y="528" font-size="11" fill="#fffdf9" text-anchor="middle" font-weight="600">job</text>
+  </g>
+
+  <!-- caption -->
+  <text x="150" y="644" font-size="12.5" fill="#8a7a66">namespaces, inside a VM, inside a serverless control plane — the isolation boundary is KVM, not a shared kernel</text>
+  <text x="1128" y="644" font-size="11" fill="#b3a48f" text-anchor="end" font-family="'IBM Plex Mono',monospace">kartikeytripathi.in</text>
+</svg>
