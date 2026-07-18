@@ -53,8 +53,9 @@ export function Projects() {
               <Image
                 src={project.image}
                 alt={project.title}
-                width={400}
-                height={300}
+                width={1600}
+                height={900}
+                unoptimized={project.image.endsWith(".svg")}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
             </div>

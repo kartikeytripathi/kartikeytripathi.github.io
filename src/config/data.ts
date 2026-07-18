@@ -3,6 +3,7 @@ import {
   SiKubernetes,
   SiNextdotjs,
   SiTypescript,
+  SiJavascript,
   SiTailwindcss,
   SiPostgresql,
   SiMysql,
@@ -12,6 +13,8 @@ import {
   SiAnsible,
   SiJenkins,
   SiGithubactions,
+  SiGooglechrome,
+  SiAnthropic,
 } from "react-icons/si";
 
 export const socialLinks = [
@@ -134,6 +137,7 @@ export const techStack = [
   // === LANGUAGES ===
   { name: "Python", icon: FaPython, color: "text-yellow-400", type: "Languages" },
   { name: "TypeScript", icon: SiTypescript, color: "text-blue-500", type: "Languages" },
+  { name: "JavaScript", icon: SiJavascript, color: "text-yellow-300", type: "Languages" },
 
   // === DEVOPS & IAC ===
   { name: "Terraform", icon: SiTerraform, color: "text-purple-500", type: "DevOps & IaC" },
@@ -146,6 +150,8 @@ export const techStack = [
   // === WEB ===
   { name: "Next.js", icon: SiNextdotjs, color: "text-white", type: "Web" },
   { name: "Tailwind", icon: SiTailwindcss, color: "text-cyan-400", type: "Web" },
+  { name: "Chrome", icon: SiGooglechrome, color: "text-blue-400", type: "Web" },
+  { name: "Anthropic", icon: SiAnthropic, color: "text-orange-300", type: "Web" },
 ];
 
 export const projects = [
@@ -158,6 +164,17 @@ export const projects = [
     githubUrl: "https://github.com/kartikeytripathi/kubeforge",
     techStack: techStack.filter((item) =>
       ["Next.js", "TypeScript", "Tailwind"].includes(item.name)
+    ),
+  },
+  {
+    title: "QuizLens",
+    description:
+      "Chrome extension that turns any public practice question into a structured breakdown — Answer, Why, per-option Elimination, and one memorable Key Rule. Highlight a question, hit Alt+Q, and a dark amber overlay slides in. Built for grinding AWS certification and CKA question banks without alt-tabbing between the quiz, docs, and ChatGPT.",
+    image: "/images/projects/quizlens.svg",
+    liveUrl: "https://github.com/kartikeytripathi/quizlens",
+    githubUrl: "https://github.com/kartikeytripathi/quizlens",
+    techStack: techStack.filter((item) =>
+      ["JavaScript", "Chrome", "Anthropic"].includes(item.name)
     ),
   },
 ];
