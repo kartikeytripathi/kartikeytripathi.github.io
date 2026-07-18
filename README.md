@@ -1,73 +1,150 @@
+<div align="center">
+
+<img src="./public/logo.webp" alt="Kartikey Tripathi" width="120" style="border-radius: 50%;"/>
+
 # Kartikey Tripathi — Portfolio
 
-> Cloud & DevOps Engineer at Amazon Web Services  
-> 🌐 [kartikeytripathi.in](https://www.kartikeytripathi.in) · 📝 [blogs.kartikeytripathi.in](https://blogs.kartikeytripathi.in) · 🗺️ [diagrams.kartikeytripathi.in](https://diagrams.kartikeytripathi.in)
+### *Cloud & DevOps Engineer @ AWS · shipping content, tools, and diagrams for the containers community*
+
+[![Portfolio](https://img.shields.io/badge/Live-kartikeytripathi.in-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://www.kartikeytripathi.in)
+[![Blog](https://img.shields.io/badge/Blog-blogs.kartikeytripathi.in-F5C842?style=for-the-badge&logo=hashnode&logoColor=black)](https://blogs.kartikeytripathi.in)
+[![Diagrams](https://img.shields.io/badge/AWS_Diagrams-diagrams.kartikeytripathi.in-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)](https://diagrams.kartikeytripathi.in)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kartikeytripathi)
+
+<br/>
+
+![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=flat-square&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-animated-0055FF?style=flat-square&logo=framer&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+
+</div>
 
 ---
 
-## Tech Stack
+## 🎯 What this is
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwindcss)
-![MongoDB](https://img.shields.io/badge/MongoDB-6-47A248?style=flat-square&logo=mongodb)
-![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?style=flat-square&logo=vercel)
+The portfolio of an **AWS Containers Support Engineer** moving deeper into DevOps — but really it's the front door to a small ecosystem I've been building on the side:
 
----
-
-## Features
-
-- **Hero section** — avatar, bio, social links, location
-- **Work experience** — detailed timeline with bullet points
-- **Technical skills** — categorised icon grid (Cloud, Databases, DevOps, Web)
-- **Projects** — live demos with thumbnails and tech stack
-- **Certifications** — AWS certs with issuer badges
-- **Blog section** — linked to [blogs.kartikeytripathi.in](https://blogs.kartikeytripathi.in)
-- **GitHub contribution graph** — live stats, views counter, love reaction
-- **Call to action** — email + Topmate scheduling
-- **Dark theme** — always on, monospace accents
-- **SEO** — JSON-LD structured data, OG image, sitemap, robots.txt
+| Property | What it is | URL |
+|---|---|---|
+| 🌐 **Portfolio** | This site — bio, work, projects, certs, contribution graph | [kartikeytripathi.in](https://www.kartikeytripathi.in) |
+| 📝 **Blog** | Long-form writeups — EKS internals, ADOT, Karpenter, Lambda MicroVMs | [blogs.kartikeytripathi.in](https://blogs.kartikeytripathi.in) |
+| 🗺️ **AWS Diagrams** | Interactive architecture diagrams — searchable, filterable | [diagrams.kartikeytripathi.in](https://diagrams.kartikeytripathi.in) |
+| ⎈ **KubeForge** | 38-lab hands-on K8s + EKS platform for CKA / DevOps prep | [kubeforge.kartikeytripathi.in](https://kubeforge.kartikeytripathi.in) |
+| 🔍 **QuizLens** | Chrome extension: highlight a practice question → get the full breakdown | [github.com/kartikeytripathi/quizlens](https://github.com/kartikeytripathi/quizlens) |
 
 ---
 
-## Properties
+## ✨ What's on the page
 
-| Property | URL |
-|----------|-----|
-| Portfolio | [kartikeytripathi.in](https://www.kartikeytripathi.in) |
-| Blog | [blogs.kartikeytripathi.in](https://blogs.kartikeytripathi.in) |
-| AWS Diagrams | [diagrams.kartikeytripathi.in](https://diagrams.kartikeytripathi.in) |
-| KubeForge | [kubeforge.kartikeytripathi.in](https://kubeforge.kartikeytripathi.in) |
+Everything is animated with Framer Motion, dark by default, monospace where it matters.
 
----
-
-## Local Development
-
-```bash
-# Install dependencies
-npm install
-
-# Add environment variables
-cp .env.example .env.local
-# Fill in MONGODB_URI in .env.local
-
-# Start dev server
-npm run dev
+```
+┌─────────────────────────────────────────────────────────────┐
+│  ◆  HERO           avatar · bio · socials · location · CTA  │
+│  ◆  WORK           timeline · bullets · role progression    │
+│  ◆  SKILLS         Cloud · DB · DevOps · Web · Languages    │
+│  ◆  PROJECTS       KubeForge · QuizLens · custom SVG heroes │
+│  ◆  CERTS          AWS SAA · AIF · CCP · OCI · BeSA         │
+│  ◆  BLOG           latest 3 posts + featured video          │
+│  ◆  CONTRIBUTIONS  live GitHub graph · views · love button  │
+│  ◆  CTA            email · Topmate 1:1 · calendar hook      │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+**Also under the hood:**
+- 🎨 Cursor spotlight, scroll progress bar, back-to-top affordance
+- ♿ Semantic HTML, focus states, `prefers-reduced-motion` respected
+- 🚀 JSON-LD structured data, OG image, sitemap, robots.txt
+- 🔒 XSS-hardened JSON-LD sinks, server-only DB access, no client secrets
+- 📱 Mobile-first responsive layout down to 320px
 
 ---
 
-## Environment Variables
+## 🛠 Tech stack
 
-| Variable | Description |
-|----------|-------------|
-| `MONGODB_URI` | MongoDB Atlas connection string |
+| Layer | Choice | Why |
+|---|---|---|
+| **Framework** | Next.js 15 (App Router) | Server components, streaming, image optimizer, edge-friendly |
+| **Language** | TypeScript 5 | Type safety across data config + components |
+| **Styling** | Tailwind CSS 4 | Utility-first, no runtime, dark-mode-first design |
+| **Animation** | Framer Motion | Enter-viewport reveals, subtle hover choreography |
+| **Data** | MongoDB Atlas | Love-counter, view tracking — read/write through server actions |
+| **Icons** | react-icons (Fa/Si) | Vendor-accurate brand marks for the skills grid |
+| **Hosting** | Vercel | Preview deploys per PR, prod on `main` |
 
 ---
 
-## License
+## 🚀 Local development
 
-© 2026 Kartikey Tripathi. All rights reserved.  
-See [LICENSE](./LICENSE) for details.
+```bash
+git clone https://github.com/kartikeytripathi/kartikeytripathi.github.io.git
+cd kartikeytripathi.github.io
+
+npm install
+
+cp .env.example .env.local        # fill MONGODB_URI
+
+npm run dev                       # → http://localhost:3000
+```
+
+### Useful scripts
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Turbopack dev server |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build locally |
+| `npm run lint` | ESLint over `src/` |
+
+---
+
+## 🔐 Environment variables
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `MONGODB_URI` | ✅ | MongoDB Atlas connection string — used by server actions for the love/views counter |
+
+Never commit `.env.local`. `.env.example` in the repo is the canonical placeholder.
+
+---
+
+## 📁 Project structure
+
+```
+src/
+├── app/                   # App Router: pages, layout, server actions
+├── components/            # Section components (Hero, Projects, Certifications, …)
+│   └── ui/                # shadcn-flavoured primitives
+├── config/                # data.ts — content lives here as typed exports
+├── content/               # MDX / structured blog content shims
+├── lib/                   # Server-only helpers (DB, MDX, utils)
+├── model/                 # Mongoose schemas
+└── middleware.ts          # request-time headers, CSP hooks
+
+public/
+├── images/                # project heroes (webp + SVG), blog assets, about
+└── icons/                 # OG image, favicons, resume.pdf
+```
+
+Content is data-driven — most of what you see on the site is edited by touching `src/config/data.ts`, no component code changes required.
+
+---
+
+## 📜 License
+
+© 2026 Kartikey Tripathi · [MIT-flavoured license](./LICENSE) for code; **content and images are all rights reserved**.
+
+<div align="center">
+
+<br/>
+
+**Built and maintained solo. If any of it saved you a Google, ⭐ the repo or drop me a note.**
+
+[![Email](https://img.shields.io/badge/Email-kartikey.tripathi.37%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:kartikey.tripathi.37@gmail.com)
+[![GitHub followers](https://img.shields.io/github/followers/kartikeytripathi?style=flat-square&logo=github&label=Follow)](https://github.com/kartikeytripathi)
+
+</div>
