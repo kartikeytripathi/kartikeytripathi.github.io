@@ -1,70 +1,82 @@
 <div align="center">
 
-<img src="./public/logo.webp" alt="Kartikey Tripathi" width="120" style="border-radius: 50%;"/>
-
-# Kartikey Tripathi — Portfolio
-
-### *Cloud & DevOps Engineer @ AWS · shipping content, tools, and diagrams for the containers community*
-
-[![Portfolio](https://img.shields.io/badge/Live-kartikeytripathi.in-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://www.kartikeytripathi.in)
-[![Blog](https://img.shields.io/badge/Blog-blogs.kartikeytripathi.in-F5C842?style=for-the-badge&logo=hashnode&logoColor=black)](https://blogs.kartikeytripathi.in)
-[![Diagrams](https://img.shields.io/badge/AWS_Diagrams-diagrams.kartikeytripathi.in-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)](https://diagrams.kartikeytripathi.in)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kartikeytripathi)
+<img src="./public/images/readme-banner.svg" alt="Kartikey Tripathi — mission log" width="100%"/>
 
 <br/>
 
-![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=flat-square&logo=next.js&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-animated-0055FF?style=flat-square&logo=framer&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white)
-![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+### ✦ *Cloud & DevOps Engineer @ AWS · shipping content, tools, and diagrams for the containers community* ✦
+
+[![Portfolio](https://img.shields.io/badge/◆_Live-kartikeytripathi.in-FCD34D?style=for-the-badge&labelColor=0B1026)](https://www.kartikeytripathi.in)
+[![Blog](https://img.shields.io/badge/◇_Blog-blogs.kartikeytripathi.in-67E8F9?style=for-the-badge&labelColor=0B1026)](https://blogs.kartikeytripathi.in)
+[![Diagrams](https://img.shields.io/badge/◈_Diagrams-diagrams.kartikeytripathi.in-E879F9?style=for-the-badge&labelColor=0B1026)](https://diagrams.kartikeytripathi.in)
+[![LinkedIn](https://img.shields.io/badge/◉_LinkedIn-connect-A78BFA?style=for-the-badge&labelColor=0B1026)](https://www.linkedin.com/in/kartikeytripathi)
+
+<br/>
+
+![Next.js](https://img.shields.io/badge/Next.js-15-C4B5FD?style=flat-square&labelColor=0B1026&logo=next.js&logoColor=C4B5FD)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-67E8F9?style=flat-square&labelColor=0B1026&logo=typescript&logoColor=67E8F9)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-E879F9?style=flat-square&labelColor=0B1026&logo=tailwindcss&logoColor=E879F9)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-animated-FCD34D?style=flat-square&labelColor=0B1026&logo=framer&logoColor=FCD34D)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-A78BFA?style=flat-square&labelColor=0B1026&logo=mongodb&logoColor=A78BFA)
+![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-F8FAFC?style=flat-square&labelColor=0B1026&logo=vercel&logoColor=F8FAFC)
 
 </div>
 
 ---
 
-## 🎯 What this is
+## 🪐  Mission
 
-The portfolio of an **AWS Containers Support Engineer** moving deeper into DevOps — but really it's the front door to a small ecosystem I've been building on the side:
+This isn't just a résumé site — it's **mission control** for a small orbit of things I've been building on the side. An AWS Containers Support Engineer transitioning deeper into DevOps, publishing what I learn along the way.
 
-| Property | What it is | URL |
-|---|---|---|
-| 🌐 **Portfolio** | This site — bio, work, projects, certs, contribution graph | [kartikeytripathi.in](https://www.kartikeytripathi.in) |
-| 📝 **Blog** | Long-form writeups — EKS internals, ADOT, Karpenter, Lambda MicroVMs | [blogs.kartikeytripathi.in](https://blogs.kartikeytripathi.in) |
-| 🗺️ **AWS Diagrams** | Interactive architecture diagrams — searchable, filterable | [diagrams.kartikeytripathi.in](https://diagrams.kartikeytripathi.in) |
-| ⎈ **KubeForge** | 38-lab hands-on K8s + EKS platform for CKA / DevOps prep | [kubeforge.kartikeytripathi.in](https://kubeforge.kartikeytripathi.in) |
-| 🔍 **QuizLens** | Chrome extension: highlight a practice question → get the full breakdown | [github.com/kartikeytripathi/quizlens](https://github.com/kartikeytripathi/quizlens) |
+Every satellite below is a self-contained deployment. This repo is the one you're looking at now — the hub.
 
 ---
 
-## ✨ What's on the page
+## 🛰  The constellation
 
-Everything is animated with Framer Motion, dark by default, monospace where it matters.
+Five properties in orbit around a shared brand and shared writing voice.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  ◆  HERO           avatar · bio · socials · location · CTA  │
-│  ◆  WORK           timeline · bullets · role progression    │
-│  ◆  SKILLS         Cloud · DB · DevOps · Web · Languages    │
-│  ◆  PROJECTS       KubeForge · QuizLens · custom SVG heroes │
-│  ◆  CERTS          AWS SAA · AIF · CCP · OCI · BeSA         │
-│  ◆  BLOG           latest 3 posts + featured video          │
-│  ◆  CONTRIBUTIONS  live GitHub graph · views · love button  │
-│  ◆  CTA            email · Topmate 1:1 · calendar hook      │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Also under the hood:**
-- 🎨 Cursor spotlight, scroll progress bar, back-to-top affordance
-- ♿ Semantic HTML, focus states, `prefers-reduced-motion` respected
-- 🚀 JSON-LD structured data, OG image, sitemap, robots.txt
-- 🔒 XSS-hardened JSON-LD sinks, server-only DB access, no client secrets
-- 📱 Mobile-first responsive layout down to 320px
+| ✦ | Satellite | Purpose | Orbit |
+|---|---|---|---|
+| ◆ | **Portfolio** *(this repo)* | Hub · bio · work · projects · certs · contribution graph | [`kartikeytripathi.in`](https://www.kartikeytripathi.in) |
+| ◇ | **Blog** | Long-form — EKS internals, ADOT, Karpenter, Lambda MicroVMs | [`blogs.kartikeytripathi.in`](https://blogs.kartikeytripathi.in) |
+| ◈ | **AWS Diagrams** | Interactive architecture diagrams — searchable, filterable | [`diagrams.kartikeytripathi.in`](https://diagrams.kartikeytripathi.in) |
+| ⎈ | **KubeForge** | 38-lab hands-on K8s + EKS platform for CKA / DevOps prep | [`kubeforge.kartikeytripathi.in`](https://kubeforge.kartikeytripathi.in) |
+| 🔍 | **QuizLens** | Chrome extension: highlight a practice question → get the full breakdown | [`github.com/kartikeytripathi/quizlens`](https://github.com/kartikeytripathi/quizlens) |
 
 ---
 
-## 🛠 Tech stack
+## 🌌  Star map
+
+The page reads top-to-bottom like a flight plan — every section is animated with Framer Motion, dark by default, monospace where it matters.
+
+```
+      ✦
+       \
+    ┌───────────────────────────────────────────────────────────┐
+    │  ◆  HERO           avatar · bio · socials · location      │
+    │  ◆  WORK           timeline · role progression            │
+    │  ◆  SKILLS         Cloud · DB · DevOps · Web · Languages  │
+    │  ◆  PROJECTS       KubeForge · QuizLens · SVG heroes      │
+    │  ◆  CERTS          AWS SAA · AIF · CCP · OCI · BeSA       │
+    │  ◆  BLOG           latest 3 posts + featured video        │
+    │  ◆  CONTRIBUTIONS  live GitHub graph · views · love       │
+    │  ◆  CTA            email · Topmate 1:1 · calendar hook    │
+    └───────────────────────────────────────────────────────────┘
+                                                              \
+                                                               ✧
+```
+
+**Also aboard:**
+- 🌠  Cursor spotlight · scroll progress bar · back-to-top thruster
+- ♿  Semantic HTML · focus states · `prefers-reduced-motion` respected
+- 🚀  JSON-LD structured data · OG image · sitemap · robots.txt
+- 🔒  XSS-hardened JSON-LD sinks · server-only DB access · no client secrets
+- 📱  Mobile-first responsive layout down to 320px
+
+---
+
+## ⚙  Ship systems
 
 | Layer | Choice | Why |
 |---|---|---|
@@ -78,7 +90,7 @@ Everything is animated with Framer Motion, dark by default, monospace where it m
 
 ---
 
-## 🚀 Local development
+## 🚀  Launch locally
 
 ```bash
 git clone https://github.com/kartikeytripathi/kartikeytripathi.github.io.git
@@ -91,7 +103,7 @@ cp .env.example .env.local        # fill MONGODB_URI
 npm run dev                       # → http://localhost:3000
 ```
 
-### Useful scripts
+### Flight commands
 
 | Command | What it does |
 |---|---|
@@ -102,7 +114,7 @@ npm run dev                       # → http://localhost:3000
 
 ---
 
-## 🔐 Environment variables
+## 🔐  Life support (env vars)
 
 | Variable | Required | Purpose |
 |---|---|---|
@@ -112,7 +124,7 @@ Never commit `.env.local`. `.env.example` in the repo is the canonical placehold
 
 ---
 
-## 📁 Project structure
+## 🗺  Ship's blueprint
 
 ```
 src/
@@ -134,7 +146,7 @@ Content is data-driven — most of what you see on the site is edited by touchin
 
 ---
 
-## 📜 License
+## 📜  Signal
 
 © 2026 Kartikey Tripathi · [MIT-flavoured license](./LICENSE) for code; **content and images are all rights reserved**.
 
@@ -142,9 +154,13 @@ Content is data-driven — most of what you see on the site is edited by touchin
 
 <br/>
 
-**Built and maintained solo. If any of it saved you a Google, ⭐ the repo or drop me a note.**
+**✦   Built and maintained solo. If any of it saved you a Google, ⭐ the repo or send a signal.   ✦**
 
-[![Email](https://img.shields.io/badge/Email-kartikey.tripathi.37%40gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:kartikey.tripathi.37@gmail.com)
-[![GitHub followers](https://img.shields.io/github/followers/kartikeytripathi?style=flat-square&logo=github&label=Follow)](https://github.com/kartikeytripathi)
+[![Email](https://img.shields.io/badge/◈_Email-kartikey.tripathi.37%40gmail.com-FCD34D?style=flat-square&labelColor=0B1026)](mailto:kartikey.tripathi.37@gmail.com)
+[![GitHub followers](https://img.shields.io/github/followers/kartikeytripathi?style=flat-square&labelColor=0B1026&color=A78BFA&logo=github&label=Follow)](https://github.com/kartikeytripathi)
+
+<br/>
+
+<sub>*mission log · v2026 · orbit stable*</sub>
 
 </div>
