@@ -8,6 +8,7 @@ import {
   WorkExperience,
   ContributionGraph,
   BlogSection,
+  Videos,
   ErrorBoundary,
 } from "@/components";
 
@@ -108,6 +109,12 @@ export default function Portfolio() {
 <div id="blog">
 <FadeInUp delay={0.55}>
   <BlogSection />
+</FadeInUp>
+</div>
+
+<div id="videos">
+<FadeInUp delay={0.58}>
+  <Videos />
 </FadeInUp>
 </div>
 

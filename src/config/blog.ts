@@ -83,18 +83,28 @@ export const blogPosts: BlogPost[] = [
     type: "article",
     thumbnail: "",
   },
+];
+
+export type Video = {
+  title: string;
+  description: string;
+  date: string;
+  tags: string[];
+  videoId: string;
+  url: string;
+  publishedOn?: string;
+};
+
+export const videos: Video[] = [
   {
-    slug: "connect-rds-private-ec2-instance-connect-endpoint",
     title:
       "How do I use an EC2 instance to connect to a private RDS DB instance from a local machine?",
     description:
       "A step-by-step walkthrough on securely connecting to a private Amazon RDS instance from your local machine using EC2 Instance Connect Endpoint — no bastion host or SSH tunnel required.",
     date: "Oct 2025",
     tags: ["AWS", "RDS", "EC2", "Networking"],
-    type: "video",
     videoId: "TRkp54ekyY4",
-    externalUrl: "https://www.youtube.com/watch?v=TRkp54ekyY4",
-    thumbnail: "https://i.ytimg.com/vi/TRkp54ekyY4/hqdefault.jpg",
+    url: "https://www.youtube.com/watch?v=TRkp54ekyY4",
     publishedOn: "Amazon Web Services",
   },
 ];

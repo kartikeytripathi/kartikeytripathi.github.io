@@ -3,6 +3,7 @@ export * from "./CursorSpotlight";
 export * from "./ScrollProgress";
 export * from "./BackToTop";
 export * from "./BlogSection";
+export * from "./Videos";
 export * from "./ErrorBoundary";
 export * from "./CallToAction";
 export * from "./Certifications";
