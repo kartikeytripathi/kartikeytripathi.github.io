@@ -62,6 +62,7 @@ export const heroSection = {
 export const workExperience = [
   {
     company: "Amazon Web Services (AWS)",
+    tabLabel: "AWS · Containers",
     position: "Cloud Engineer – Containers",
     period: "Feb 2026 – Present",
     location: "Hyderabad, Telangana, India",
@@ -76,6 +77,7 @@ export const workExperience = [
   },
   {
     company: "Amazon Web Services (AWS)",
+    tabLabel: "AWS · Databases",
     position: "Cloud Database Engineer",
     period: "Jun 2024 – Feb 2026",
     location: "Bangalore, Karnataka, India",
@@ -91,6 +93,7 @@ export const workExperience = [
   },
   {
     company: "IQVIA",
+    tabLabel: "IQVIA",
     position: "Software Developer",
     period: "Nov 2021 – Jun 2024",
     location: "Bangalore, Karnataka, India",
@@ -106,6 +109,7 @@ export const workExperience = [
   },
   {
     company: "Wipro",
+    tabLabel: "Wipro",
     position: "SQL Database Administrator",
     period: "Jul 2019 – Nov 2021",
     location: "Bangalore, Karnataka, India",
