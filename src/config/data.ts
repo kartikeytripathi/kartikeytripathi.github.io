@@ -5,8 +5,9 @@ import {
   SiTypescript,
   SiJavascript,
   SiTailwindcss,
-  SiPostgresql,
   SiMysql,
+  SiAmazonrds,
+  SiAmazonredshift,
   SiSnowflake,
   SiOracle,
   SiTerraform,
@@ -133,8 +134,10 @@ export const techStack = [
 
   // === DATABASES ===
   { name: "MySQL", icon: SiMysql, color: "text-blue-400", type: "Databases" },
-  { name: "PostgreSQL", icon: SiPostgresql, color: "text-blue-500", type: "Databases" },
+  { name: "Aurora MySQL", icon: SiAmazonrds, color: "text-blue-500", type: "Databases" },
+  { name: "Redshift", icon: SiAmazonredshift, color: "text-purple-400", type: "Databases" },
   { name: "SQL Server", icon: FaDatabase, color: "text-red-400", type: "Databases" },
+  { name: "Sybase", icon: FaDatabase, color: "text-teal-400", type: "Databases" },
   { name: "Oracle", icon: SiOracle, color: "text-red-600", type: "Databases" },
   { name: "Snowflake", icon: SiSnowflake, color: "text-cyan-400", type: "Databases" },
 
