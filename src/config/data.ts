@@ -154,8 +154,9 @@ export const techStack = [
   // === WEB ===
   { name: "Next.js", icon: SiNextdotjs, color: "text-white", type: "Web" },
   { name: "Tailwind", icon: SiTailwindcss, color: "text-cyan-400", type: "Web" },
-  { name: "Chrome", icon: SiGooglechrome, color: "text-blue-400", type: "Web" },
-  { name: "Anthropic", icon: SiAnthropic, color: "text-orange-300", type: "Web" },
+  // === PROJECT-ONLY (not shown in Tech Arsenal) ===
+  { name: "Chrome", icon: SiGooglechrome, color: "text-blue-400", type: "Project" },
+  { name: "Anthropic", icon: SiAnthropic, color: "text-orange-300", type: "Project" },
 ];
 
 export const projects = [

@@ -4,6 +4,13 @@ import { techStack } from "@/config/data";
 import { motion } from "framer-motion";
 import { FaReact } from "react-icons/fa";
 
+const categories = [
+  { title: "Cloud & Containers", types: ["Cloud & Containers"] },
+  { title: "DevOps & IaC", types: ["DevOps & IaC"] },
+  { title: "Databases", types: ["Databases"] },
+  { title: "Languages & Web", types: ["Languages", "Web"] },
+];
+
 export function TechnicalSkills() {
   return (
     <div className="mb-16">
@@ -37,31 +44,49 @@ export function TechnicalSkills() {
         />
       </motion.div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        {techStack.map((skill, index) => {
-          const IconComponent = skill.icon;
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {categories.map((category, catIndex) => {
+          const skills = techStack.filter((s) => category.types.includes(s.type));
           return (
             <motion.div
-              key={index}
+              key={category.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: index * 0.05,
-                ease: "easeOut",
-              }}
+              transition={{ duration: 0.6, delay: catIndex * 0.1, ease: "easeOut" }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.05, y: -2 }}
-              className=" group p-4 flex flex-col items-center  rounded-xl border border-blue-500/30 group bg-gray-900/30 hover:bg-gray-800/50 transition-all duration-500"
+              className="rounded-xl border border-blue-500/30 bg-gray-900/30 p-5"
             >
-              <div className="w-12 h-12 mb-3 flex items-center justify-center">
-                <IconComponent
-                  className={`w-10 h-10 ${skill.color} group-hover:scale-110 transition-transform duration-500`}
-                />
+              <h3 className="text-sm font-mono font-semibold text-blue-400 uppercase tracking-wider mb-4 pb-3 border-b border-gray-800">
+                {category.title}
+              </h3>
+
+              <div className="space-y-3">
+                {skills.map((skill, index) => {
+                  const IconComponent = skill.icon;
+                  return (
+                    <motion.div
+                      key={skill.name}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: catIndex * 0.1 + index * 0.05,
+                        ease: "easeOut",
+                      }}
+                      viewport={{ once: true }}
+                      whileHover={{ x: 4 }}
+                      className="group flex items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-gray-800/50 transition-colors duration-300"
+                    >
+                      <IconComponent
+                        className={`w-6 h-6 shrink-0 ${skill.color} group-hover:scale-110 transition-transform duration-300`}
+                      />
+                      <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-300">
+                        {skill.name}
+                      </span>
+                    </motion.div>
+                  );
+                })}
               </div>
-              <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-300">
-                {skill.name}
-              </span>
             </motion.div>
           );
         })}
