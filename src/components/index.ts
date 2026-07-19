@@ -4,6 +4,7 @@ export * from "./ScrollProgress";
 export * from "./BackToTop";
 export * from "./BlogSection";
 export * from "./Videos";
+export * from "./FloatingLove";
 export * from "./ErrorBoundary";
 export * from "./CallToAction";
 export * from "./Certifications";

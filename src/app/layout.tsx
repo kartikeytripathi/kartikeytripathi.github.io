@@ -1,7 +1,7 @@
 import "./globals.css";
 import { inter, jetbrainsMono } from "@/config/fonts";
 import { metaData } from "@/config/metadata";
-import { Header, CursorSpotlight, ScrollProgress, BackToTop } from "@/components";
+import { Header, CursorSpotlight, ScrollProgress, BackToTop, FloatingLove } from "@/components";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -26,6 +26,7 @@ export default function RootLayout({
         <Header />
         {children}
         <BackToTop />
+        <FloatingLove />
 
         {/* 📊 Analytics */}
         {gaId && <GoogleAnalytics gaId={gaId} />} {/* Google Analytics */}

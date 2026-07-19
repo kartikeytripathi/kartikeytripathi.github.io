@@ -4,13 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import {
-  FiGithub,
-  FiUsers,
-  FiUserCheck,
-  FiHeart,
-  FiEye,
-} from "react-icons/fi";
+import { FiGithub, FiUsers, FiUserCheck } from "react-icons/fi";
 import { githubSection } from "@/config/data";
 
 // Lazy-load GitHubCalendar
@@ -20,26 +14,6 @@ const GitHubCalendar = dynamic(() => import("react-github-calendar"), {
     <div className="text-center text-gray-400 py-10">Loading graph...</div>
   ),
 });
-
-// Server Actions
-import {
-  getLoveCountServerAction,
-  addLoveServerAction,
-} from "@/app/api/loveActions";
-import {
-  getViewsServerAction,
-  setViewsServerAction,
-} from "@/app/api/viewsActions";
-
-// 🎵 Preload audio (TS FIX)
-let preloadedAudio: HTMLAudioElement | null = null;
-
-if (typeof Audio !== "undefined") {
-  preloadedAudio = new Audio("/sounds/song1.mp3");
-  preloadedAudio.volume = 0.75;
-  preloadedAudio.preload = "auto";
-  preloadedAudio.load();
-}
 
 const githubTheme = {
   light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
@@ -52,20 +26,12 @@ export default function ContributionGraph() {
 
   const [mounted, setMounted] = useState(false);
   const [stats, setStats] = useState({ followers: 0, following: 0 });
-  const [views, setViews] = useState(0);
-  const [love, setLove] = useState(0);
-  const [hasLoved, setHasLoved] = useState(false);
 
   const { theme, systemTheme } = useTheme();
   const scheme =
     theme === "light" ? "light" : theme === "dark" ? "dark" : systemTheme;
 
   const graphRef = useRef<HTMLDivElement>(null);
-
-  // preload audio on mount
-  useEffect(() => {
-    preloadedAudio?.load();
-  }, []);
 
   // Auto scroll
   useEffect(() => {
@@ -101,88 +67,9 @@ export default function ContributionGraph() {
     fetchGitHubData();
   }, [username]);
 
-  // Views + Love
-  useEffect(() => {
-    async function fetchCounts() {
-      try {
-        const [viewRes, loveRes] = await Promise.all([
-          getViewsServerAction(),
-          getLoveCountServerAction(),
-        ]);
-        setViews(viewRes.views || 0);
-        setLove(loveRes.count || 0);
-
-        const viewed = localStorage.getItem("uniqueUserViewed");
-        if (!viewed) {
-          await setViewsServerAction();
-          localStorage.setItem("uniqueUserViewed", "true");
-        }
-      } catch {
-        // counts stay at 0 on failure
-      }
-    }
-    fetchCounts();
-  }, []);
-
-  // 🎉 Confetti + instant audio
-  const celebrate = async () => {
-    try {
-      const { default: confetti } = await import("canvas-confetti");
-
-      // instant play
-      preloadedAudio?.play().catch(() => {});
-
-      const colors =
-        scheme === "dark"
-          ? ["#ff4d6d", "#00bbf9", "#38bdf8", "#a855f7", "#f472b6"]
-          : ["#facc15", "#ef4444", "#3b82f6", "#10b981", "#a855f7"];
-
-      const defaults = {
-        spread: 70,
-        startVelocity: 45,
-        gravity: 0.9,
-        scalar: 1.1,
-        ticks: 100,
-        colors,
-      };
-
-      const shoot = () => {
-        confetti({
-          ...defaults,
-          particleCount: 45,
-          origin: { x: 0.5, y: 0.5 },
-        });
-      };
-
-      shoot();
-      [200, 400, 600, 800].forEach((t) => setTimeout(shoot, t));
-    } catch {
-      // confetti is non-critical
-    }
-  };
-
-  // ❤️ Love click
-  const handleLoveClick = async () => {
-    if (hasLoved) return;
-
-    celebrate();
-    setHasLoved(true);
-    setLove((prev) => prev + 1);
-    localStorage.setItem("hasLoved", "true");
-
-    try {
-      const res = await addLoveServerAction();
-      setLove(res.count);
-    } catch {
-      // love count stays optimistically incremented
-    }
-  };
-
   const githubInfo = [
     { icon: <FiUsers />, label: "Followers", value: stats.followers },
     { icon: <FiUserCheck />, label: "Following", value: stats.following },
-    { icon: <FiHeart />, label: "Love Count", value: love, isLove: true },
-    { icon: <FiEye />, label: "Views", value: views },
   ];
 
   return (
@@ -233,7 +120,7 @@ export default function ContributionGraph() {
       {/* Info Cards */}
       <div
         className="
-          grid grid-cols-2 md:grid-cols-4 gap-4 
+          grid grid-cols-2 gap-4
           w-full md:w-[90%] lg:w-[80%] xl:w-[78%]
           mx-auto mt-6
         "
@@ -246,48 +133,16 @@ export default function ContributionGraph() {
             transition={{ duration: 0.4, delay: i * 0.1 }}
             viewport={{ once: true }}
             whileHover={{ scale: 1.05 }}
-            onClick={item.isLove ? handleLoveClick : undefined}
-            {...(item.isLove && {
-              role: "button",
-              tabIndex: 0,
-              "aria-label": hasLoved
-                ? `You already loved this — ${love} loves`
-                : `Give love — ${love} loves so far`,
-              "aria-pressed": hasLoved,
-              onKeyDown: (e: React.KeyboardEvent) => {
-                if (e.key === "Enter" || e.key === " ") handleLoveClick();
-              },
-            })}
-            className={`bg-gray-900/30 border transition-all duration-300 flex flex-col items-center justify-center
+            className="bg-gray-900/30 border border-blue-500/30 hover:bg-gray-800/50 transition-all duration-300 flex flex-col items-center justify-center
               p-3 rounded-lg text-center h-[70px] md:h-[80px] lg:h-[85px]
-              w-[90%] md:w-[85%] lg:w-[80%] mx-auto
-              ${item.isLove
-                ? hasLoved
-                  ? "cursor-default border-red-500/60 bg-red-950/20"
-                  : "cursor-pointer border-blue-500/30 hover:bg-gray-800/50 hover:border-pink-400/60"
-                : "border-blue-500/30 hover:bg-gray-800/50"
-              }`}
+              w-[90%] md:w-[85%] lg:w-[80%] mx-auto"
           >
-            <div
-              className={`mb-1 ${
-                item.isLove
-                  ? hasLoved
-                    ? "text-red-500"
-                    : "text-pink-400 group-hover:text-pink-300"
-                  : "text-blue-400"
-              }`}
-            >
-              {item.icon}
-            </div>
+            <div className="mb-1 text-blue-400">{item.icon}</div>
             <p className="text-[11px] md:text-[12px] font-medium text-gray-400 leading-tight">
               {item.label}
             </p>
-            <p
-              className={`text-[13px] md:text-[14px] font-semibold ${
-                item.isLove ? (hasLoved ? "text-red-500" : "text-pink-400") : "text-white"
-              }`}
-            >
-              {item.isLove ? `❤️ ${item.value}` : item.value}
+            <p className="text-[13px] md:text-[14px] font-semibold text-white">
+              {item.value}
             </p>
           </motion.div>
         ))}
