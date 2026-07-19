@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
+import { MessageForm } from "./MessageForm";
 
 export function CallToAction() {
   return (
@@ -109,6 +110,10 @@ export function CallToAction() {
           </motion.div>
         ))}
 
+      </div>
+
+      <div className="px-6">
+        <MessageForm />
       </div>
     </motion.div>
   );
