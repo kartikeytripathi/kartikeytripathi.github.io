@@ -8,6 +8,11 @@ import {
   SiMysql,
   SiAmazonrds,
   SiAmazonredshift,
+  SiGooglecloud,
+  SiAmazoneks,
+  SiAmazonecs,
+  SiHelm,
+  SiArgo,
   SiSnowflake,
   SiOracle,
   SiTerraform,
@@ -129,8 +134,14 @@ export const workExperience = [
 export const techStack = [
   // === CLOUD & CONTAINERS ===
   { name: "AWS", icon: FaAws, color: "text-orange-400", type: "Cloud & Containers" },
+  { name: "GCP", icon: SiGooglecloud, color: "text-blue-400", type: "Cloud & Containers" },
+  { name: "OCI", icon: SiOracle, color: "text-red-500", type: "Cloud & Containers" },
   { name: "Kubernetes", icon: SiKubernetes, color: "text-blue-500", type: "Cloud & Containers" },
+  { name: "EKS", icon: SiAmazoneks, color: "text-orange-400", type: "Cloud & Containers" },
+  { name: "ECS", icon: SiAmazonecs, color: "text-orange-500", type: "Cloud & Containers" },
+  { name: "ECR", icon: FaAws, color: "text-amber-400", type: "Cloud & Containers" },
   { name: "Docker", icon: FaDocker, color: "text-blue-400", type: "Cloud & Containers" },
+  { name: "Helm", icon: SiHelm, color: "text-slate-300", type: "Cloud & Containers" },
 
   // === DATABASES ===
   { name: "MySQL", icon: SiMysql, color: "text-blue-400", type: "Databases" },
@@ -148,6 +159,7 @@ export const techStack = [
 
   // === DEVOPS & IAC ===
   { name: "Terraform", icon: SiTerraform, color: "text-purple-500", type: "DevOps & IaC" },
+  { name: "ArgoCD", icon: SiArgo, color: "text-orange-400", type: "DevOps & IaC" },
   { name: "Ansible", icon: SiAnsible, color: "text-red-500", type: "DevOps & IaC" },
   { name: "Jenkins", icon: SiJenkins, color: "text-red-400", type: "DevOps & IaC" },
   { name: "GitHub Actions", icon: SiGithubactions, color: "text-white", type: "DevOps & IaC" },
