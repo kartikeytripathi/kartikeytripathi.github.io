@@ -236,13 +236,6 @@ export const certifications = [
     url: "",
   },
   {
-    title: "Oracle Cloud Infrastructure 2023 Certified Foundations Associate",
-    issuer: "Oracle",
-    issued: "2023",
-    expires: "",
-    url: "",
-  },
-  {
     title: "Amazon DynamoDB Immersion Day Participant",
     issuer: "Amazon Web Services (AWS)",
     issued: "2023",
