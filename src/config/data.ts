@@ -201,6 +201,13 @@ export const projects = [
 
 export const certifications = [
   {
+    title: "AWS Certified DevOps Engineer – Professional",
+    issuer: "Amazon Web Services (AWS)",
+    issued: "2026",
+    expires: "",
+    url: "https://www.credly.com/badges/aa78bdbd-37b8-4353-9f8b-430c6a053bed/public_url",
+  },
+  {
     title: "AWS Certified Solutions Architect – Associate",
     issuer: "Amazon Web Services (AWS)",
     issued: "2024",
