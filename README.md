@@ -58,7 +58,7 @@ The page reads top-to-bottom like a flight plan — every section is animated wi
     │  ◆  WORK           timeline · role progression            │
     │  ◆  SKILLS         Cloud · DB · DevOps · Web · Languages  │
     │  ◆  PROJECTS       KubeForge · QuizLens · SVG heroes      │
-    │  ◆  CERTS          AWS SAA · AIF · CCP · OCI · BeSA       │
+    │  ◆  CERTS          AWS DOP · SAA · AIF · CCP · BeSA       │
     │  ◆  BLOG           latest 3 posts + featured video        │
     │  ◆  CONTRIBUTIONS  live GitHub graph · views · love       │
     │  ◆  CTA            email · Topmate 1:1 · calendar hook    │
