@@ -14,4 +14,5 @@ export * from "./TechnicalSkills";
 export * from "./WorkExperience";
 export * from "./ui";
 export { default as ContributionGraph } from "./ContributionGraph";
+export * from "./TerminalWidget";
 
