@@ -3,6 +3,7 @@ import {
   Certifications,
   FadeInUp,
   HeroSection,
+  LatestStrip,
   Projects,
   TechnicalSkills,
   WorkExperience,
@@ -86,6 +87,10 @@ export default function Portfolio() {
   <HeroSection />
 </FadeInUp>
 
+<FadeInUp delay={0.15}>
+  <LatestStrip />
+</FadeInUp>
+
 <div id="experience">
 <FadeInUp delay={0.2}>
   <WorkExperience />
@@ -102,21 +107,21 @@ export default function Portfolio() {
 </FadeInUp>
 </div>
 
-<FadeInUp delay={0.5}>
-  <Certifications />
+<div id="videos">
+<FadeInUp delay={0.45}>
+  <Videos />
 </FadeInUp>
+</div>
 
 <div id="blog">
-<FadeInUp delay={0.55}>
+<FadeInUp delay={0.5}>
   <BlogSection />
 </FadeInUp>
 </div>
 
-<div id="videos">
-<FadeInUp delay={0.58}>
-  <Videos />
+<FadeInUp delay={0.55}>
+  <Certifications />
 </FadeInUp>
-</div>
 
 <FadeInUp delay={0.6}>
   <ErrorBoundary>
