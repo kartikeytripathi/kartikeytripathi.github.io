@@ -1,7 +1,7 @@
 import "./globals.css";
 import { inter, jetbrainsMono } from "@/config/fonts";
 import { metaData } from "@/config/metadata";
-import { Header, CursorSpotlight, ScrollProgress, BackToTop, FloatingLove } from "@/components";
+import { SiteChrome } from "@/components/SiteChrome";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -21,12 +21,8 @@ export default function RootLayout({
       className={`dark ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased bg-black text-white select-none">
-        <ScrollProgress />
-        <CursorSpotlight />
-        <Header />
+        <SiteChrome />
         {children}
-        <BackToTop />
-        <FloatingLove />
 
         {/* 📊 Analytics */}
         {gaId && <GoogleAnalytics gaId={gaId} />} {/* Google Analytics */}
