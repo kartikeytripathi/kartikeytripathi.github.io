@@ -13,6 +13,16 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "the-control-plane-is-four-files",
+    title: "The Control Plane Is Four Files",
+    description:
+      "I'd never once looked inside /etc/kubernetes before this weekend. Here's what happened when I finally built a kubeadm cluster from scratch — static pods, mirror pods, etcd internals, and the two times I destroyed my own cluster.",
+    date: "Aug 2026",
+    tags: ["Kubernetes", "kubeadm", "CKA", "etcd", "Static Pods", "Control Plane", "Debugging"],
+    type: "article",
+    thumbnail: "",
+  },
+  {
     slug: "github-actions-runners-lambda-microvms",
     title: "Every CI Job Gets Its Own Kernel: GitHub Actions Runners on AWS Lambda MicroVMs",
     description:
