@@ -20,7 +20,7 @@ export const blogPosts: BlogPost[] = [
     date: "Aug 2026",
     tags: ["Kubernetes", "kubeadm", "CKA", "etcd", "Static Pods", "Control Plane", "Debugging"],
     type: "article",
-    thumbnail: "",
+    thumbnail: "/images/blog/the-control-plane-is-four-files-thumbnail.svg",
   },
   {
     slug: "github-actions-runners-lambda-microvms",

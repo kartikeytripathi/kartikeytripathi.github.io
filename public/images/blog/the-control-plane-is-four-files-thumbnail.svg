@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="'JetBrains Mono', 'Courier New', monospace">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0A0A"/>
+      <stop offset="100%" style="stop-color:#0f1117"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-soft">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+
+  <!-- Subtle dot grid -->
+  <g opacity="0.07" fill="#ffffff">
+    <circle cx="60" cy="60" r="1.5"/><circle cx="180" cy="60" r="1.5"/><circle cx="300" cy="60" r="1.5"/>
+    <circle cx="420" cy="60" r="1.5"/><circle cx="540" cy="60" r="1.5"/><circle cx="660" cy="60" r="1.5"/>
+    <circle cx="780" cy="60" r="1.5"/><circle cx="900" cy="60" r="1.5"/><circle cx="1020" cy="60" r="1.5"/>
+    <circle cx="1140" cy="60" r="1.5"/>
+    <circle cx="60" cy="180" r="1.5"/><circle cx="180" cy="180" r="1.5"/><circle cx="300" cy="180" r="1.5"/>
+    <circle cx="420" cy="180" r="1.5"/><circle cx="540" cy="180" r="1.5"/><circle cx="660" cy="180" r="1.5"/>
+    <circle cx="780" cy="180" r="1.5"/><circle cx="900" cy="180" r="1.5"/><circle cx="1020" cy="180" r="1.5"/>
+    <circle cx="1140" cy="180" r="1.5"/>
+    <circle cx="60" cy="300" r="1.5"/><circle cx="180" cy="300" r="1.5"/><circle cx="300" cy="300" r="1.5"/>
+    <circle cx="420" cy="300" r="1.5"/><circle cx="540" cy="300" r="1.5"/><circle cx="660" cy="300" r="1.5"/>
+    <circle cx="780" cy="300" r="1.5"/><circle cx="900" cy="300" r="1.5"/><circle cx="1020" cy="300" r="1.5"/>
+    <circle cx="1140" cy="300" r="1.5"/>
+    <circle cx="60" cy="420" r="1.5"/><circle cx="180" cy="420" r="1.5"/><circle cx="300" cy="420" r="1.5"/>
+    <circle cx="420" cy="420" r="1.5"/><circle cx="540" cy="420" r="1.5"/><circle cx="660" cy="420" r="1.5"/>
+    <circle cx="780" cy="420" r="1.5"/><circle cx="900" cy="420" r="1.5"/><circle cx="1020" cy="420" r="1.5"/>
+    <circle cx="1140" cy="420" r="1.5"/>
+    <circle cx="60" cy="540" r="1.5"/><circle cx="180" cy="540" r="1.5"/><circle cx="300" cy="540" r="1.5"/>
+    <circle cx="420" cy="540" r="1.5"/><circle cx="540" cy="540" r="1.5"/><circle cx="660" cy="540" r="1.5"/>
+    <circle cx="780" cy="540" r="1.5"/><circle cx="900" cy="540" r="1.5"/><circle cx="1020" cy="540" r="1.5"/>
+    <circle cx="1140" cy="540" r="1.5"/>
+  </g>
+
+  <!-- Amber accent top bar -->
+  <rect x="0" y="0" width="1200" height="5" fill="#F5C842" opacity="0.9" filter="url(#glow)"/>
+
+  <!-- Background visual — /etc/kubernetes/manifests directory listing (right side decoration) -->
+  <g opacity="0.9">
+    <rect x="720" y="120" width="420" height="330" rx="8" fill="#0d0f10" stroke="#F5C842" stroke-width="1" opacity="0.18"/>
+    <text x="744" y="156" fill="#6b7280" font-size="13" letter-spacing="0.5" opacity="0.55">/etc/kubernetes/manifests</text>
+    <line x1="744" y1="170" x2="1116" y2="170" stroke="#374151" stroke-width="1" opacity="0.35"/>
+
+    <rect x="744" y="188" width="372" height="46" rx="4" fill="#F5C842" opacity="0.10"/>
+    <text x="760" y="216" fill="#F5C842" font-size="16" font-weight="600" opacity="0.9">etcd.yaml</text>
+
+    <rect x="744" y="244" width="372" height="46" rx="4" fill="#1a1c1e" opacity="0.6"/>
+    <text x="760" y="272" fill="#9CA3AF" font-size="16" opacity="0.75">kube-apiserver.yaml</text>
+
+    <rect x="744" y="300" width="372" height="46" rx="4" fill="#1a1c1e" opacity="0.6"/>
+    <text x="760" y="328" fill="#9CA3AF" font-size="16" opacity="0.75">kube-controller-manager.yaml</text>
+
+    <rect x="744" y="356" width="372" height="46" rx="4" fill="#1a1c1e" opacity="0.6"/>
+    <text x="760" y="384" fill="#9CA3AF" font-size="16" opacity="0.75">kube-scheduler.yaml</text>
+
+    <text x="744" y="428" fill="#6b7280" font-size="12" opacity="0.5">4 files · watched by the kubelet</text>
+  </g>
+
+  <!-- Left amber accent bar -->
+  <rect x="72" y="160" width="4" height="280" rx="2" fill="#F5C842" opacity="0.8" filter="url(#glow)"/>
+
+  <!-- Main category label -->
+  <text x="96" y="196" fill="#F5C842" font-size="14" font-weight="700" letter-spacing="4" opacity="0.9">KUBERNETES  ·  CKA  ·  CONTROL PLANE</text>
+
+  <!-- Title -->
+  <text x="96" y="276" fill="#E8E8E8" font-size="56" font-weight="700" letter-spacing="-1">The Control</text>
+  <text x="96" y="348" fill="#E8E8E8" font-size="56" font-weight="700" letter-spacing="-1">Plane Is</text>
+  <text x="96" y="420" fill="#F5C842" font-size="56" font-weight="700" letter-spacing="-1" filter="url(#glow-soft)">Four Files</text>
+
+  <!-- Subtitle -->
+  <text x="96" y="474" fill="#9CA3AF" font-size="20" letter-spacing="0">Static pods, etcd internals, and two self-inflicted outages</text>
+
+  <!-- Tags -->
+  <rect x="96" y="506" width="108" height="28" rx="4" fill="#111111" stroke="#374151" stroke-width="1"/>
+  <text x="150" y="525" fill="#9CA3AF" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="1">kubeadm</text>
+
+  <rect x="216" y="506" width="72" height="28" rx="4" fill="#111111" stroke="#374151" stroke-width="1"/>
+  <text x="252" y="525" fill="#9CA3AF" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="1">etcd</text>
+
+  <rect x="300" y="506" width="64" height="28" rx="4" fill="#111111" stroke="#374151" stroke-width="1"/>
+  <text x="332" y="525" fill="#9CA3AF" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="1">CKA</text>
+
+  <rect x="376" y="506" width="132" height="28" rx="4" fill="#111111" stroke="#374151" stroke-width="1"/>
+  <text x="442" y="525" fill="#9CA3AF" font-size="12" font-weight="600" text-anchor="middle" letter-spacing="1">static pods</text>
+
+  <!-- Author -->
+  <text x="96" y="590" fill="#6b7280" font-size="14" letter-spacing="1">Kartikey Tripathi  ·  blogs.kartikeytripathi.in</text>
+
+  <!-- Error badge (decorative) -->
+  <rect x="920" y="490" width="200" height="60" rx="6" fill="#3b0000" stroke="#991b1b" stroke-width="1.5"/>
+  <text x="1020" y="516" fill="#f87171" font-size="12" font-weight="700" text-anchor="middle">Forbidden: deployments</text>
+  <text x="1020" y="538" fill="#9ca3af" font-size="11" text-anchor="middle">kubectl get deploy</text>
+</svg>
