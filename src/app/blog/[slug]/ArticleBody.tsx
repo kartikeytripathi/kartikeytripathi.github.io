@@ -3,13 +3,35 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
+import type { ReactNode } from "react";
+import { slugify } from "@/lib/slugify";
+
+function flattenToText(node: ReactNode): string {
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(flattenToText).join("");
+  if (
+    node &&
+    typeof node === "object" &&
+    "props" in node &&
+    node.props &&
+    typeof node.props === "object" &&
+    "children" in node.props
+  ) {
+    return flattenToText(node.props.children as ReactNode);
+  }
+  return "";
+}
 
 const components: Components = {
   h1: ({ children }) => (
     <h1 className="text-2xl font-bold mt-10 mb-4 text-white">{children}</h1>
   ),
   h2: ({ children }) => (
-    <h2 className="text-xl font-bold mt-10 mb-3 text-white border-b border-gray-800 pb-2">
+    <h2
+      id={slugify(flattenToText(children))}
+      className="text-xl font-bold mt-10 mb-3 text-white border-b border-gray-800 pb-2 scroll-mt-24"
+    >
       {children}
     </h2>
   ),
@@ -107,7 +129,7 @@ const components: Components = {
 
 export default function ArticleBody({ content }: { content: string }) {
   return (
-    <article className="mt-2">
+    <article id="article-content" className="mt-2">
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
         {content}
       </ReactMarkdown>

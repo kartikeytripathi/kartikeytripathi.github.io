@@ -13,10 +13,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "i.pinimg.com",
-      },
-      {
-        protocol: "https",
         hostname: "i.ytimg.com",
       },
     ],

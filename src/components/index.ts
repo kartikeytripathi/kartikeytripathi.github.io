@@ -1,6 +1,7 @@
 export * from "./Header";
 export * from "./CursorSpotlight";
 export * from "./ScrollProgress";
+export * from "./ArticleProgress";
 export * from "./BackToTop";
 export * from "./BlogSection";
 export * from "./Videos";

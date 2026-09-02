@@ -1,14 +1,21 @@
 "use client";
 
 import { useEffect, useState, useTransition, type FormEvent } from "react";
-import { FiHeart, FiMessageSquare } from "react-icons/fi";
+import { FiHeart, FiMessageSquare, FiEye } from "react-icons/fi";
 import {
   getBlogLikeServerAction,
   addBlogLikeServerAction,
+  getBlogViewsServerAction,
+  addBlogViewServerAction,
   getBlogCommentsServerAction,
   addBlogCommentServerAction,
   type BlogCommentDTO,
 } from "@/app/api/blogEngagementActions";
+
+const formatCount = (n: number) =>
+  n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, "")}k` : `${n}`;
+
+const COMMENT_COOLDOWN_MS = 30_000;
 
 function timeAgo(iso: string) {
   const diffMs = Date.now() - new Date(iso).getTime();
@@ -29,6 +36,7 @@ function timeAgo(iso: string) {
 export default function BlogEngagement({ slug }: { slug: string }) {
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
+  const [viewCount, setViewCount] = useState(0);
   const [comments, setComments] = useState<BlogCommentDTO[]>([]);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -42,12 +50,21 @@ export default function BlogEngagement({ slug }: { slug: string }) {
 
     (async () => {
       try {
-        const [likeRes, commentsRes] = await Promise.all([
+        const [likeRes, viewRes, commentsRes] = await Promise.all([
           getBlogLikeServerAction(slug),
+          getBlogViewsServerAction(slug),
           getBlogCommentsServerAction(slug),
         ]);
         setLikeCount(likeRes.count);
+        setViewCount(viewRes.views);
         setComments(commentsRes.comments);
+
+        const viewedKey = `viewed:${slug}`;
+        if (!localStorage.getItem(viewedKey)) {
+          const bumped = await addBlogViewServerAction(slug);
+          setViewCount(bumped.views);
+          localStorage.setItem(viewedKey, "true");
+        }
       } catch {
         // stay at defaults on failure
       }
@@ -81,6 +98,15 @@ export default function BlogEngagement({ slug }: { slug: string }) {
       return;
     }
 
+    const lastCommentAt = Number(localStorage.getItem("lastCommentAt") || 0);
+    const remaining = COMMENT_COOLDOWN_MS - (Date.now() - lastCommentAt);
+    if (remaining > 0) {
+      setError(
+        `You just posted a comment — wait ${Math.ceil(remaining / 1000)}s before posting another.`
+      );
+      return;
+    }
+
     startTransition(async () => {
       try {
         const res = await addBlogCommentServerAction(
@@ -91,6 +117,7 @@ export default function BlogEngagement({ slug }: { slug: string }) {
         );
         if (res.comment) {
           setComments((prev) => [res.comment as BlogCommentDTO, ...prev]);
+          localStorage.setItem("lastCommentAt", String(Date.now()));
         }
         setName("");
         setMessage("");
@@ -102,21 +129,31 @@ export default function BlogEngagement({ slug }: { slug: string }) {
 
   return (
     <section className="mt-14 pt-8 border-t border-gray-800">
-      {/* Like button */}
-      <button
-        type="button"
-        onClick={handleLike}
-        disabled={hasLiked}
-        aria-pressed={hasLiked}
-        className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-mono transition-colors ${
-          hasLiked
-            ? "cursor-default border-red-500/60 bg-red-950/40 text-red-400"
-            : "cursor-pointer border-gray-800 bg-gray-900 text-gray-300 hover:border-pink-400/60 hover:text-pink-400"
-        }`}
-      >
-        <FiHeart className={hasLiked ? "fill-red-500 text-red-500" : ""} />
-        {likeCount} {likeCount === 1 ? "like" : "likes"}
-      </button>
+      {/* Like + views */}
+      <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={handleLike}
+          disabled={hasLiked}
+          aria-pressed={hasLiked}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-mono transition-colors ${
+            hasLiked
+              ? "cursor-default border-red-500/60 bg-red-950/40 text-red-400"
+              : "cursor-pointer border-gray-800 bg-gray-900 text-gray-300 hover:border-pink-400/60 hover:text-pink-400"
+          }`}
+        >
+          <FiHeart className={hasLiked ? "fill-red-500 text-red-500" : ""} />
+          {likeCount} {likeCount === 1 ? "like" : "likes"}
+        </button>
+
+        <div
+          className="flex items-center gap-1.5 text-xs font-mono text-gray-500"
+          title={`${viewCount} views`}
+        >
+          <FiEye className="w-3.5 h-3.5" />
+          {formatCount(viewCount)}
+        </div>
+      </div>
 
       {/* Comments */}
       <div className="mt-10">

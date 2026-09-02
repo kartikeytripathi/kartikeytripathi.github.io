@@ -24,7 +24,7 @@ export default async function RootLayout({
       className={`dark ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased bg-black text-white select-none">
-        <ScrollProgress />
+        {!isBlogRoute && <ScrollProgress />}
         <CursorSpotlight />
         <Header />
         {children}

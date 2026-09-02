@@ -3,6 +3,7 @@
 import { connectToDatabase } from "@/lib/database";
 import BlogLike from "@/model/blogLike.model";
 import BlogComment from "@/model/blogComment.model";
+import BlogView from "@/model/blogView.model";
 import { blogPosts } from "@/config/blog";
 import { Resend } from "resend";
 
@@ -38,6 +39,26 @@ export async function addBlogLikeServerAction(slug: string) {
   });
 
   return { success: true, count: doc.count };
+}
+
+export async function getBlogViewsServerAction(slug: string) {
+  assertValidSlug(slug);
+  await connectToDatabase();
+  const doc = await BlogView.findOne({ slug });
+  return { views: doc?.views ?? 0 };
+}
+
+// No email notification here — unlike likes/comments, views fire on every
+// unique visit and would flood the inbox at any real traffic volume.
+export async function addBlogViewServerAction(slug: string) {
+  assertValidSlug(slug);
+  await connectToDatabase();
+  const doc = await BlogView.findOneAndUpdate(
+    { slug },
+    { $inc: { views: 1 } },
+    { upsert: true, new: true }
+  );
+  return { success: true, views: doc.views };
 }
 
 export type BlogCommentDTO = {

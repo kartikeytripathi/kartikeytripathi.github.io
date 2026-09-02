@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,6 +16,7 @@ const navLinks = [
 
 export function Header() {
   const [activeSection, setActiveSection] = useState<string>("");
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const ids = navLinks.map((l) => l.href.slice(1));
@@ -48,6 +50,7 @@ export function Header() {
     e.preventDefault();
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
+    setMobileOpen(false);
   };
 
   return (
@@ -64,9 +67,9 @@ export function Header() {
           className="flex gap-2 items-center shrink-0"
         >
           <Image
-            src="https://i.pinimg.com/1200x/fc/5d/7c/fc5d7c4dd0339b2053ddd781e6626d49.jpg"
+            src="/images/about/KT.webp"
             alt="Kartikey Tripathi"
-            className="rounded-full h-8 w-8"
+            className="rounded-full h-8 w-8 object-cover"
             width={50}
             height={50}
           />
@@ -106,7 +109,50 @@ export function Header() {
           <span className="md:hidden">@ AWS</span>
           <span className="hidden md:inline">@ Amazon Web Services</span>
         </span>
+
+        {/* Mobile menu toggle */}
+        <button
+          type="button"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          className="md:hidden shrink-0 p-1.5 -mr-1.5 text-gray-300 hover:text-white transition-colors"
+        >
+          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
       </nav>
+
+      {/* Mobile menu panel */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden overflow-hidden"
+          >
+            <div className="flex flex-col gap-1 pt-4 pb-1">
+              {navLinks.map(({ label, href }) => {
+                const id = href.slice(1);
+                const isActive = activeSection === id;
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    onClick={(e) => handleScroll(e, href)}
+                    className={`text-sm py-2 transition-colors duration-200 ${
+                      isActive ? "text-white" : "text-gray-500 hover:text-gray-200"
+                    }`}
+                  >
+                    {label}
+                  </a>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

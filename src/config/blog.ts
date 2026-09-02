@@ -11,6 +11,25 @@ export type BlogPost = {
   publishedOn?: string;
 };
 
+export function getRelatedPosts(
+  currentSlug: string,
+  tags: string[],
+  limit = 3
+): BlogPost[] {
+  const tagSet = new Set(tags);
+
+  const scored = blogPosts
+    .filter((p) => p.slug !== currentSlug)
+    .map((p) => ({
+      post: p,
+      shared: p.tags.filter((t) => tagSet.has(t)).length,
+    }))
+    .filter((p) => p.shared > 0)
+    .sort((a, b) => b.shared - a.shared);
+
+  return scored.slice(0, limit).map((s) => s.post);
+}
+
 export const blogPosts: BlogPost[] = [
   {
     slug: "the-control-plane-is-four-files",
