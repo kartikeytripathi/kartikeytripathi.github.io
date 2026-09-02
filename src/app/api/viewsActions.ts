@@ -3,8 +3,11 @@
 import { connectToDatabase } from "@/lib/database";
 import View from "@/model/views.model";
 import { Resend } from "resend";
-import { headers } from "next/headers";
-import { createHash } from "crypto";
+import {
+  collectVisitorInfo,
+  fallbackVisitorInfo,
+  type VisitorInfo,
+} from "@/lib/visitorInfo";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,128 +15,6 @@ export async function getViewsServerAction() {
   await connectToDatabase();
   const doc = await View.findOne();
   return { views: doc?.views ?? 0 };
-}
-
-type VisitorInfo = {
-  location: string;
-  flag: string;
-  timezone: string;
-  localTime: string;
-  device: string;
-  referrer: string;
-  ipHash: string;
-  isBot: boolean;
-};
-
-/** Turn a 2-letter ISO country code into its flag emoji. */
-function countryFlag(code?: string) {
-  if (!code || code.length !== 2) return "🌐";
-  const A = 0x1f1e6;
-  return String.fromCodePoint(
-    ...[...code.toUpperCase()].map((c) => A + c.charCodeAt(0) - 65)
-  );
-}
-
-/** Best-effort device string from the User-Agent, e.g. "iPhone · Safari". */
-function parseDevice(ua: string) {
-  const os =
-    /iPhone|iPad|iPod/.test(ua)
-      ? "iOS"
-      : /Android/.test(ua)
-      ? "Android"
-      : /Windows/.test(ua)
-      ? "Windows"
-      : /Mac OS X/.test(ua)
-      ? "macOS"
-      : /Linux/.test(ua)
-      ? "Linux"
-      : "Unknown OS";
-
-  const browser =
-    /Edg\//.test(ua)
-      ? "Edge"
-      : /OPR\/|Opera/.test(ua)
-      ? "Opera"
-      : /Chrome\//.test(ua) && !/Chromium/.test(ua)
-      ? "Chrome"
-      : /Firefox\//.test(ua)
-      ? "Firefox"
-      : /Safari\//.test(ua)
-      ? "Safari"
-      : "Unknown browser";
-
-  const kind = /Mobi|Android|iPhone|iPad|iPod/.test(ua) ? "📱" : "💻";
-  return `${kind} ${os} · ${browser}`;
-}
-
-function looksLikeBot(ua: string) {
-  return /bot|crawl|spider|preview|facebookexternalhit|WhatsApp|Slackbot|LinkedInBot|Twitterbot|TelegramBot|Discordbot|bingbot|Googlebot|embedly|redditbot/i.test(
-    ua
-  );
-}
-
-async function collectVisitorInfo(): Promise<VisitorInfo> {
-  const h = await headers();
-
-  const ua = h.get("user-agent") ?? "";
-  const rawIp =
-    h.get("x-forwarded-for")?.split(",")[0].trim() ||
-    h.get("x-real-ip") ||
-    "";
-
-  const city = h.get("x-vercel-ip-city");
-  const region = h.get("x-vercel-ip-country-region");
-  const country = h.get("x-vercel-ip-country") ?? undefined;
-  const timezone = h.get("x-vercel-ip-timezone") ?? "";
-
-  const locationParts = [
-    city ? decodeURIComponent(city) : null,
-    region,
-    country,
-  ].filter(Boolean);
-  const location = locationParts.length ? locationParts.join(", ") : "Unknown";
-
-  let localTime = "—";
-  if (timezone) {
-    try {
-      localTime = new Intl.DateTimeFormat("en-US", {
-        timeZone: timezone,
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }).format(new Date());
-    } catch {
-      // invalid timezone header — leave as em dash
-    }
-  }
-
-  const referer = h.get("referer");
-  let referrer = "Direct / unknown";
-  if (referer) {
-    try {
-      referrer = new URL(referer).hostname;
-    } catch {
-      referrer = referer;
-    }
-  }
-
-  const ipHash = rawIp
-    ? createHash("sha256")
-        .update(rawIp + (process.env.IP_HASH_SALT ?? ""))
-        .digest("hex")
-        .slice(0, 12)
-    : "unknown";
-
-  return {
-    location,
-    flag: countryFlag(country),
-    timezone: timezone || "—",
-    localTime,
-    device: ua ? parseDevice(ua) : "Unknown",
-    referrer,
-    ipHash,
-    isBot: looksLikeBot(ua),
-  };
 }
 
 function buildEmailHtml(info: VisitorInfo, totalViews: number) {
@@ -180,16 +61,7 @@ export async function setViewsServerAction() {
   try {
     info = await collectVisitorInfo();
   } catch {
-    info = {
-      location: "Unknown",
-      flag: "🌐",
-      timezone: "—",
-      localTime: "—",
-      device: "Unknown",
-      referrer: "Direct / unknown",
-      ipHash: "unknown",
-      isBot: false,
-    };
+    info = fallbackVisitorInfo();
   }
 
   await resend.emails.send({

@@ -6,8 +6,30 @@ import BlogComment from "@/model/blogComment.model";
 import BlogView from "@/model/blogView.model";
 import { blogPosts } from "@/config/blog";
 import { Resend } from "resend";
+import {
+  collectVisitorInfo,
+  fallbackVisitorInfo,
+  buildVisitorEmailHtml,
+} from "@/lib/visitorInfo";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+async function safeCollectVisitorInfo() {
+  try {
+    return await collectVisitorInfo();
+  } catch {
+    return fallbackVisitorInfo();
+  }
+}
+
+function escapeHtml(text: string) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 function assertValidSlug(slug: string) {
   if (!blogPosts.some((p) => p.slug === slug)) {
@@ -31,11 +53,30 @@ export async function addBlogLikeServerAction(slug: string) {
     { upsert: true, new: true }
   );
 
+  const post = blogPosts.find((p) => p.slug === slug);
+  const title = post?.title ?? slug;
+  const info = await safeCollectVisitorInfo();
+
   await resend.emails.send({
     from: "portfolio@kartikeytripathi.in",
     to: "kartikey.tripathi.37@gmail.com",
-    subject: `❤️ Someone liked "${slug}"`,
-    text: `A reader liked your post "${slug}". Total likes: ${doc.count}`,
+    subject: `❤️ Someone liked "${title}"${info.location !== "Unknown" ? ` — ${info.location}` : ""}`,
+    html: buildVisitorEmailHtml({
+      emoji: "❤️",
+      eventLabel: "New like on your post",
+      headline: title,
+      info,
+      footerLabel: "Total likes",
+      footerValue: String(doc.count),
+    }),
+    text: `A reader liked your post "${title}".
+Location: ${info.location}
+Their time: ${info.localTime} (${info.timezone})
+Device: ${info.device}
+Came from: ${info.referrer}
+IP hash: ${info.ipHash}
+Likely bot: ${info.isBot ? "Yes" : "No"}
+Total likes: ${doc.count}`,
   });
 
   return { success: true, count: doc.count };
@@ -112,12 +153,38 @@ export async function addBlogCommentServerAction(
   });
 
   const post = blogPosts.find((p) => p.slug === slug);
+  const title = post?.title ?? slug;
+  const info = await safeCollectVisitorInfo();
+
+  const commentBlockHtml = `
+    <div style="padding:16px 24px 0;">
+      <div style="background:#f9fafb;border-left:3px solid #8b5cf6;border-radius:6px;padding:12px 14px;">
+        <div style="font-size:13px;font-weight:600;color:#111827;margin-bottom:4px;">${escapeHtml(cleanName)}</div>
+        <div style="font-size:14px;color:#374151;white-space:pre-wrap;">${escapeHtml(cleanMessage)}</div>
+      </div>
+    </div>`;
 
   await resend.emails.send({
     from: "portfolio@kartikeytripathi.in",
     to: "kartikey.tripathi.37@gmail.com",
-    subject: `💬 New comment on "${post?.title ?? slug}"`,
-    text: `${cleanName} commented on "${post?.title ?? slug}":\n\n${cleanMessage}`,
+    subject: `💬 New comment on "${title}"${info.location !== "Unknown" ? ` — ${info.location}` : ""}`,
+    html: buildVisitorEmailHtml({
+      emoji: "💬",
+      eventLabel: "New comment on your post",
+      headline: title,
+      info,
+      bodyHtml: commentBlockHtml,
+    }),
+    text: `${cleanName} commented on "${title}":
+
+${cleanMessage}
+
+Location: ${info.location}
+Their time: ${info.localTime} (${info.timezone})
+Device: ${info.device}
+Came from: ${info.referrer}
+IP hash: ${info.ipHash}
+Likely bot: ${info.isBot ? "Yes" : "No"}`,
   });
 
   return {
