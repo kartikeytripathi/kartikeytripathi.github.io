@@ -214,10 +214,6 @@ export default async function BlogPostPage({ params }: Props) {
 
         {hasToc && <TableOfContents items={toc} />}
       </div>
-
-      {(post.type === "article" || post.type === "video") && (
-        <BlogEngagement slug={slug} />
-      )}
     </main>
   );
 }
