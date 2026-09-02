@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { FiHeart, FiEye } from "react-icons/fi";
 import {
@@ -26,16 +25,11 @@ const formatCount = (n: number) =>
   n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, "")}k` : `${n}`;
 
 export function FloatingLove() {
-  const pathname = usePathname();
-  const isBlog = pathname?.startsWith("/blog") ?? false;
-
   const [views, setViews] = useState(0);
   const [love, setLove] = useState(0);
   const [hasLoved, setHasLoved] = useState(false);
 
   useEffect(() => {
-    if (isBlog) return;
-
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasLoved(localStorage.getItem("hasLoved") === "true");
 
@@ -58,7 +52,7 @@ export function FloatingLove() {
       }
     }
     fetchCounts();
-  }, [isBlog]);
+  }, []);
 
   const celebrate = async () => {
     try {
@@ -99,8 +93,6 @@ export function FloatingLove() {
       // love count stays optimistically incremented
     }
   };
-
-  if (isBlog) return null;
 
   return (
     <motion.div

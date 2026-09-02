@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
       url.pathname === "/sitemap.xml" ||
       url.pathname === "/robots.txt"
     ) {
-      return NextResponse.next();
+      return withResolvedPathHeader(request, url.pathname);
     }
 
     // Redirect /blog/* and /blog to clean URLs so the browser never shows /blog/ prefix
@@ -26,8 +26,28 @@ export function middleware(request: NextRequest) {
     // Rewrite clean slug paths to /blog/* internally
     const path = url.pathname === "/" ? "" : url.pathname;
     url.pathname = `/blog${path}`;
-    return NextResponse.rewrite(url);
+    return withResolvedPathHeader(request, url.pathname, url);
   }
+
+  return withResolvedPathHeader(request, request.nextUrl.pathname);
+}
+
+/**
+ * Stamps the resolved (post-rewrite) pathname onto a request header so
+ * server components can read the real route even though the browser's
+ * address bar (and therefore client-side usePathname()) never sees the
+ * /blog prefix for the blogs.kartikeytripathi.in host.
+ */
+function withResolvedPathHeader(
+  request: NextRequest,
+  resolvedPathname: string,
+  rewriteUrl?: URL
+) {
+  const headers = new Headers(request.headers);
+  headers.set("x-resolved-pathname", resolvedPathname);
+  return rewriteUrl
+    ? NextResponse.rewrite(rewriteUrl, { request: { headers } })
+    : NextResponse.next({ request: { headers } });
 }
 
 export const config = {

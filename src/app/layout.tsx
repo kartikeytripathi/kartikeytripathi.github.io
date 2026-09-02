@@ -1,4 +1,5 @@
 import "./globals.css";
+import { headers } from "next/headers";
 import { inter, jetbrainsMono } from "@/config/fonts";
 import { metaData } from "@/config/metadata";
 import { Header, CursorSpotlight, ScrollProgress, BackToTop, FloatingLove } from "@/components";
@@ -8,12 +9,14 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = metaData;
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const gaId = process.env.GOOGLE_ANALYTICS_ID || "";
+  const resolvedPathname = (await headers()).get("x-resolved-pathname") ?? "";
+  const isBlogRoute = resolvedPathname.startsWith("/blog");
 
   return (
     <html
@@ -26,7 +29,7 @@ export default function RootLayout({
         <Header />
         {children}
         <BackToTop />
-        <FloatingLove />
+        {!isBlogRoute && <FloatingLove />}
 
         {/* 📊 Analytics */}
         {gaId && <GoogleAnalytics gaId={gaId} />} {/* Google Analytics */}
