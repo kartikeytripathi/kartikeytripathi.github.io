@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { readFile } from "fs/promises";
 import path from "path";
 import ArticleBody from "./ArticleBody";
+import BlogEngagement from "./BlogEngagement";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -146,6 +147,10 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Article body */}
       {post.type === "article" && markdown && (
         <ArticleBody content={markdown} />
+      )}
+
+      {(post.type === "article" || post.type === "video") && (
+        <BlogEngagement slug={slug} />
       )}
     </main>
   );
