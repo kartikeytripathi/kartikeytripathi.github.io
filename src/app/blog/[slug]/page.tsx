@@ -102,7 +102,7 @@ export default async function BlogPostPage({ params }: Props) {
   };
 
   return (
-    <main className={`mx-auto p-6 lg:p-8 overflow-x-hidden ${hasToc ? "max-w-6xl" : "max-w-4xl"}`}>
+    <main className={`mx-auto p-6 lg:p-8 ${hasToc ? "max-w-6xl" : "max-w-4xl"}`}>
       {post.type === "article" && markdown && (
         <ArticleProgress targetId="article-content" />
       )}
