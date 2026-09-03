@@ -25,28 +25,28 @@ function flattenToText(node: ReactNode): string {
 
 const components: Components = {
   h1: ({ children }) => (
-    <h1 className="text-2xl font-bold mt-10 mb-4 text-white">{children}</h1>
+    <h1 className="text-2xl font-bold mt-10 mb-4 text-white break-words">{children}</h1>
   ),
   h2: ({ children }) => (
     <h2
       id={slugify(flattenToText(children))}
-      className="text-xl font-bold mt-10 mb-3 text-white border-b border-gray-800 pb-2 scroll-mt-24"
+      className="text-xl font-bold mt-10 mb-3 text-white border-b border-gray-800 pb-2 scroll-mt-24 break-words"
     >
       {children}
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-lg font-semibold mt-8 mb-2 text-gray-100">{children}</h3>
+    <h3 className="text-lg font-semibold mt-8 mb-2 text-gray-100 break-words">{children}</h3>
   ),
   p: ({ children }) => (
-    <p className="text-gray-300 leading-relaxed mb-5">{children}</p>
+    <p className="text-gray-300 leading-relaxed mb-5 break-words">{children}</p>
   ),
   a: ({ href, children }) => (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors"
+      className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 transition-colors break-words"
     >
       {children}
     </a>
@@ -65,7 +65,7 @@ const components: Components = {
     }
     return (
       <code
-        className="bg-gray-900 border border-gray-800 rounded px-1.5 py-0.5 text-sm font-mono text-orange-300"
+        className="bg-gray-900 border border-gray-800 rounded px-1.5 py-0.5 text-sm font-mono text-orange-300 break-all"
         {...props}
       >
         {children}
@@ -73,21 +73,21 @@ const components: Components = {
     );
   },
   pre: ({ children }) => (
-    <pre className="mb-5 rounded-md overflow-hidden">{children}</pre>
+    <pre className="mb-5 rounded-md overflow-x-auto max-w-full">{children}</pre>
   ),
   ul: ({ children }) => (
-    <ul className="list-disc list-inside text-gray-300 mb-5 space-y-1.5 pl-2">
+    <ul className="list-disc list-inside text-gray-300 mb-5 space-y-1.5 pl-2 break-words">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="list-decimal list-inside text-gray-300 mb-5 space-y-1.5 pl-2">
+    <ol className="list-decimal list-inside text-gray-300 mb-5 space-y-1.5 pl-2 break-words">
       {children}
     </ol>
   ),
-  li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+  li: ({ children }) => <li className="leading-relaxed break-words">{children}</li>,
   blockquote: ({ children }) => (
-    <blockquote className="border-l-2 border-indigo-500 pl-4 text-gray-400 italic my-5">
+    <blockquote className="border-l-2 border-indigo-500 pl-4 text-gray-400 italic my-5 break-words">
       {children}
     </blockquote>
   ),
