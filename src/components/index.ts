@@ -7,6 +7,7 @@ export * from "./BlogSection";
 export * from "./Videos";
 export * from "./LatestStrip";
 export * from "./FloatingLove";
+export * from "./FestivalBadge";
 export * from "./ErrorBoundary";
 export * from "./CallToAction";
 export * from "./Certifications";

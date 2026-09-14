@@ -2,7 +2,8 @@ import "./globals.css";
 import { headers } from "next/headers";
 import { inter, jetbrainsMono } from "@/config/fonts";
 import { metaData } from "@/config/metadata";
-import { Header, CursorSpotlight, ScrollProgress, BackToTop, FloatingLove } from "@/components";
+import { Header, CursorSpotlight, ScrollProgress, BackToTop, FloatingLove, FestivalBadge } from "@/components";
+import { getActiveFestival } from "@/config/festivals";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -17,6 +18,7 @@ export default async function RootLayout({
   const gaId = process.env.GOOGLE_ANALYTICS_ID || "";
   const resolvedPathname = (await headers()).get("x-resolved-pathname") ?? "";
   const isBlogRoute = resolvedPathname.startsWith("/blog");
+  const activeFestival = getActiveFestival();
 
   return (
     <html
@@ -30,6 +32,7 @@ export default async function RootLayout({
         {children}
         <BackToTop />
         {!isBlogRoute && <FloatingLove />}
+        <FestivalBadge festival={activeFestival} />
 
         {/* 📊 Analytics */}
         {gaId && <GoogleAnalytics gaId={gaId} />} {/* Google Analytics */}
