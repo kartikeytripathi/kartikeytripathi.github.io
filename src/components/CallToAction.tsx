@@ -64,7 +64,7 @@ export function CallToAction() {
         {[
           {
             href: "https://topmate.io/kartikeytripathi",
-            label: "Source code on Topmate",
+            label: "Connect with me on Topmate",
             icon: (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
