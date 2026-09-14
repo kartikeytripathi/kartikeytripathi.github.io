@@ -156,7 +156,7 @@ Content is data-driven — most of what you see on the site is edited by touchin
 
 **✦   Built and maintained solo. If any of it saved you a Google, ⭐ the repo or send a signal.   ✦**
 
-[![Email](https://img.shields.io/badge/◈_Email-kartikey.tripathi.37%40gmail.com-FCD34D?style=flat-square&labelColor=0B1026)](mailto:kartikey.tripathi.37@gmail.com)
+[![Contact](https://img.shields.io/badge/◈_Contact-kartikeytripathi.in-FCD34D?style=flat-square&labelColor=0B1026)](https://www.kartikeytripathi.in/#contact)
 [![GitHub followers](https://img.shields.io/github/followers/kartikeytripathi?style=flat-square&labelColor=0B1026&color=A78BFA&logo=github&label=Follow)](https://github.com/kartikeytripathi)
 
 <br/>

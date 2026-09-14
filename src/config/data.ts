@@ -54,7 +54,6 @@ export const personalInfo = {
   name: "Kartikey Tripathi",
   title: "Cloud & DevOps Engineer",
   avatar: "/images/about/KT.webp",
-  email: "kartikey.tripathi.37@gmail.com",
   location: "Hyderabad, Telangana, India",
   description:
     "Cloud and DevOps Engineer with 6.5+ years of experience in AWS, containerization, and cloud-native architectures. Passionate about automation, performance tuning, and helping organizations modernize with EKS, ECS, and microservices.",

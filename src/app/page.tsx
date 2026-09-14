@@ -22,13 +22,17 @@ const jsonLd = {
       name: "Kartikey Tripathi",
       jobTitle: "Cloud & DevOps Engineer",
       url: "https://www.kartikeytripathi.in",
-      email: "kartikey.tripathi.37@gmail.com",
       image: "https://www.kartikeytripathi.in/images/about/KT.webp",
       sameAs: [
         "https://github.com/kartikeytripathi",
         "https://www.linkedin.com/in/kartikeytripathi",
         "https://www.instagram.com/kar.ti.key",
       ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "General Inquiries",
+        url: "https://www.kartikeytripathi.in/#contact",
+      },
       worksFor: {
         "@type": "Organization",
         name: "Amazon Web Services",

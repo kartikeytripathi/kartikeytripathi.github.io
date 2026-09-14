@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { FaRocket } from "react-icons/fa";
-import { FiMail } from "react-icons/fi";
 import { MessageForm } from "./MessageForm";
 
 export function CallToAction() {
@@ -60,14 +59,9 @@ export function CallToAction() {
       </motion.p>
 
       {/* BUTTON GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto w-full">
+      <div className="grid grid-cols-1 gap-4 max-w-xl mx-auto w-full">
 
         {[
-          {
-            href: "mailto:contact@kartikeytripathi.in",
-            label: "contact@kartikeytripathi.in",
-            icon: <FiMail className="w-5 h-5 text-blue-400" />
-          },
           {
             href: "https://topmate.io/kartikeytripathi",
             label: "Source code on Topmate",
