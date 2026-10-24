@@ -5,6 +5,7 @@ import View from "@/model/views.model";
 import { Resend } from "resend";
 import {
   collectVisitorInfo,
+  escapeHtml,
   fallbackVisitorInfo,
   type VisitorInfo,
 } from "@/lib/visitorInfo";
@@ -29,14 +30,14 @@ function buildEmailHtml(info: VisitorInfo, totalViews: number) {
     <div style="max-width:440px;margin:0 auto;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
       <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:20px 24px;color:#ffffff;">
         <div style="font-size:15px;opacity:0.85;">👀 New portfolio visit</div>
-        <div style="font-size:22px;font-weight:700;margin-top:4px;">${info.flag} ${info.location}</div>
+        <div style="font-size:22px;font-weight:700;margin-top:4px;">${info.flag} ${escapeHtml(info.location)}</div>
       </div>
       <div style="padding:20px 24px;">
         <table style="width:100%;border-collapse:collapse;">
-          ${row("🕐 Their time", `${info.localTime} <span style="color:#9ca3af;">(${info.timezone})</span>`)}
-          ${row("💻 Device", info.device)}
-          ${row("🔗 Came from", info.referrer)}
-          ${row("🌐 IP hash", `<code style="font-size:12px;color:#6b7280;">${info.ipHash}</code>`)}
+          ${row("🕐 Their time", `${escapeHtml(info.localTime)} <span style="color:#9ca3af;">(${escapeHtml(info.timezone)})</span>`)}
+          ${row("💻 Device", escapeHtml(info.device))}
+          ${row("🔗 Came from", escapeHtml(info.referrer))}
+          ${row("🌐 IP hash", `<code style="font-size:12px;color:#6b7280;">${escapeHtml(info.ipHash)}</code>`)}
           ${row("🤖 Likely bot", info.isBot ? "⚠️ Yes" : "No")}
         </table>
       </div>

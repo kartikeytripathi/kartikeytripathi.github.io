@@ -59,6 +59,16 @@ function looksLikeBot(ua: string) {
   );
 }
 
+/** Escape HTML-significant characters so header-derived values can't inject markup into notification emails. */
+export function escapeHtml(text: string) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export async function collectVisitorInfo(): Promise<VisitorInfo> {
   const h = await headers();
 
@@ -164,11 +174,11 @@ export function buildVisitorEmailHtml(opts: {
       ${bodyHtml ?? ""}
       <div style="padding:20px 24px;">
         <table style="width:100%;border-collapse:collapse;">
-          ${row("📍 Location", `${info.flag} ${info.location}`)}
-          ${row("🕐 Their time", `${info.localTime} <span style="color:#9ca3af;">(${info.timezone})</span>`)}
-          ${row("💻 Device", info.device)}
-          ${row("🔗 Came from", info.referrer)}
-          ${row("🌐 IP hash", `<code style="font-size:12px;color:#6b7280;">${info.ipHash}</code>`)}
+          ${row("📍 Location", `${info.flag} ${escapeHtml(info.location)}`)}
+          ${row("🕐 Their time", `${escapeHtml(info.localTime)} <span style="color:#9ca3af;">(${escapeHtml(info.timezone)})</span>`)}
+          ${row("💻 Device", escapeHtml(info.device))}
+          ${row("🔗 Came from", escapeHtml(info.referrer))}
+          ${row("🌐 IP hash", `<code style="font-size:12px;color:#6b7280;">${escapeHtml(info.ipHash)}</code>`)}
           ${row("🤖 Likely bot", info.isBot ? "⚠️ Yes" : "No")}
         </table>
       </div>
