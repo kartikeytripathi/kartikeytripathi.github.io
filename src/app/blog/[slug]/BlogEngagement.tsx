@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useState, useTransition, type FormEvent } from "react";
+import { useEffect, useRef, useState, useTransition, type FormEvent } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { FiHeart, FiMessageSquare, FiEye } from "react-icons/fi";
+import FloatingEngagementBar from "./FloatingEngagementBar";
+import { LikeBurst } from "./LikeBurst";
 import {
   getBlogLikeServerAction,
   addBlogLikeServerAction,
@@ -43,6 +46,10 @@ export default function BlogEngagement({ slug }: { slug: string }) {
   const [website, setWebsite] = useState(""); // honeypot
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  // Bumped on each like so the heart pop + burst animations replay.
+  const [burstKey, setBurstKey] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -75,6 +82,7 @@ export default function BlogEngagement({ slug }: { slug: string }) {
     if (hasLiked) return;
     setHasLiked(true);
     setLikeCount((c) => c + 1);
+    setBurstKey((k) => k + 1);
     localStorage.setItem(`liked:${slug}`, "true");
 
     startTransition(async () => {
@@ -132,35 +140,72 @@ export default function BlogEngagement({ slug }: { slug: string }) {
   };
 
   return (
-    <section className="mt-14 pt-8 border-t border-gray-800">
-      {/* Like + views */}
-      <div className="flex items-center gap-3">
+    <section ref={sectionRef} className="mt-14 pt-8 border-t border-gray-800">
+      <FloatingEngagementBar
+        likeCount={likeCount}
+        hasLiked={hasLiked}
+        burstKey={burstKey}
+        viewCount={viewCount}
+        commentCount={comments.length}
+        onLike={handleLike}
+        formatCount={formatCount}
+        sectionRef={sectionRef}
+      />
+
+      {/* End-of-article reaction card */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-5 p-6 rounded-lg border border-gray-800 bg-gradient-to-br from-gray-900/80 to-gray-950">
         <button
           type="button"
           onClick={handleLike}
           disabled={hasLiked}
           aria-pressed={hasLiked}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-mono transition-colors ${
+          aria-label={hasLiked ? "You liked this post" : "Like this post"}
+          className={`group relative shrink-0 self-start sm:self-auto inline-flex items-center justify-center w-16 h-16 rounded-full border-2 transition-colors ${
             hasLiked
-              ? "cursor-default border-red-500/60 bg-red-950/40 text-red-400"
-              : "cursor-pointer border-gray-800 bg-gray-900 text-gray-300 hover:border-pink-400/60 hover:text-pink-400"
+              ? "cursor-default border-red-500/70 bg-red-950/50"
+              : "cursor-pointer border-gray-700 bg-gray-900 hover:border-pink-400 hover:bg-pink-950/30"
           }`}
         >
-          <FiHeart className={hasLiked ? "fill-red-500 text-red-500" : ""} />
-          {likeCount} {likeCount === 1 ? "like" : "likes"}
+          <motion.span
+            key={burstKey}
+            initial={burstKey && !reduceMotion ? { scale: 0.5 } : false}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 500, damping: 10 }}
+            className="inline-flex"
+          >
+            <FiHeart
+              className={`w-7 h-7 transition-colors ${
+                hasLiked ? "fill-red-500 text-red-500" : "text-gray-300 group-hover:text-pink-400"
+              }`}
+            />
+          </motion.span>
+          <LikeBurst burstKey={burstKey} />
         </button>
 
-        <div
-          className="flex items-center gap-1.5 text-xs font-mono text-gray-500"
-          title={`${viewCount} views`}
-        >
-          <FiEye className="w-3.5 h-3.5" />
-          {formatCount(viewCount)}
+        <div className="min-w-0">
+          <p className="text-base font-semibold text-white">
+            {hasLiked ? "Thanks for the love ❤️" : "Found this useful?"}
+          </p>
+          <p className="text-sm text-gray-400 mt-0.5">
+            {hasLiked
+              ? "It genuinely helps me decide what to write next."
+              : "Tap the heart — it tells me what to write more of."}
+          </p>
+          <div className="flex items-center gap-4 mt-2 text-xs font-mono text-gray-500">
+            <span>
+              <span className="text-gray-300">{formatCount(likeCount)}</span>{" "}
+              {likeCount === 1 ? "like" : "likes"}
+            </span>
+            <span className="inline-flex items-center gap-1" title={`${viewCount} views`}>
+              <FiEye className="w-3.5 h-3.5" aria-hidden="true" />
+              <span className="text-gray-300">{formatCount(viewCount)}</span> views
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Comments */}
-      <div className="mt-10">
+      <div id="comments" className="mt-10 scroll-mt-24">
         <h2 className="flex items-center gap-2 text-lg font-bold text-white mb-5">
           <FiMessageSquare className="text-gray-400" />
           Comments {comments.length > 0 && `(${comments.length})`}
