@@ -4,6 +4,7 @@ import { connectToDatabase } from "@/lib/database";
 import BlogLike from "@/model/blogLike.model";
 import BlogComment from "@/model/blogComment.model";
 import BlogView from "@/model/blogView.model";
+import EngagementClaim from "@/model/engagementClaim.model";
 import { blogPosts } from "@/config/blog";
 import { Resend } from "resend";
 import {
@@ -37,6 +38,29 @@ function assertValidSlug(slug: string) {
   }
 }
 
+const VIEW_DEDUPE_MS = 24 * 60 * 60 * 1000;
+const COMMENT_WINDOW_MS = 10 * 60 * 1000;
+const COMMENT_MAX_PER_WINDOW = 3;
+
+/**
+ * Atomically claim a one-time action for this visitor. Returns false if the
+ * key was already claimed. Visitors with no resolvable IP (local dev) are
+ * always allowed — on Vercel the client IP header is always set.
+ */
+async function claimOnce(key: string, ipHash: string, ttlMs?: number) {
+  if (ipHash === "unknown") return true;
+  try {
+    await EngagementClaim.create({
+      key,
+      expiresAt: ttlMs ? new Date(Date.now() + ttlMs) : undefined,
+    });
+    return true;
+  } catch (err) {
+    if ((err as { code?: number }).code === 11000) return false;
+    throw err;
+  }
+}
+
 export async function getBlogLikeServerAction(slug: string) {
   assertValidSlug(slug);
   await connectToDatabase();
@@ -47,15 +71,26 @@ export async function getBlogLikeServerAction(slug: string) {
 export async function addBlogLikeServerAction(slug: string) {
   assertValidSlug(slug);
   await connectToDatabase();
+  const info = await safeCollectVisitorInfo();
+
+  // One like per visitor per post; repeats return the current count silently.
+  if (!(await claimOnce(`like:${slug}:${info.ipHash}`, info.ipHash))) {
+    const existing = await BlogLike.findOne({ slug });
+    return { success: true, count: existing?.count ?? 0 };
+  }
+
   const doc = await BlogLike.findOneAndUpdate(
     { slug },
     { $inc: { count: 1 } },
     { upsert: true, new: true }
   );
 
+  if (info.isBot) {
+    return { success: true, count: doc.count };
+  }
+
   const post = blogPosts.find((p) => p.slug === slug);
   const title = post?.title ?? slug;
-  const info = await safeCollectVisitorInfo();
 
   await resend.emails.send({
     from: "portfolio@kartikeytripathi.in",
@@ -94,6 +129,16 @@ export async function getBlogViewsServerAction(slug: string) {
 export async function addBlogViewServerAction(slug: string) {
   assertValidSlug(slug);
   await connectToDatabase();
+  const info = await safeCollectVisitorInfo();
+
+  // Count a visitor at most once per post per day.
+  if (
+    !(await claimOnce(`view:${slug}:${info.ipHash}`, info.ipHash, VIEW_DEDUPE_MS))
+  ) {
+    const existing = await BlogView.findOne({ slug });
+    return { success: true, views: existing?.views ?? 0 };
+  }
+
   const doc = await BlogView.findOneAndUpdate(
     { slug },
     { $inc: { views: 1 } },
@@ -146,15 +191,30 @@ export async function addBlogCommentServerAction(
   }
 
   await connectToDatabase();
+  const info = await safeCollectVisitorInfo();
+
+  if (info.ipHash !== "unknown") {
+    const recent = await BlogComment.countDocuments({
+      ipHash: info.ipHash,
+      createdAt: { $gte: new Date(Date.now() - COMMENT_WINDOW_MS) },
+    });
+    if (recent >= COMMENT_MAX_PER_WINDOW) {
+      return {
+        success: false,
+        error: "You've posted a few comments already — try again in a few minutes.",
+      };
+    }
+  }
+
   const doc = await BlogComment.create({
     slug,
     name: cleanName,
     message: cleanMessage,
+    ipHash: info.ipHash,
   });
 
   const post = blogPosts.find((p) => p.slug === slug);
   const title = post?.title ?? slug;
-  const info = await safeCollectVisitorInfo();
 
   const commentBlockHtml = `
     <div style="padding:16px 24px 0;">

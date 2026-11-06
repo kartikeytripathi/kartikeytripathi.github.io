@@ -115,6 +115,10 @@ export default function BlogEngagement({ slug }: { slug: string }) {
           trimmedMessage,
           website
         );
+        if (!res.success) {
+          setError(res.error ?? "Couldn't post that comment. Try again in a moment.");
+          return;
+        }
         if (res.comment) {
           setComments((prev) => [res.comment as BlogCommentDTO, ...prev]);
           localStorage.setItem("lastCommentAt", String(Date.now()));
