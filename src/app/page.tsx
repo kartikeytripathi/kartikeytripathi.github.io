@@ -11,6 +11,7 @@ import {
   BlogSection,
   Videos,
   ErrorBoundary,
+  PortfolioReactions,
 } from "@/components";
 
 const jsonLd = {
@@ -138,6 +139,8 @@ export default function Portfolio() {
   <CallToAction />
 </FadeInUp>
 </div>
+
+<PortfolioReactions />
 
 <footer className="mt-12 pb-6 text-center text-sm text-muted-foreground">
   © 2026 Kartikey Tripathi

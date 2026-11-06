@@ -2,7 +2,7 @@ import "./globals.css";
 import { headers } from "next/headers";
 import { inter, jetbrainsMono } from "@/config/fonts";
 import { metaData } from "@/config/metadata";
-import { Header, CursorSpotlight, ScrollProgress, BackToTop, FloatingLove, FestivalBadge } from "@/components";
+import { Header, CursorSpotlight, ScrollProgress, BackToTop, FestivalBadge } from "@/components";
 import { getActiveFestival } from "@/config/festivals";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -31,7 +31,6 @@ export default async function RootLayout({
         <Header />
         {children}
         <BackToTop />
-        {!isBlogRoute && <FloatingLove />}
         <FestivalBadge festival={activeFestival} />
 
         {/* 📊 Analytics */}
