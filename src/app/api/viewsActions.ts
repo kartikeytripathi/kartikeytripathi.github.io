@@ -2,6 +2,7 @@
 
 import { connectToDatabase } from "@/lib/database";
 import View from "@/model/views.model";
+import { claimOnce } from "@/lib/engagementClaim";
 import { Resend } from "resend";
 import {
   collectVisitorInfo,
@@ -48,15 +49,10 @@ function buildEmailHtml(info: VisitorInfo, totalViews: number) {
   </div>`;
 }
 
+const VIEW_DEDUPE_MS = 24 * 60 * 60 * 1000;
+
 export async function setViewsServerAction() {
   await connectToDatabase();
-  const doc = await View.findOneAndUpdate(
-    {},
-    { $inc: { views: 1 } },
-    { upsert: true, new: true }
-  );
-
-  const totalViews = doc?.views ?? 1;
 
   let info: VisitorInfo;
   try {
@@ -64,6 +60,19 @@ export async function setViewsServerAction() {
   } catch {
     info = fallbackVisitorInfo();
   }
+
+  // Count (and email about) a visitor at most once per day.
+  if (!(await claimOnce(`site-view:${info.ipHash}`, info.ipHash, VIEW_DEDUPE_MS))) {
+    return { success: true };
+  }
+
+  const doc = await View.findOneAndUpdate(
+    {},
+    { $inc: { views: 1 } },
+    { upsert: true, new: true }
+  );
+
+  const totalViews = doc?.views ?? 1;
 
   await resend.emails.send({
     from: "portfolio@kartikeytripathi.in",

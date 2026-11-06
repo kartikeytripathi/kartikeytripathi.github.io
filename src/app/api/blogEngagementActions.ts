@@ -4,7 +4,7 @@ import { connectToDatabase } from "@/lib/database";
 import BlogLike from "@/model/blogLike.model";
 import BlogComment from "@/model/blogComment.model";
 import BlogView from "@/model/blogView.model";
-import EngagementClaim from "@/model/engagementClaim.model";
+import { claimOnce } from "@/lib/engagementClaim";
 import { blogPosts } from "@/config/blog";
 import { Resend } from "resend";
 import {
@@ -41,25 +41,6 @@ function assertValidSlug(slug: string) {
 const VIEW_DEDUPE_MS = 24 * 60 * 60 * 1000;
 const COMMENT_WINDOW_MS = 10 * 60 * 1000;
 const COMMENT_MAX_PER_WINDOW = 3;
-
-/**
- * Atomically claim a one-time action for this visitor. Returns false if the
- * key was already claimed. Visitors with no resolvable IP (local dev) are
- * always allowed — on Vercel the client IP header is always set.
- */
-async function claimOnce(key: string, ipHash: string, ttlMs?: number) {
-  if (ipHash === "unknown") return true;
-  try {
-    await EngagementClaim.create({
-      key,
-      expiresAt: ttlMs ? new Date(Date.now() + ttlMs) : undefined,
-    });
-    return true;
-  } catch (err) {
-    if ((err as { code?: number }).code === 11000) return false;
-    throw err;
-  }
-}
 
 export async function getBlogLikeServerAction(slug: string) {
   assertValidSlug(slug);
