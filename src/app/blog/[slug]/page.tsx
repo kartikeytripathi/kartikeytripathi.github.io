@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { blogPosts, getRelatedPosts } from "@/config/blog";
+import { blogPosts, getRelatedPosts, feedAlternate } from "@/config/blog";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { readFile } from "fs/promises";
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} — Kartikey Tripathi`,
     description: post.description,
     authors: [{ name: "Kartikey Tripathi", url: "https://kartikeytripathi.in" }],
-    alternates: { canonical },
+    alternates: { canonical, ...feedAlternate },
     openGraph: {
       title: post.title,
       description: post.description,

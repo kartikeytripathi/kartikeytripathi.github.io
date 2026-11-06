@@ -1,8 +1,7 @@
 import { MetadataRoute } from "next";
-import { blogPosts, parsePostDate } from "@/config/blog";
+import { blogPosts, parsePostDate, BLOG_URL } from "@/config/blog";
 
 const PORTFOLIO_URL = "https://www.kartikeytripathi.in";
-const BLOG_URL = "https://blogs.kartikeytripathi.in";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogRoutes = blogPosts

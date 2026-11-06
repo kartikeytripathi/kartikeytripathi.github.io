@@ -1,4 +1,4 @@
-import { blogPosts } from "@/config/blog";
+import { blogPosts, feedAlternate } from "@/config/blog";
 import BlogListClient from "./BlogListClient";
 import type { Metadata } from "next";
 
@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     "Articles and videos by Kartikey Tripathi on AWS, Cloud, DevOps, and Kubernetes.",
   alternates: {
     canonical: "https://blogs.kartikeytripathi.in",
+    ...feedAlternate,
   },
 };
 

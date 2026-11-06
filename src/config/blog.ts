@@ -11,6 +11,14 @@ export type BlogPost = {
   publishedOn?: string;
 };
 
+export const BLOG_URL = "https://blogs.kartikeytripathi.in";
+export const FEED_URL = `${BLOG_URL}/feed.xml`;
+
+/** Spread into a page's `alternates` so feed readers can auto-discover the RSS feed. */
+export const feedAlternate = {
+  types: { "application/rss+xml": [{ url: FEED_URL, title: "Kartikey Tripathi — Blog" }] },
+};
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 /** Parse a post's "Mon YYYY" date into the first of that month (UTC). */

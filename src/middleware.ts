@@ -11,6 +11,7 @@ export function middleware(request: NextRequest) {
       url.pathname.startsWith("/resources/") ||
       url.pathname.startsWith("/images/") ||
       url.pathname === "/sitemap.xml" ||
+      url.pathname === "/feed.xml" ||
       url.pathname === "/robots.txt"
     ) {
       return withResolvedPathHeader(request, url.pathname);

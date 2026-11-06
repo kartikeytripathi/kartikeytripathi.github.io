@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { feedAlternate } from "@/config/blog";
 
 export const metaData: Metadata = {
   metadataBase: new URL(
@@ -54,6 +55,7 @@ export const metaData: Metadata = {
 
   alternates: {
     canonical: "https://www.kartikeytripathi.in",
+    ...feedAlternate,
   },
 
   authors: [
