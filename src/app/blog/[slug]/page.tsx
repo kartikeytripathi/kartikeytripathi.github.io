@@ -172,7 +172,7 @@ export default async function BlogPostPage({ params }: Props) {
       </div>
 
       <div className={hasToc ? "flex flex-col lg:flex-row gap-10 items-start" : undefined}>
-        <div className={hasToc ? "min-w-0 flex-1 max-w-4xl mx-auto lg:mx-0" : undefined}>
+        <div className={hasToc ? "w-full min-w-0 flex-1 max-w-4xl mx-auto lg:mx-0" : undefined}>
           {/* Article body */}
           {post.type === "article" && markdown && (
             <ArticleBody content={markdown} />
