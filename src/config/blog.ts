@@ -11,6 +11,17 @@ export type BlogPost = {
   publishedOn?: string;
 };
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** Parse a post's "Mon YYYY" date into the first of that month (UTC). */
+export function parsePostDate(date: string): Date | undefined {
+  const [mon, year] = date.trim().split(/\s+/);
+  const month = MONTHS.indexOf(mon?.slice(0, 3));
+  const y = Number(year);
+  if (month === -1 || !Number.isInteger(y)) return undefined;
+  return new Date(Date.UTC(y, month, 1));
+}
+
 export function getRelatedPosts(
   currentSlug: string,
   tags: string[],
